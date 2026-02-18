@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureGate</title>
+    <link rel="stylesheet" href="../CSS/sign.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="left-nav">
+            <h1>SecureGate</h1>
+        </div>
+        <div class="right-nav">
+            <a href="signin.html">Sign In</a>
+        </div>
+    </nav>
+    <nav class="sign-card">
+        <img src="../Media/SVG.png" alt="entry door image">
+        <h1>Welcome to SecureGate</h1>
+        <p>Please enter your details to get started.</p>
+        <form action="signup.php" method="POST">
+           <span id="dynamic-label">Name</span>
+            <input type="text" name="name" placeholder="Adam" required>
+            <span id="dynamic-label">Gender</span>
+            <input type="text" name="gender" placeholder="Male/Female" required>
+            <span id="dynamic-label">Username</span>
+            <input type="text" name="username" placeholder="adam" required>
+            <div class="input-header">
+                <span id="dynamic-label">Email</span> 
+                <span id="toggle-mode" class="toggle-link">
+                    <i class="fa-solid fa-mobile-screen"></i> Use Phone Number
+                </span> 
+            </div>
+            <input type="email" id="input-email" name="email" placeholder="you@gmail.com" required>
+            <input type="tel" id="input-phone" name="number" placeholder="+62.." pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="hidden">
+            <span id="dynamic-label">Password</span>
+            <input type="password" name="password" placeholder="Use Strong Password" required>
+            <button type="submit" name="submit">Sign In</button>
+        </form>
+        <hr>
+        <div class="bottom-button-sign"><i class="fab fa-google"></i><a href="">Sign Up with Google</a></div>
+        <div class="bottom-button-sign"><i class="fas fa-user"></i><a href="../HTML/signin.html">Have Account?</a></div>
+    </nav>
+</body>
+<script src="../JS/sign.js"></script>
+</html>
