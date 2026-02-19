@@ -1,624 +1,628 @@
-/* =========================================
-   1. RESET & GLOBAL VARIABLES
-   ========================================= */
-:root {
-    --bg-body: #050505;
-    --bg-card: #121212;
-    --bg-card-hover: #1a1a1a;
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0a0;
-    --accent-orange: #f97316; /* Warna status Pending */
-    --accent-green: #22c55e;  /* Warna status Going */
-    --border-color: #2a2a2a;
-    --content-width: 1000px;
-    --edge-spacing: 40px;
-    --content-padding: 20px;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
-body {
-    background-color: var(--bg-body);
-    color: var(--text-primary);
-    min-height: 100vh;
-    padding-top: 50px
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-ul {
-    list-style: none;
-}
-
-/* =========================================
-   2. NAVBAR STYLING
-   ========================================= */
-.navbar {
-    /* 1. Membuat Navbar Menempel di Atas */
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px; /* Tinggi fix diperlukan agar layout stabil */
-    
-    /* 2. Efek Blur (Kaca) */
-    background-color: rgba(5, 5, 5, 0.7); /* Gunakan RGBA dengan transparansi (0.7 = 70%) */
-    backdrop-filter: blur(12px);          /* Ini kuncinya: memburamkan apa pun di belakangnya */
-    -webkit-backdrop-filter: blur(12px);  /* Support untuk Safari/Chrome lama */
-    
-    /* 3. Layering & Border */
-    z-index: 1000; /* Pastikan dia di atas semua elemen lain */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Garis tipis halus di bawah */
-    
-    /* 4. Grid Layout (Sama seperti sebelumnya) */
-    display: grid;
-    grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
-    align-items: center;
-    padding: 0 var(--edge-spacing); 
-    box-sizing: border-box; 
-}
-
-/* 1. POSISI KIRI (SecureGate) */
-.left-nav {
-    grid-column: 1;      /* Masuk kolom pertama */
-    justify-self: start; /* Mentok ke Kiri */
-}
-
-.left-nav h1 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #e0e0e0;
-}
-
-/* 2. POSISI TENGAH (Main Nav) */
-.main-nav {
-    grid-column: 2;      /* Masuk kolom tengah (1000px) */
-    justify-self: start; /* Mulai dari awal kolom 1000px ini */
-    padding-left: var(--inner-padding); 
-    margin-left: 14px;
-    display: flex;
-    gap: 30px;
-}
-
-/* 3. POSISI KANAN (Profile/Create Event) */
-.right-nav {
-    grid-column: 3;      /* Masuk kolom ketiga */
-    justify-self: end;   /* Mentok ke Kanan */
-    
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-/* Sisa styling navbar (warna text dll) tetap sama */
-.main-nav div {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #a0a0a0;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.main-nav div:hover {
-    color: #ffffff;
-}
-
-.right-nav a {
-    font-size: 14px;
-    font-weight: 500;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.right-nav img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #333;
-    display: block;
-}
-
-/* =========================================
-   3. PAGE FRAME & TAB HEADER
-   ========================================= */
-.page-frame {
-    max-width: var(--content-width);
-    margin: 40px auto;
-    padding: 0 var(--content-padding);
-}
-
-.page-frame-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.page-frame-nav h1 {
-    font-size: 32px;
-    font-weight: 700;
-}
-
-/* Styling Tombol Toggle (Upcoming / Past) */
-
-
-.toggle-select-event {
-    background-color: #1f1f1f;
-    padding: 4px;
-    border-radius: 8px;
-    display: flex;
-}
-
-.toggle-select-event a {
-    padding: 8px 24px;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 6px;
-    color: var(--text-secondary);
-    transition: all 0.2s;
-}
-
-/* Class 'active' akan ditambahkan via JS */
-.toggle-select-event a.active {
-    background-color: #333;
-    color: var(--text-primary);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.toggle-select-event a:hover {
-    color: var(--text-primary);
-}
-
-/* =========================================
-   4. UPCOMING EVENT (EMPTY STATE)
-   ========================================= */
-.upcoming-event {
-    /* Layout Default: Flex column center untuk empty state */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0px 0;
-    text-align: center;
-    gap: 20px;
-    
-}
-
-/* Styling Kartu Detail */
-.event-card-detail {
-    /* 1. AGAR CARD LEBIH KECIL & RESPONSIF */
-    width: 100%;             /* Akan mencoba memenuhi lebar layar */
-    max-width: 350px;        /* TAPI dibatasi maksimal cuma 350px (sangat compact) */
-    
-    margin: 0 auto;          /* Posisi tengah */
-    background-color: #121212;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    
-    /* Gunakan padding yang dinamis (lebih kecil di HP, lebih besar di monitor) */
-    padding: clamp(16px, 4vw, 20px); 
-    
-    box-sizing: border-box;  /* Penting agar padding tidak menambah lebar */
-}
-
-/* Opsional: Efek hover pada kartu utama */
-.event-card-detail:hover {
-    border-color: #444;
-}
-
-/* 1. Container Header Atas */
-.card-top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 12px; /* Jarak diperkecil sedikit */
-}
-
-/* Teks Tanggal & Waktu */
-.card-top-header h4 {
-    /* Font size mengecil otomatis jika layar sempit: Minimal 12px, Ideal 4vw, Maksimal 14px */
-    font-size: clamp(12px, 4vw, 14px); 
-    font-weight: 600;
-    color: #ffffff;
-    letter-spacing: 0.3px;
-}
-
-.header-right h4 {
-    color: #e0e0e0; 
-}
-
-/* 2. Garis Pemisah */
-.card-divider {
-    border: 0;
-    border-top: 1px solid #2a2a2a;
-    margin: 0 0 16px 0; /* Margin diperkecil */
-    width: 100%;
-}
-
-/* Menargetkan pembungkus (wrapper) gambarnya */
-.card-hero-img {
-    width: 70%; 
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    overflow: hidden;
-    border-radius: 8px; /* Radius diperkecil agar proporsional */
-    margin-bottom: 16px; 
-    margin-top: 10px;    
-}
-
-.card-hero-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* JUDUL */
-.card-title {
-    /* Font Title Responsif: Minimal 18px, Maksimal 22px */
-    font-size: clamp(18px, 5vw, 22px); 
-    font-weight: 700;
-    color: #ffffff;   
-    text-align: left; 
-    margin-bottom: 10px;
-    line-height: 1.3;   
-    width: 100%; 
-}
-
-/* AUTHOR */
-.card-author {
-    display: flex;       
-    align-items: center; 
-    justify-content: flex-start; 
-    gap: 8px;           
-    margin-bottom: 20px; /* Jarak diperkecil */
-    cursor: pointer;  
-    text-align: left;
-}
-
-.card-author img {
-    /* Logo ikut mengecil sedikit jika perlu, atau tetap fix kecil */
-    width: 20px;   
-    height: 20px;
-    border-radius: 4px; 
-    background-color: #fff;
-    object-fit: contain; 
-    flex-shrink: 0;      
-}
-
-.card-author span {
-    /* Font Author Responsif */
-    font-size: clamp(11px, 3vw, 13px);
-    font-weight: 500;
-    color: #e0e0e0;
-    white-space: nowrap; 
-}
-
-.card-author:hover span {
-    color: #fff;
-    text-decoration: underline;
-}
-
-.card-author i {
-    font-size: 10px;
-    color: #666;
-    /* margin-top dihapus/disesuaikan karena align-items:center sudah menangani tengah */
-}
-
-/* INFO BLOCKS (DATE & LOCATION) */
-.card-info-blocks {
-    display: flex;
-    flex-direction: column;
-    gap: 16px; /* Jarak antar info diperkecil */
-}
-
-.info-block {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
-
-
-.block-icon {
-    width: 40px !important;
-    height: 40px !important;
-
-    display: flex !important;
-    justify-content: center !important; /* Tengah Kiri-Kanan */
-    align-items: center !important;     /* Tengah Atas-Bawah */
-
-    background-color: #1a1a1a; /* Warna Kotak */
-    border: 1px solid #333;
-    border-radius: 8px;
-    font-size: 22px !important; 
-    color: #838383 !important;
-    flex-shrink: 0;
-    margin: 0;
-}
-
-/* Text Detail */
-.block-text h3 {
-    margin: 0 0 2px 0; /* Margin bawah kecil saja */
-    /* Sisa properti font tetap sama */
-    font-size: clamp(13px, 4vw, 15px);
-    font-weight: 600;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.block-text p {
-    margin: 0;
-    /* Sisa properti font tetap sama */
-    font-size: clamp(11px, 3.5vw, 13px);
-    color: #888;
-    line-height: 1.2;
-}
-
-.block-text h3:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-/* Menyembunyikan kartu di dalam upcoming (karena kita mau tampilan kosong sesuai gambar 1) */
-.upcoming-event .event-card {
-    display: none; 
-}
-
-/* Styling icon kosong (jika ada i class kosong di html kamu, kita beri style) */
-.upcoming-event i { 
-    font-size: 48px;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.upcoming-event p {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 24px;
-}
-
-.create-event a {
-    background-color: #2a2a2a;
-    color: var(--text-primary);
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: background 0.2s;
-}
-
-.create-event a::before {
-    content: "+";
-    font-size: 16px;
-}
-
-.create-event a:hover {
-    background-color: #333;
-}
-
-/* =========================================
-   5. PAST EVENT (LIST VIEW)
-   ========================================= */
-.past-event {
-    display: none; /* Default Hidden, muncul via JS */
-    flex-direction: column; /* PENTING: Susun ke bawah */
-    gap: 30px; /* Jarak antar event atas-bawah */
-    margin-bottom: 30px;
-}
-
-.timeline-row {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    width: 100%;
-}
-
-/* TRIK UNTUK CARD TERAKHIR: Menghilangkan garis berlebih di bawah titik terakhir */
-.timeline-row:last-child .left-info {
-    border-right: 1px solid transparent; /* Hilangkan border */
-}
-
-/* Tapi kita harus membuat ulang garisnya secara manual agar stop pas di titik */
-.timeline-row:last-child .left-info::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -1px;
-    height: 15px; /* Hanya sepanjang sampai titik */
-    border-right: 1px dashed #444;
-}
-
-/* Kiri: Tanggal Timeline */
-.left-info {
-    min-width: 100px;
-    text-align: left;
-    padding-top: 10px;
-    
-    /* Membuat garis putus-putus vertikal */
-    border-right: 1px dashed #333; 
-    
-    position: relative;
-    /* Agar garisnya memanjang sampai bawah mengikuti tinggi kartu */
-    align-self: stretch;
-}
-
-/* Titik timeline */
-.left-info::after {
-    content: "";
-    position: absolute;
-    top: 20px;
-    right: -5px; /* Menempatkan titik pas di garis */
-    width: 9px;
-    height: 9px;
-    background-color: #555;
-    border-radius: 50%;
-    border: 2px solid #050505; /* Warna background body agar terlihat terpotong */
-}
-
-.left-info h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 4px;
-}
-
-.left-info h3:last-child {
-    font-weight: 400;
-    color: #a0a0a0;
-}
-
-/* Kanan: Kartu Event */
-.right-info {
-    flex-grow: 1; /* Mengisi sisa lebar */
-    background-color: #121212;
-    border: 1px solid #2a2a2a;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-    transition: background-color 0.2s;
-}
-
-.right-info:hover {
-    background-color: #1a1a1a;
-    border-color: #444;
-}
-
-/* Bagian Teks dalam Kartu */
-.past-event-card {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
-}
-
-.left-past-card {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.time-event {
-    display: flex;
-    gap: 5px;
-    font-size: 13px;
-    color: #f97316; /* Warna Oranye / Emas sesuai gambar */
-    font-weight: 500;
-}
-.time-event .begin-time{
-    color: #bbbbbb; /* Warna Oranye / Emas sesuai gambar */
-}
-
-.past-event-card h2 {
-    font-size: 18px;
-    line-height: 1.4;
-    font-weight: 600;
-    margin: 8px 0;
-}
-
-.author-past {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--text-secondary);
-}
-
-.author-past img {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-}
-
-.past-location {
-    font-size: 13px;
-    color: #666;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-/* Label Status (Going/Pending) */
-.status-past {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 4px 12px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    width: fit-content;
-}
-
-/* Logika warna status */
-.right-info:nth-child(1) .status-past {
-    background-color: var(--accent-orange); /* Pending */
-    color: #fff;
-}
-
-/* Bagian Wadah Gambar (Kanan) */
-.right-past-card {
-    width: 180px;
-    position: relative;
-    display: flex; 
-    height: auto;
-}
-
-/* Bagian Gambar Itu Sendiri */
-.right-past-card img {
-    align-self: center;
-    width: 85%;
-    height: 80%;
-    object-fit: cover;
-    display: block;
-    border-radius: 10px;  
-}
-/* =========================================
-   6. FOOTER
-   ========================================= */
-hr {
-    border: 0;
-    border-top: 1px solid #2a2a2a;
-    margin: 40px 0;
-    width: 100%;
-}
-
-.page-footer {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 40px;
-    font-size: 14px;
-    color: var(--text-secondary);
-}
-
-.left-footer, .right-footer {
-    display: flex;
-    gap: 20px;
-}
-
-.right-footer a:hover {
-    color: var(--text-primary);
-}
-
-/* Utility Class untuk JS */
-.hidden {
-    display: none !important;
-}
-
-.visible-flex {
-    display: flex !important;
-}
+    /* =========================================
+    1. RESET & GLOBAL VARIABLES
+    ========================================= */
+    :root {
+        --bg-body: #050505;
+        --bg-card: #121212;
+        --bg-card-hover: #1a1a1a;
+        --text-primary: #ffffff;
+        --text-secondary: #a0a0a0;
+        --accent-orange: #f97316; /* Warna status Pending */
+        --accent-green: #22c55e;  /* Warna status Going */
+        --border-color: #2a2a2a;
+        --content-width: 1000px;
+        --edge-spacing: 40px;
+        --content-padding: 20px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+        background-color: var(--bg-body);
+        color: var(--text-primary);
+        min-height: 100vh;
+        padding-top: 50px
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    /* =========================================
+    2. NAVBAR STYLING
+    ========================================= */
+    .navbar {
+        /* 1. Membuat Navbar Menempel di Atas */
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px; /* Tinggi fix diperlukan agar layout stabil */
+        
+        /* 2. Efek Blur (Kaca) */
+        background-color: rgba(5, 5, 5, 0.7); /* Gunakan RGBA dengan transparansi (0.7 = 70%) */
+        backdrop-filter: blur(12px);          /* Ini kuncinya: memburamkan apa pun di belakangnya */
+        -webkit-backdrop-filter: blur(12px);  /* Support untuk Safari/Chrome lama */
+        
+        /* 3. Layering & Border */
+        z-index: 1000; /* Pastikan dia di atas semua elemen lain */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Garis tipis halus di bawah */
+        
+        /* 4. Grid Layout (Sama seperti sebelumnya) */
+        display: grid;
+        grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
+        align-items: center;
+        padding: 0 var(--edge-spacing); 
+        box-sizing: border-box; 
+    }
+
+    /* 1. POSISI KIRI (SecureGate) */
+    .left-nav {
+        grid-column: 1;      /* Masuk kolom pertama */
+        justify-self: start; /* Mentok ke Kiri */
+    }
+
+    .left-nav h1 {
+        font-size: 20px;
+        font-weight: 700;
+        color: #e0e0e0;
+    }
+
+    /* 2. POSISI TENGAH (Main Nav) */
+    .main-nav {
+        grid-column: 2;      /* Masuk kolom tengah (1000px) */
+        justify-self: start; /* Mulai dari awal kolom 1000px ini */
+        padding-left: var(--inner-padding); 
+        margin-left: 14px;
+        display: flex;
+        gap: 30px;
+    }
+
+    /* 3. POSISI KANAN (Profile/Create Event) */
+    .right-nav {
+        grid-column: 3;      /* Masuk kolom ketiga */
+        justify-self: end;   /* Mentok ke Kanan */
+        
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    /* Sisa styling navbar (warna text dll) tetap sama */
+    .main-nav div {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #a0a0a0;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .main-nav div:hover {
+        color: #ffffff;
+    }
+
+    .right-nav a {
+        font-size: 14px;
+        font-weight: 500;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .right-nav img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #333;
+        display: block;
+    }
+
+    /* =========================================
+    3. PAGE FRAME & TAB HEADER
+    ========================================= */
+    .page-frame {
+        max-width: var(--content-width);
+        margin: 40px auto;
+        padding: 0 var(--content-padding);
+    }
+
+    .page-frame-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .page-frame-nav h1 {
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+    /* Styling Tombol Toggle (Upcoming / Past) */
+
+
+    .toggle-select-event {
+        background-color: #1f1f1f;
+        padding: 4px;
+        border-radius: 8px;
+        display: flex;
+    }
+
+    .toggle-select-event a {
+        padding: 8px 24px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        color: var(--text-secondary);
+        transition: all 0.2s;
+    }
+
+    /* Class 'active' akan ditambahkan via JS */
+    .toggle-select-event a.active {
+        background-color: #333;
+        color: var(--text-primary);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .toggle-select-event a:hover {
+        color: var(--text-primary);
+    }
+
+    /* =========================================
+    4. UPCOMING EVENT (EMPTY STATE)
+    ========================================= */
+    .upcoming-event {
+        display: flex;
+        
+        /* INI KUNCINYA: Membiarkan elemen turun ke baris baru jika penuh */
+        flex-wrap: wrap; 
+        
+        /* Sejajarkan kartu dari Kiri ke Kanan, dan menempel ke atas */
+        justify-content: flex-start; 
+        align-items: flex-start;
+        
+        gap: 20px; /* Jarak antar kartu (kiri-kanan dan atas-bawah) */
+        padding: 20px 0;
+    }
+
+    /* Styling Kartu Detail */
+    .event-card-detail {
+        width: 100%;
+        
+        /* UBAH: Turunkan menjadi 300px agar 3 kartu muat dalam ruang 960px */
+        max-width: 300px; 
+        
+        margin: 0; 
+        
+        background-color: #121212;
+        border: 1px solid #2a2a2a;
+        border-radius: 12px;
+        
+        padding: clamp(16px, 4vw, 20px); 
+        box-sizing: border-box; 
+        transition: border-color 0.2s; /* Tambahan agar hover border mulus */
+    }
+
+    /* Opsional: Efek hover pada kartu utama */
+    .event-card-detail:hover {
+        border-color: #444;
+    }
+
+    /* 1. Container Header Atas */
+    .card-top-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 12px; /* Jarak diperkecil sedikit */
+    }
+
+    /* Teks Tanggal & Waktu */
+    .card-top-header h4 {
+        /* Font size mengecil otomatis jika layar sempit: Minimal 12px, Ideal 4vw, Maksimal 14px */
+        font-size: clamp(12px, 4vw, 14px); 
+        font-weight: 600;
+        color: #ffffff;
+        letter-spacing: 0.3px;
+    }
+
+    .header-right h4 {
+        color: #e0e0e0; 
+    }
+
+    /* 2. Garis Pemisah */
+    .card-divider {
+        border: 0;
+        border-top: 1px solid #2a2a2a;
+        margin: 0 0 16px 0; /* Margin diperkecil */
+        width: 100%;
+    }
+
+    /* Menargetkan pembungkus (wrapper) gambarnya */
+    .card-hero-img {
+        width: 70%; 
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        overflow: hidden;
+        border-radius: 8px; /* Radius diperkecil agar proporsional */
+        margin-bottom: 16px; 
+        margin-top: 10px;    
+    }
+
+    .card-hero-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* JUDUL */
+    .card-title {
+        /* Font Title Responsif: Minimal 18px, Maksimal 22px */
+        font-size: clamp(18px, 5vw, 22px); 
+        font-weight: 700;
+        color: #ffffff;   
+        text-align: left; 
+        margin-bottom: 10px;
+        line-height: 1.3;   
+        width: 100%; 
+    }
+
+    /* AUTHOR */
+    .card-author {
+        display: flex;       
+        align-items: center; 
+        justify-content: flex-start; 
+        gap: 8px;           
+        margin-bottom: 20px; /* Jarak diperkecil */
+        cursor: pointer;  
+        text-align: left;
+    }
+
+    .card-author img {
+        /* Logo ikut mengecil sedikit jika perlu, atau tetap fix kecil */
+        width: 20px;   
+        height: 20px;
+        border-radius: 4px; 
+        background-color: #fff;
+        object-fit: contain; 
+        flex-shrink: 0;      
+    }
+
+    .card-author span {
+        /* Font Author Responsif */
+        font-size: clamp(11px, 3vw, 13px);
+        font-weight: 500;
+        color: #e0e0e0;
+        white-space: nowrap; 
+    }
+
+    .card-author:hover span {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+    .card-author i {
+        font-size: 10px;
+        color: #666;
+        /* margin-top dihapus/disesuaikan karena align-items:center sudah menangani tengah */
+    }
+
+    /* INFO BLOCKS (DATE & LOCATION) */
+    .card-info-blocks {
+        display: flex;
+        flex-direction: column;
+        gap: 16px; /* Jarak antar info diperkecil */
+    }
+
+    .info-block {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+
+    .block-icon {
+        width: 40px !important;
+        height: 40px !important;
+
+        display: flex !important;
+        justify-content: center !important; /* Tengah Kiri-Kanan */
+        align-items: center !important;     /* Tengah Atas-Bawah */
+
+        background-color: #1a1a1a; /* Warna Kotak */
+        border: 1px solid #333;
+        border-radius: 8px;
+        font-size: 22px !important; 
+        color: #838383 !important;
+        flex-shrink: 0;
+        margin: 0;
+    }
+
+    /* Text Detail */
+    .block-text h3 {
+        margin: 0 0 2px 0; /* Margin bawah kecil saja */
+        /* Sisa properti font tetap sama */
+        font-size: clamp(13px, 4vw, 15px);
+        font-weight: 600;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .block-text p {
+        margin: 0;
+        /* Sisa properti font tetap sama */
+        font-size: clamp(11px, 3.5vw, 13px);
+        color: #888;
+        line-height: 1.2;
+    }
+
+    .block-text h3:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    /* Menyembunyikan kartu di dalam upcoming (karena kita mau tampilan kosong sesuai gambar 1) */
+    .upcoming-event .event-card {
+        display: none; 
+    }
+
+    /* Styling icon kosong (jika ada i class kosong di html kamu, kita beri style) */
+    .upcoming-event i { 
+        font-size: 48px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .upcoming-event p {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 24px;
+    }
+
+    .create-event a {
+        background-color: #2a2a2a;
+        color: var(--text-primary);
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.2s;
+    }
+
+    .create-event a::before {
+        content: "+";
+        font-size: 16px;
+    }
+
+    .create-event a:hover {
+        background-color: #333;
+    }
+
+    /* =========================================
+    5. PAST EVENT (LIST VIEW)
+    ========================================= */
+    .past-event {
+        display: none; /* Default Hidden, muncul via JS */
+        flex-direction: column; /* PENTING: Susun ke bawah */
+        gap: 30px; /* Jarak antar event atas-bawah */
+        margin-bottom: 30px;
+    }
+
+    .timeline-row {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        width: 100%;
+    }
+
+    /* TRIK UNTUK CARD TERAKHIR: Menghilangkan garis berlebih di bawah titik terakhir */
+    .timeline-row:last-child .left-info {
+        border-right: 1px solid transparent; /* Hilangkan border */
+    }
+
+    /* Tapi kita harus membuat ulang garisnya secara manual agar stop pas di titik */
+    .timeline-row:last-child .left-info::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -1px;
+        height: 15px; /* Hanya sepanjang sampai titik */
+        border-right: 1px dashed #444;
+    }
+
+    /* Kiri: Tanggal Timeline */
+    .left-info {
+        min-width: 100px;
+        text-align: left;
+        padding-top: 10px;
+        
+        /* Membuat garis putus-putus vertikal */
+        border-right: 1px dashed #333; 
+        
+        position: relative;
+        /* Agar garisnya memanjang sampai bawah mengikuti tinggi kartu */
+        align-self: stretch;
+    }
+
+    /* Titik timeline */
+    .left-info::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: -5px; /* Menempatkan titik pas di garis */
+        width: 9px;
+        height: 9px;
+        background-color: #555;
+        border-radius: 50%;
+        border: 2px solid #050505; /* Warna background body agar terlihat terpotong */
+    }
+
+    .left-info h3 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 4px;
+    }
+
+    .left-info h3:last-child {
+        font-weight: 400;
+        color: #a0a0a0;
+    }
+
+    /* Kanan: Kartu Event */
+    .right-info {
+        flex-grow: 1; /* Mengisi sisa lebar */
+        background-color: #121212;
+        border: 1px solid #2a2a2a;
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        transition: background-color 0.2s;
+    }
+
+    .right-info:hover {
+        background-color: #1a1a1a;
+        border-color: #444;
+    }
+
+    /* Bagian Teks dalam Kartu */
+    .past-event-card {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
+    }
+
+    .left-past-card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .time-event {
+        display: flex;
+        gap: 5px;
+        font-size: 13px;
+        color: #f97316; /* Warna Oranye / Emas sesuai gambar */
+        font-weight: 500;
+    }
+    .time-event .begin-time{
+        color: #bbbbbb; /* Warna Oranye / Emas sesuai gambar */
+    }
+
+    .past-event-card h2 {
+        font-size: 18px;
+        line-height: 1.4;
+        font-weight: 600;
+        margin: 8px 0;
+    }
+
+    .author-past {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--text-secondary);
+    }
+
+    .author-past img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+
+    .past-location {
+        font-size: 13px;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Label Status (Going/Pending) */
+    .status-past {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        width: fit-content;
+    }
+
+    /* Logika warna status */
+    .right-info:nth-child(1) .status-past {
+        background-color: var(--accent-orange); /* Pending */
+        color: #fff;
+    }
+
+    /* Bagian Wadah Gambar (Kanan) */
+    .right-past-card {
+        width: 180px;
+        position: relative;
+        display: flex; 
+        height: auto;
+    }
+
+    /* Bagian Gambar Itu Sendiri */
+    .right-past-card img {
+        align-self: center;
+        width: 85%;
+        height: 80%;
+        object-fit: cover;
+        display: block;
+        border-radius: 10px;  
+    }
+    /* =========================================
+    6. FOOTER
+    ========================================= */
+    hr {
+        border: 0;
+        border-top: 1px solid #2a2a2a;
+        margin: 40px 0;
+        width: 100%;
+    }
+
+    .page-footer {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 40px;
+        font-size: 14px;
+        color: var(--text-secondary);
+    }
+
+    .left-footer, .right-footer {
+        display: flex;
+        gap: 20px;
+    }
+
+    .right-footer a:hover {
+        color: var(--text-primary);
+    }
+
+    /* Utility Class untuk JS */
+    .hidden {
+        display: none !important;
+    }
+
+    .visible-flex {
+        display: flex !important;
+    }
