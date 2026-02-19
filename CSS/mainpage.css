@@ -188,9 +188,10 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 60px 0;
+    padding: 0px 0;
     text-align: center;
     gap: 20px;
+    
 }
 
 /* Styling Kartu Detail */
@@ -208,6 +209,11 @@ ul {
     padding: clamp(16px, 4vw, 20px); 
     
     box-sizing: border-box;  /* Penting agar padding tidak menambah lebar */
+}
+
+/* Opsional: Efek hover pada kartu utama */
+.event-card-detail:hover {
+    border-color: #444;
 }
 
 /* 1. Container Header Atas */

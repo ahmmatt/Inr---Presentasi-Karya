@@ -1,0 +1,747 @@
+/* =========================================
+   1. RESET & GLOBAL VARIABLES
+   ========================================= */
+:root {
+    --bg-body: #050505;
+    --bg-card: #121212;
+    --bg-card-hover: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-orange: #f97316; /* Warna status Pending */
+    --accent-green: #22c55e;  /* Warna status Going */
+    --border-color: #2a2a2a;
+    --content-width: 1000px;
+    --edge-spacing: 40px;
+    --content-padding: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding-top: 50px
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* =========================================
+   2. NAVBAR STYLING
+   ========================================= */
+.navbar {
+    /* 1. Membuat Navbar Menempel di Atas */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Tinggi fix diperlukan agar layout stabil */
+    
+    /* 2. Efek Blur (Kaca) */
+    background-color: rgba(5, 5, 5, 0.7); /* Gunakan RGBA dengan transparansi (0.7 = 70%) */
+    backdrop-filter: blur(12px);          /* Ini kuncinya: memburamkan apa pun di belakangnya */
+    -webkit-backdrop-filter: blur(12px);  /* Support untuk Safari/Chrome lama */
+    
+    /* 3. Layering & Border */
+    z-index: 1000; /* Pastikan dia di atas semua elemen lain */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Garis tipis halus di bawah */
+    
+    /* 4. Grid Layout (Sama seperti sebelumnya) */
+    display: grid;
+    grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
+    align-items: center;
+    padding: 0 var(--edge-spacing); 
+    box-sizing: border-box; 
+}
+
+/* 1. POSISI KIRI (SecureGate) */
+.left-nav {
+    grid-column: 1;      /* Masuk kolom pertama */
+    justify-self: start; /* Mentok ke Kiri */
+}
+
+.left-nav h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #e0e0e0;
+}
+
+/* 2. POSISI TENGAH (Main Nav) */
+.main-nav {
+    grid-column: 2;      /* Masuk kolom tengah (1000px) */
+    justify-self: start; /* Mulai dari awal kolom 1000px ini */
+    padding-left: var(--inner-padding); 
+    margin-left: 14px;
+    display: flex;
+    gap: 30px;
+}
+
+/* 3. POSISI KANAN (Profile/Create Event) */
+.right-nav {
+    grid-column: 3;      /* Masuk kolom ketiga */
+    justify-self: end;   /* Mentok ke Kanan */
+    
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Sisa styling navbar (warna text dll) tetap sama */
+.main-nav div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #a0a0a0;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.main-nav div:hover {
+    color: #ffffff;
+}
+
+.right-nav a {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.right-nav img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #333;
+    display: block;
+}
+
+/* =========================================
+   3. PAGE FRAME & TAB HEADER
+   ========================================= */
+.page-frame {
+    max-width: var(--content-width);
+    margin: 40px auto;
+    padding: 0 var(--content-padding);
+}
+
+.page-frame-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:flex-start;
+    margin-bottom: 40px;
+    gap: 20px;
+}
+
+.page-frame-nav h1 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* =========================================
+   SEARCH BAR GLASSMORPHISM STYLE
+   ========================================= */
+
+/* 1. Wrapper untuk posisi */
+.search-bar-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Posisi tengah horizontal */
+    margin-bottom: 40px;     /* Jarak ke konten bawah */
+    padding: 0 10px;         /* Padding agar tidak mentok di layar HP */
+}
+
+/* 2. Batang Pencarian (Glass Effect) */
+.search-bar {
+    width: 100%;
+    max-width: 400px; /* Lebar maksimal agar mirip Google Search */
+    height: 55px;     /* Tinggi yang nyaman untuk diklik */
+    
+    /* GLASSMORPHISM STYLE */
+    /* Warna putih transparan (sangat tipis) agar terlihat di background gelap */
+    background-color: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(12px);          /* Efek buram belakang */
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* Border halus transparan */
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 50px; /* Membuat bentuk kapsul/pill penuh */
+    
+    /* Layout Flexbox */
+    display: flex;
+    align-items: center;
+    padding: 0 25px; /* Jarak isi dari pinggir */
+    gap: 15px;       /* Jarak antar elemen di dalam */
+    
+    /* Animasi halus saat hover/klik */
+    transition: all 0.3s ease;
+}
+
+/* EFEK SAAT HOVER ATAU DI-KLIK (FOCUS) */
+.search-bar:hover, 
+.search-bar:focus-within {
+    /* Background jadi sedikit lebih terang */
+    background-color: rgba(255, 255, 255, 0.1); 
+    /* Border lebih tegas */
+    border-color: rgba(255, 255, 255, 0.3);
+    /* Efek bayangan/glow */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); 
+}
+
+/* 3. Input Text Styling */
+.search-bar form {
+    flex-grow: 1; /* Mengisi ruang kosong di tengah */
+    display: flex;
+}
+
+.search-bar input {
+    width: 100%;
+    background: transparent; /* Transparan total */
+    border: none;
+    outline: none; /* Hilangkan garis biru bawaan browser */
+    
+    /* Typography */
+    font-size: 16px;
+    color: var(--text-primary); /* Warna putih */
+    font-weight: 400;
+}
+
+.search-bar input::placeholder {
+    color: var(--text-secondary); /* Warna abu-abu untuk placeholder */
+}
+
+/* =========================================
+   LOCATION CARD (GLASSMORPHISM & POSITION)
+   ========================================= */
+
+/* 1. Wrapper: Mengatur Posisi ke Kanan */
+.event-location-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; /* PENTING: Mendorong isi ke KANAN */
+    margin-bottom: 20px;       /* Jarak ke elemen bawahnya */
+    padding: 0 10px;           /* Padding agar tidak terlalu mepet layar HP */
+}
+
+/* 2. Kartu Lokasi (Glass Style) */
+.event-location-now {
+    /* Layout & Ukuran */
+    display: inline-flex;      /* Agar lebar menyesuaikan isi konten */
+    align-items: center;
+    gap: 10px;                 /* Jarak antar ikon dan teks */
+    padding: 10px 20px;        /* Ruang di dalam kartu */
+    height: 44px;              /* Tinggi fix agar rapi */
+    
+    /* GLASSMORPHISM STYLE (Sama dengan Search Bar) */
+    background-color: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* Bentuk Kapsul/Rounded */
+    border-radius: 50px; 
+    
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Efek Hover */
+.event-location-now:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Sedikit lebih terang */
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px); /* Naik sedikit */
+}
+
+/* 3. Styling Teks & Ikon */
+.event-location-now h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+    margin: 0;
+    white-space: nowrap; /* Mencegah teks turun baris */
+}
+
+/* Ikon Lokasi (Merah/Orange atau Putih) */
+.location-icon {
+    font-size: 14px;
+    color: #16f91a; /* Warna oranye agar menonjol (atau ganti #fff) */
+}
+
+/* Ikon Panah Kecil */
+.location-arrow {
+    font-size: 10px;
+    color: #888;
+    margin-left: 4px;
+}
+
+/* =========================================
+   CATEGORY SECTION STYLE
+   ========================================= */
+
+/* 1. Grid Wrapper (Tata Letak 3 Kolom) */
+.category-wrapper {
+    display: grid;
+    /* Membuat kolom otomatis: minimal lebar 250px, jika muat isi 3 kolom */
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); 
+    gap: 16px; /* Jarak antar kartu */
+    margin-bottom: 40px;
+    margin-top: 25px;
+}
+
+/* 2. Style Kartu Utama */
+.category-card {
+    background-color: #121212; /* Background gelap */
+    border: 1px solid #2a2a2a; /* Border tipis */
+    border-radius: 12px;       /* Sudut membulat */
+    padding: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Efek Hover: Sedikit terang & border berubah */
+.category-card:hover {
+    background-color: #1a1a1a;
+    border-color: #444;
+    transform: translateY(-2px); /* Naik sedikit saat dihover */
+}
+
+/* 3. Layout Isi Kartu (Flexbox Horizontal) */
+/* Saya ganti class wrapper di HTML tadi jadi .category-card-content agar lebih jelas */
+.category-card-content {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Jarak antara ikon dan teks */
+}
+
+/* 4. Styling Ikon */
+.icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px; /* Ikon tidak bulat penuh, tapi rounded box */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0; /* Agar ikon tidak gepeng */
+}
+
+/* Warna-warni Ikon (Sesuai Referensi) */
+/* Kuning (Konser) */
+.icon-yellow {
+    color: #facc15; 
+    /* Opsional: Background transparan warna senada */
+    background-color: rgba(250, 204, 21, 0.1); 
+    border: 1px solid rgba(250, 204, 21, 0.2);
+}
+
+/* Hijau (Ceramah) */
+.icon-green {
+    color: #4ade80;
+    background-color: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.icon-orange {
+    /* 1. Warna Ikon (Solid) */
+    color: #f97316; 
+    
+    /* 2. Warna Background (Transparan 10%) */
+    /* Menggunakan RGBA (249, 115, 22) adalah kode angka untuk warna oranye ini */
+    background-color: rgba(249, 115, 22, 0.1); 
+    
+    /* 3. Warna Border (Transparan 20% - sedikit lebih tebal warnanya) */
+    border: 1px solid rgba(249, 115, 22, 0.2);
+}
+
+/* Ungu (Inagurasi) */
+.icon-purple {
+    color: #c084fc;
+    background-color: rgba(192, 132, 252, 0.1);
+    border: 1px solid rgba(192, 132, 252, 0.2);
+}
+
+/* 5. Typography (Teks) */
+.category-card-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 2px;
+}
+
+.number-of-event {
+    display: flex; /* Menyusun angka dan kata 'Event' ke samping */
+    gap: 4px;
+    font-size: 12px;
+    color: #a0a0a0; /* Warna abu-abu */
+    font-weight: 400;
+}
+
+.number-of-event p {
+    margin: 0;
+}
+
+.upcoming-event {
+    /* Layout Default: Flex column center untuk empty state */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 0;
+    text-align: center;
+    gap: 20px;
+    margin-top: 20px;
+    
+}
+
+/* Styling Kartu Detail */
+.event-card-detail {
+    width: 100%;
+    /* UBAH: Max-width diperkecil dari 350px ke 280px atau 300px */
+    max-width: 300px; 
+    
+    margin: 0 auto;
+    background-color: #121212;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    
+    /* UBAH: Padding diperkecil agar terlihat padat */
+    padding: 16px; 
+    
+    box-sizing: border-box;
+    transition: transform 0.2s ease;
+}
+
+/* Opsional: Efek hover pada kartu utama */
+.event-card-detail:hover {
+    border-color: #444;
+}
+
+/* 1. Container Header Atas */
+.card-top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px; /* Jarak diperkecil sedikit */
+}
+
+/* Teks Tanggal & Waktu */
+.card-top-header h4 {
+    /* Font size mengecil otomatis jika layar sempit: Minimal 12px, Ideal 4vw, Maksimal 14px */
+    font-size: clamp(8px, 3vw, 11px); 
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.3px;
+}
+
+.header-right h4 {
+    color: #e0e0e0; 
+}
+
+/* 2. Garis Pemisah */
+.card-divider {
+    border: 0;
+    border-top: 1px solid #2a2a2a;
+    margin: 0 0 16px 0; /* Margin diperkecil */
+    width: 100%;
+}
+
+/* Menargetkan pembungkus (wrapper) gambarnya */
+.card-hero-img {
+    width: 70%; 
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    overflow: hidden;
+    border-radius: 8px; /* Radius diperkecil agar proporsional */
+    margin-bottom: 16px; 
+    margin-top: 10px;    
+}
+
+.card-hero-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* JUDUL */
+.card-title {
+    /* Font Title Responsif: Minimal 18px, Maksimal 22px */
+    font-size: clamp(12px, 4vw, 16px); 
+    font-weight: 700;
+    color: #ffffff;   
+    text-align: left; 
+    margin-bottom: 12px;
+    line-height: 1.4;   
+    width: 100%; 
+}
+
+/* AUTHOR */
+
+/* Wrapper ini penting untuk memisahkan Kiri (Author) dan Kanan (Go) */
+.card-author-wrapper {
+    display: flex;
+    justify-content: space-between; /* PENDORONG UTAMA: Kiri mentok kiri, Kanan mentok kanan */
+    align-items: center;
+    margin-bottom: 12px; /* Jarak ke judul diperkecil */
+    width: 100%;
+}
+
+.card-author-left {
+    display: flex;       
+    align-items: center; 
+    gap: 8px;           
+    /* Hapus margin-bottom dari kode lama, karena sudah diurus wrapper */
+    margin-bottom: 0; 
+    text-align: left;
+    max-width: 75%; /* Agar tidak menabrak tombol Go jika nama panjang */
+}
+
+.card-author-left img {
+    width: 18px;   /* Perkecil sedikit */
+    height: 18px;
+    border-radius: 4px; 
+    background-color: #fff;
+    object-fit: contain; 
+    flex-shrink: 0;    
+}
+
+.card-author-left span {
+    font-size: 11px; /* Font author diperkecil */
+    font-weight: 500;
+    color: #e0e0e0;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-author-left:hover span {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.card-author-left i {
+    font-size: 10px;
+    color: #666;
+    /* margin-top dihapus/disesuaikan karena align-items:center sudah menangani tengah */
+}
+
+/* Bagian Kanan (Tombol GO) */
+.card-author-right {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Jarak teks Go dan Panah */
+    cursor: pointer;
+    
+    /* Styling Teks Go */
+    font-size: 12px;
+    font-weight: 600;
+    color: #666; /* Warna awal agak gelap */
+    transition: all 0.3s ease;
+}
+
+/* EFEK HOVER TOMBOL GO */
+.card-author-right:hover {
+    color: #f97316; /* Berubah jadi oranye (atau warna lain) saat hover */
+    transform: translateX(2px); /* Geser sedikit ke kanan */
+}
+
+.card-author-right i {
+    font-size: 12px !important; /* Paksa ukuran kecil */
+    color: inherit; /* Ikut warna teks induknya */
+    margin: 0;      /* Reset margin */
+}
+
+/* INFO BLOCKS (DATE & LOCATION) */
+.card-info-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Jarak antar info diperkecil */
+}
+
+.info-block {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+
+.block-icon {
+    width: 32px !important;
+    height: 32px !important;
+
+    display: flex !important;
+    justify-content: center !important; /* Tengah Kiri-Kanan */
+    align-items: center !important;     /* Tengah Atas-Bawah */
+
+    background-color: #1a1a1a; /* Warna Kotak */
+    border: 1px solid #333;
+    border-radius: 6px;
+    font-size: 14px !important; 
+    color: #838383 !important;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+/* Text Detail */
+.block-text h3 {
+    margin: 0 0 2px 0; /* Margin bawah kecil saja */
+    /* Sisa properti font tetap sama */
+    font-size: clamp(10px, 3.5vw, 13px);
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.block-text p {
+    margin: 0;
+    /* Sisa properti font tetap sama */
+    font-size: clamp(9px, 2vw, 11px);
+    color: #888;
+    line-height: 1.2;
+}
+
+.block-text h3:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+/* Menyembunyikan kartu di dalam upcoming (karena kita mau tampilan kosong sesuai gambar 1) */
+.upcoming-event .event-card {
+    display: none; 
+}
+
+/* Styling icon kosong (jika ada i class kosong di html kamu, kita beri style) */
+.upcoming-event i { 
+    font-size: 48px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.upcoming-event p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 24px;
+}
+
+
+/* =========================================
+   CITY LIST STYLE (INDONESIA BIG CITIES)
+   ========================================= */
+
+/* 1. Grid Wrapper */
+.city-wrapper {
+    display: grid;
+    /* Responsive: Minimal lebar 200px per kartu */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 16px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+/* 2. Card Style */
+.city-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background-color: transparent; /* Clean look */
+    transition: background-color 0.2s ease, transform 0.2s;
+    cursor: pointer;
+}
+
+.city-card:hover {
+    background-color: #1a1a1a; /* Efek highlight saat hover */
+    transform: translateX(4px); /* Gerak sedikit ke kanan */
+}
+
+/* 3. Logo Bulat */
+.city-card-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%; /* Lingkaran Penuh */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    font-size: 18px;
+    color: #ffffff; /* Ikon Putih */
+    flex-shrink: 0;
+}
+
+/* --- VARIAN WARNA KOTA --- */
+.logo-orange { background-color: #f97316; } /* Jakarta */
+.logo-cyan   { background-color: #06b6d4; } /* Bali */
+.logo-green  { background-color: #10b981; } /* Bandung */
+.logo-red    { background-color: #ef4444; } /* Surabaya */
+.logo-yellow { background-color: #eab308; } /* Yogyakarta */
+.logo-blue   { background-color: #3b82f6; } /* Makassar */
+.logo-purple { background-color: #a855f7; } /* Medan */
+.logo-pink   { background-color: #ec4899; } /* Semarang */
+
+
+/* 4. Text Info */
+.city-card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.city-card-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 2px 0;
+}
+
+.value-city-event {
+    display: flex;
+    gap: 4px;
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+.value-city-event p {
+    margin: 0;
+}
+
+/* =========================================
+   6. FOOTER
+   ========================================= */
+hr {
+    border: 0;
+    border-top: 1px solid #2a2a2a;
+    margin: 40px 0;
+    width: 100%;
+}
+
+.page-footer {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 40px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.left-footer, .right-footer {
+    display: flex;
+    gap: 20px;
+}
+
+.right-footer a:hover {
+    color: var(--text-primary);
+}
