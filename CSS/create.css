@@ -3,12 +3,10 @@
    ========================================= */
 :root {
     --bg-body: #050505;
-    --bg-card: #121212;
-    --bg-card-hover: #1a1a1a;
     --text-primary: #ffffff;
     --text-secondary: #a0a0a0;
-    --accent-orange: #f97316; /* Warna status Pending */
-    --accent-green: #22c55e;  /* Warna status Going */
+    --accent-orange: #f97316; 
+    --accent-green: #22c55e;  
     --border-color: #2a2a2a;
     --content-width: 1000px;
     --edge-spacing: 40px;
@@ -42,7 +40,6 @@ body {
     min-height: 100vh;
     padding-top: 50px; /* Saya kembalikan ke 100px agar tidak tertutup navbar yang sticky */
 }
-
 a {
     text-decoration: none;
     color: inherit;
@@ -53,7 +50,7 @@ ul {
 }
 
 /* =========================================
-   2. NAVBAR STYLING
+   2. NAVBAR STYLING (DINAMIS)
    ========================================= */
 .navbar {
     /* 1. Membuat Navbar Menempel di Atas */
@@ -92,117 +89,812 @@ ul {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* 1. POSISI KIRI (SecureGate) */
-.left-nav {
-    grid-column: 1;      /* Masuk kolom pertama */
-    justify-self: start; /* Mentok ke Kiri */
-}
+/* Navbar Items */
+.left-nav { grid-column: 1; justify-self: start; }
+.left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
 
-.left-nav h1 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #e0e0e0;
-}
-
-/* 2. POSISI TENGAH (Main Nav) */
 .main-nav {
-    grid-column: 2;      /* Masuk kolom tengah (1000px) */
-    justify-self: start; /* Mulai dari awal kolom 1000px ini */
-    padding-left: var(--inner-padding); 
+    grid-column: 2; 
+    justify-self: start; 
     margin-left: 14px;
     display: flex;
     gap: 30px;
 }
-
-/* 3. POSISI KANAN (Profile/Create Event) */
-.right-nav {
-    grid-column: 3;      /* Masuk kolom ketiga */
-    justify-self: end;   /* Mentok ke Kanan */
-    
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-/* Sisa styling navbar (warna text dll) tetap sama */
 .main-nav div {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #a0a0a0;
+    color: var(--text-secondary);
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: color 0.2s;
 }
+.main-nav div:hover { color: var(--text-primary); }
 
-.main-nav div:hover {
-    color: #ffffff;
+.right-nav {
+    grid-column: 3; 
+    justify-self: end; 
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
-
-.right-nav a {
-    font-size: 14px;
-    font-weight: 500;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.right-nav img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #333;
-    display: block;
-}
+.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; }
+.right-nav img { width: 32px; height: 32px; border-radius: 50%; background-color: #333; display: block; }
 
 /* =========================================
-   3. PAGE FRAME & TAB HEADER
+   3. PAGE FRAME & HEADER
    ========================================= */
 .page-frame {
     max-width: var(--content-width);
-    margin: 40px auto;
+    margin: 0 auto;
     padding: 0 var(--content-padding);
+    margin-top: 40px;
 }
 
 .page-frame-nav {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items:flex-start;
-    margin-bottom: 40px;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    gap: 8px;
+}
+.page-frame-nav h1 { font-size: 32px; font-weight: 700; margin: 0;}
+.page-frame-nav p { color: var(--text-secondary); font-size: 14px; margin: 0;}
+
+/* =========================================
+   4. LAYOUT CREATE EVENT (2 KOLOM)
+   ========================================= */
+.create-wrapper-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr; 
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 60px;
+}
+
+/* =========================================
+   5. KOLOM KIRI (GAMBAR & LOKASI)
+   ========================================= */
+.left-layout {
+    display: flex;
+    flex-direction: column;
     gap: 20px;
 }
 
-.page-frame-nav h1 {
-    font-size: 32px;
-    font-weight: 700;
+/* A. Kotak Upload Gambar */
+.add-pict-card {
+    background-color: rgba(255, 255, 255, 0.03); 
+    border-radius: 16px;
+    aspect-ratio: 1 / 1; /* Persegi */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s;
+}
+.add-pict-card:hover { background-color: rgba(255, 255, 255, 0.08); }
+.add-pict-card form, .add-pict-card input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2; 
 }
 
+/* =========================================
+   HOVER EFFECT UNTUK ICON UPLOAD GAMBAR
+   ========================================= */
+/* Ketika area kartu upload gambar disorot mouse */
+.add-pict-card:hover .pict-action-select {
+    background-color: #2a2a2a; /* Background berubah jadi gelap */
+    color: #ffffff;            /* Ikon berubah jadi putih */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Opsional: Menambah sedikit efek timbul */
+}
+.pict-action-select {
+    background-color: #ffffff;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1;
+    
+    /* TAMBAHKAN BARIS INI: Agar perubahan warna halus */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
+/* B. Dropdown Lokasi */
+.add-loc-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.add-loc-card {
+    background-color: rgba(255, 255, 255, 0.05); 
+    padding: 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s;
+}
+.add-loc-card:hover { background-color: rgba(255, 255, 255, 0.1); }
+.left-loc-card { font-size: 20px; color: #a0a0a0; }
+.right-loc-card h3 { font-size: 14px; color: #fff; margin: 0 0 4px 0; font-weight: 600; }
+.right-loc-card p { font-size: 12px; color: #a0a0a0; margin: 0; }
+.loc-arrow { position: absolute; right: 20px; color: #a0a0a0; transition: transform 0.3s ease; }
+
+/* Area Opsi Lokasi (Tersembunyi) */
+.loc-options {
+    display: none; 
+    flex-direction: column;
+    gap: 12px;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.loc-options.show { display: flex; }
+
+.loc-btn {
+    background-color: #2a2a2a;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.2s;
+}
+.loc-btn:hover { background-color: #333; }
+
+.loc-divider { text-align: center; position: relative; color: #666; font-size: 12px; }
+.loc-divider::before, .loc-divider::after {
+    content: ""; position: absolute; top: 50%; width: 40%; height: 1px; background-color: rgba(255, 255, 255, 0.1);
+}
+.loc-divider::before { left: 0; }
+.loc-divider::after { right: 0; }
+
+.virtual-link-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #121212;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.virtual-link-input i { color: #888; }
+.virtual-link-input input { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-size: 14px; }
 
 /* =========================================
-   6. FOOTER
+   3D EVENT SPACE CARD
    ========================================= */
-hr {
-    border: 0;
-    border-top: 1px solid #2a2a2a;
-    margin: 40px 0;
+/* Styling Judul "Optional" */
+.left-section-title {
+    font-size: 14px;
+    color: #ffffff;
+    margin: 10px 0 -10px 0; /* Jarak agar tidak terlalu jauh dengan card-nya */
+}
+
+/* Kotak 3D Space */
+.space-3d-card {
+    background-color: rgba(255, 255, 255, 0.05); 
+    padding: 16px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    /* Memberikan garis putus-putus agar mirip kotak upload file */
+    border: 1px dashed rgba(255, 255, 255, 0.1); 
+}
+
+.space-3d-card:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Memanipulasi input file agar transparan dan menutupi kotak */
+.space-3d-card form,
+.space-3d-card input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Dibuat tidak terlihat (transparan) */
+    cursor: pointer;
+    z-index: 2; /* Berada paling atas agar bisa diklik */
+}
+
+/* Mengatur teks dan ikon 3D */
+.space-3d-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.space-3d-info i {
+    font-size: 20px;
+    color: #a0a0a0;
+}
+
+.space-3d-text h3 {
+    font-size: 14px;
+    color: #fff;
+    margin: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.space-3d-text p {
+    font-size: 12px;
+    color: #a0a0a0;
+    margin: 0;
+}
+
+/* Ikon panah upload di kanan */
+.upload-icon {
+    color: #666;
+    font-size: 14px;
+}
+
+/* =========================================
+   6. KOLOM KANAN (DETAIL EVENT)
+   ========================================= */
+.right-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* =========================================
+   DROPDOWN PUBLIC / PRIVATE
+   ========================================= */
+/* Wrapper utama (sebagai jangkar/jangkar untuk absolute dropdown) */
+.visibility-wrapper {
+    align-self: flex-end; /* Memposisikan seluruh wrapper ini di pojok kanan */
+    position: relative;   /* PENTING: Menjadi patokan letak dropdown (absolute) nanti */
+    z-index: 50;          /* Agar dropdown selalu di atas elemen lain */
+    display: inline-block; /* Lebar hanya sebesar isinya */
+}
+
+/* Badge Public/Private (Tombol yang diklik) */
+.event-type {
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: flex;        /* Ubah jadi flex agar ikon & teks di tengah */
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    user-select: none;    /* Mencegah teks ter-highlight saat diklik dua kali */
+}
+
+.event-type:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.event-type h4 { 
+    margin: 0; 
+    font-weight: 500;
+}
+
+/* Kotak Pilihan Dropdown yang Melayang */
+.visibility-dropdown {
+    display: none;        /* Sembunyi dari awal */
+    flex-direction: column;
+    
+    position: absolute;   /* Melayang keluar dari arus dokumen normal */
+    top: calc(100% + 8px);/* Posisinya pas di bawah tombol + jarak 8px */
+    right: 0;             /* Rata kanan dengan tombolnya */
+    
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    overflow: hidden;
+    min-width: 140px;     /* Lebar minimal agar teks 'Private' tidak terpotong */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+/* Munculkan (timpa display:none) jika ada class .show dari JavaScript */
+.visibility-dropdown.show {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Item dalam Dropdown */
+.visibility-option {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.visibility-option:hover {
+    background-color: #333;
+}
+/* =========================================
+   PERBAIKAN INPUT JUDUL EVENT
+   ========================================= */
+.event-name {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.event-name form { 
+    width: 100%; 
+}
+
+.event-name input {
+    width: 100%;
+    /* Paksa hilangkan style bawaan browser */
+    background-color: transparent !important; 
+    border: none !important;
+    outline: none !important;
+    font-size: 44px !important; 
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    padding: 0 !important;
+}
+
+.event-name input::placeholder { 
+    color: #555 !important; 
+    font-weight: 770;
+}
+/* Global Card Style */
+.card-box {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.03); 
+}
+
+/* Wrapper Schedule & Timezone */
+.time-loc-wrapper {
+    display: flex;
+    gap: 20px;
     width: 100%;
 }
 
-.page-footer {
+/* Grid Matrix untuk Schedule */
+.schedule-wrapper {
+    flex: 2; 
+    display: grid;
+    grid-template-areas:
+        "labels start-date start-time"
+        "labels end-date   end-time";
+    gap: 12px 16px;
+    align-items: center;
+}
+
+.start-end-wrapper { grid-area: labels; display: flex; flex-direction: column; justify-content: space-between; height: 100%; color: #a0a0a0; font-size: 14px;}
+.start-text, .end-text { display: flex; align-items: center; gap: 8px; }
+.start-text h4, .end-text h4 { margin: 0; font-weight: 500; }
+.line-of-circle { margin-left: 3px; height: 100%; border-left: 1px dashed #444; }
+
+.start-date-time-card-left { grid-area: start-date; }
+.start-date-time-card-right { grid-area: start-time; }
+.end-date-time-card-left { grid-area: end-date; }
+.end-date-time-card-right { grid-area: end-time; }
+
+.start-date-time-card-left, .start-date-time-card-right,
+.end-date-time-card-left, .end-date-time-card-right {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px 12px;
+    border-radius: 8px;
     display: flex;
-    justify-content: space-between;
-    padding-bottom: 40px;
+    align-items: center;
+}
+
+.schedule-wrapper input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
     font-size: 14px;
-    color: var(--text-secondary);
+    width: 100%;
 }
+.schedule-wrapper input::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
 
-.left-footer, .right-footer {
+/* Timezone Card */
+.time-area {
+    flex: 1; 
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    color: #a0a0a0;
+}
+.time-area i { font-size: 16px; margin-bottom: 4px;}
+.time-area h4 { color: #fff; margin: 0; font-size: 14px;}
+.time-area p { margin: 0; font-size: 12px;}
+
+/* Description Card */
+.desc-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #a0a0a0;
+}
+.desc-wrapper form { width: 100%; }
+.desc-wrapper input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
 }
 
-.right-footer a:hover {
-    color: var(--text-primary);
+/* Event Options Card */
+.right-layout > h4 { font-size: 14px; color: #ffffff; margin: 10px 0 -5px 0; }
+.event-options-wrapper { display: flex; flex-direction: column; gap: 16px; }
+.ticket-wrapper, .approval-wrapper, .capacity-wrapper { display: flex; justify-content: space-between; align-items: center; }
+.event-options-wrapper hr { border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 0; }
+
+.ticket-wrapper-left, .approval-wrapper-left, .capacity-wrapper-left {
+    display: flex; align-items: center; gap: 12px; color: #a0a0a0;
 }
+.ticket-wrapper-left h3, .approval-wrapper-left h3, .capacity-wrapper-left h3 {
+    margin: 0; font-size: 14px; font-weight: 500; color: #e0e0e0;
+}
+
+.ticket-wrapper-right, .capacity-wrapper-right { display: flex; align-items: center; gap: 8px; color: #a0a0a0; }
+.ticket-wrapper-right input, .capacity-wrapper-right input {
+    background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px;
+}
+
+/* =========================================
+   DROPDOWN TICKET PRICE (HARGA TIKET)
+   ========================================= */
+.ticket-dropdown {
+    display: none; 
+    /* INI KUNCI YANG HILANG: Sembunyikan secara default! */
+    display: none; 
+    flex-direction: column;
+    gap: 16px;
+    
+    /* Mengambang bebas di tengah layar */
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    
+    /* Ukuran Card */
+    width: 380px; 
+    max-width: 90vw; 
+    padding: 24px;
+    
+    /* Tampilan Visual */
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 16px;
+    z-index: 9999; 
+    
+    /* Menggelapkan sisa layar di belakang card (Overlay) */
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.ticket-dropdown.show {
+    display: flex;
+}
+
+.ticket-type-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.payment-details {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group label {
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+.input-group input, .custom-select {
+    background-color: #121212;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #fff;
+    font-size: 13px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+.input-group input:focus, .custom-select:focus {
+    border-color: #555;
+}
+/* =========================================
+   MENGHILANGKAN PANAH PADA INPUT NUMBER (FORCE)
+   ========================================= */
+/* Untuk Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
+/* Untuk Firefox */
+input[type="number"] {
+    -moz-appearance: textfield !important;
+}
+
+/* Styling Khusus Dropdown Select agar terlihat elegan di mode gelap */
+.custom-select {
+    appearance: none; /* Hilangkan panah bawaan browser */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+    cursor: pointer;
+}
+
+.custom-select option {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+/* Layout Tombol Aksi */
+.ticket-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.cancel-btn {
+    background-color: transparent;
+    color: #a0a0a0;
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1; /* Lebar seimbang */
+}
+
+.cancel-btn:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.ticket-actions .apply-btn {
+    flex: 1; /* Lebar seimbang */
+}
+
+
+
+/* Switch Toggle (Require Approval) */
+.approval-wrapper-right button {
+    width: 44px; height: 24px; background-color: #fff; border-radius: 12px; border: none; position: relative; cursor: pointer;
+}
+.approval-wrapper-right button::after {
+    content: ''; position: absolute; top: 2px; right: 2px; width: 20px; height: 20px; background-color: #1a1a1a; border-radius: 50%;
+}
+
+/* =========================================
+   DROPDOWN PENGATURAN KAPASITAS
+   ========================================= */
+/* Kotak Menu Melayang */
+.capacity-dropdown {
+    /* INI KUNCI YANG HILANG: Sembunyikan secara default! */
+    display: none; 
+    flex-direction: column;
+    gap: 16px;
+    
+    /* Mengambang bebas di tengah layar */
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    
+    /* Ukuran Card */
+    width: 380px; 
+    max-width: 90vw; 
+    padding: 24px;
+    
+    /* Tampilan Visual */
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 16px;
+    z-index: 9999; 
+    
+    /* Menggelapkan sisa layar di belakang card (Overlay) */
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Munculkan jika ada class .show */
+.capacity-dropdown.show {
+    display: flex;
+}
+
+/* Styling Pilihan Radio */
+.capacity-type-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cap-radio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* Mengubah warna bawaan radio button */
+.cap-radio input[type="radio"] {
+    accent-color: #ffffff; /* Warna saat dipilih */
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Styling Input Angka */
+.capacity-number-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: -4px;
+}
+
+.capacity-number-input label {
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+.capacity-number-input input {
+    background-color: #121212;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+.capacity-number-input input:focus {
+    border-color: #555;
+}
+
+/* Tombol Terapkan (Apply) */
+.apply-btn {
+    background-color: #ffffff;
+    color: #000;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.apply-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* Mencegah input asli di klik langsung seperti teks biasa */
+#capacity-display {
+    pointer-events: none;
+}
+
+/* Styling Kotak Pemilihan Posisi Kursi */
+.seat-type-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 2px;
+}
+
+/* =========================================
+   ANIMASI SWITCH TOGGLE
+   ========================================= */
+/* Default State (Mati / Kiri) */
+.switch-btn {
+    width: 44px; 
+    height: 24px; 
+    /* WARNA FALSE: Abu-abu Gelap */
+    background-color: #444444; 
+    border-radius: 12px; 
+    border: none; 
+    position: relative; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Lingkaran dalam Switch */
+.switch-btn::after {
+    content: ''; 
+    position: absolute; 
+    top: 2px; 
+    left: 2px; /* Posisi di kiri */
+    width: 20px; 
+    height: 20px; 
+    background-color: #ffffff; 
+    border-radius: 50%;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* KONDISI TRUE (Nyala / Kanan) */
+.switch-btn.active {
+    /* WARNA TRUE: Hijau Terang (Success) */
+    background-color: #22c55e; 
+}
+
+.switch-btn.active::after {
+    transform: translateX(20px); /* Lingkaran Geser ke kanan */
+    background-color: #ffffff; /* Lingkaran tetap putih */
+}
+
+/* Submit Button */
+.submit-wrapper button {
+    width: 100%;
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+.submit-wrapper button:hover { background-color: #e0e0e0; }
+
+/* =========================================
+   7. FOOTER
+   ========================================= */
+hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
+.page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
+.left-footer, .right-footer { display: flex; gap: 20px; }
+.right-footer a:hover { color: var(--text-primary); }

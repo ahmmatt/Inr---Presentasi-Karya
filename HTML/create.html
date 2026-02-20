@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title><link rel="stylesheet" href="../CSS/discover.css">
+    <title>Document</title><link rel="stylesheet" href="../CSS/create.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -23,144 +23,240 @@
     </nav>
 
     <div class="page-frame">
-        <div class="page-frame-nav">
-            <h1>Discover Event</h1>
-            <p>Find whats happening nearby, pick your favorite category, or search instantly.</p>
-        </div>
         <div class="create-wrapper-layout">
+            
             <div class="left-layout">
+                
                 <div class="add-pict-card">
                     <form action="" method="">
-                        <input type="file" required>
+                        <input type="file" accept="image/*" required>
                     </form>
                     <div class="pict-action-select">
-                        <i class=""></i>
+                        <i class="fa-solid fa-image"></i> </div>
+                </div>
+                
+                <div class="add-loc-wrapper">
+                    <div class="add-loc-card" id="btn-toggle-loc">
+                        <div class="left-loc-card">
+                            <i class="fa-solid fa-location-dot"></i> </div>
+                        <div class="right-loc-card">
+                            <h3>Add Event Location</h3>
+                            <p>Offline location or virtual link</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down loc-arrow"></i>
+                    </div>
+                    
+                    <div class="loc-options" id="loc-expand-area">
+                        <button type="button" class="loc-btn maps-btn" onclick="window.open('https://maps.google.com', '_blank')">
+                            <i class="fa-solid fa-map-location-dot"></i> Pick on Google Maps
+                        </button>
+                        
+                        <div class="loc-divider"><span>OR</span></div>
+                        
+                        <div class="virtual-link-input">
+                            <i class="fa-solid fa-link"></i>
+                            <input type="url" placeholder="Paste virtual link (Zoom, Meet, dll)...">
+                        </div>
                     </div>
                 </div>
-                <div class="add-loc-card">
-                    <div class="left-loc-card">
-                        <i class=""></i>
+                <h4 class="left-section-title">Optional</h4>
+                <div class="space-3d-card">
+                    <form action="" method="">
+                        <input type="file" accept="video/*, .glb, .gltf" required>
+                    </form>
+                    
+                    <div class="space-3d-info">
+                        <i class="fa-solid fa-vr-cardboard"></i> <div class="space-3d-text">
+                            <h3>Add 3D Event Space</h3>
+                            <p>Upload video preview or 3D space</p>
+                        </div>
                     </div>
-                    <div class="right-loc-card">
-                        <h3>Add Event Location</h3>
-                        <p>Offline location or virtual link</p>
-                    </div>
+                    
+                    <i class="fa-solid fa-upload upload-icon"></i>
                 </div>
             </div>
+
             <div class="right-layout">
-                <div class="event-type">
-                    <i class=""></i>
-                    <h4>Public</h4>
-                    <i class=""></i>
+                
+                <div class="visibility-wrapper">
+                    <div class="event-type" id="visibility-toggle">
+                        <i class="fa-solid fa-globe" id="visibility-icon"></i>
+                        <h4 id="visibility-text">Public</h4>
+                        <i class="fa-solid fa-chevron-down" id="visibility-arrow" style="transition: transform 0.3s;"></i>
+                    </div>
+                    
+                    <div class="visibility-dropdown" id="visibility-dropdown">
+                        <div class="visibility-option" data-value="Public" data-icon="fa-globe">
+                            <i class="fa-solid fa-globe"></i> Public
+                        </div>
+                        <div class="visibility-option" data-value="Private" data-icon="fa-lock">
+                            <i class="fa-solid fa-lock"></i> Private
+                        </div>
+                    </div>
                 </div>
+                
                 <div class="event-name">
                     <form action="" method="">
                         <input type="text" placeholder="Your Event Name" required>
                     </form>
                 </div>
+                
                 <div class="time-loc-wrapper">
-                    <div class="schedule-wrapper">
+                    <div class="schedule-wrapper card-box">
                         <div class="start-end-wrapper">
                             <div class="start-text">
-                                <i class=""></i>
+                                <i class="fa-solid fa-circle" style="font-size: 8px;"></i>
                                 <h4>Start</h4>
                             </div>
-                            <div class="line-of-circle">
-                                <i class=""></i>
-                            </div>
+                            <div class="line-of-circle"></div>
                             <div class="end-text">
-                                <i class=""></i>
+                                <i class="fa-regular fa-circle" style="font-size: 8px;"></i>
                                 <h4>End</h4>
                             </div>
                         </div>
                         <div class="start-date-time-card-left">
-                            <h3>Fri,</h3>
-                            <form action="" method="">
-                                <input type="date" placeholder="Feb 20" required>
-                            </form>
+                            <form action="" method=""><input type="date" required></form>
                         </div>
                         <div class="start-date-time-card-right">
-                            <h3>Fri,</h3>
-                            <form action="" method="">
-                                <input type="date" placeholder="Feb 20" required>
-                            </form>
+                            <form action="" method=""><input type="time" required></form>
                         </div>
                         <div class="end-date-time-card-left">
-                            <form action="" method="">
-                                <input type="time-hours" placeholder="12" required>
-                            </form>
-                            <h4>:</h4>
-                            <form action="" method="">
-                                <input type="time-minute" placeholder="00" required>
-                            </form>
-                            <form action="" method="">
-                                <input type="time-sun" placeholder="AM" required>
-                            </form>
+                            <form action="" method=""><input type="date" required></form>
                         </div>
                         <div class="end-date-time-card-right">
-                            <form action="" method="">
-                                <input type="time-hours" placeholder="01" required>
-                            </form>
-                            <h4>:</h4>
-                            <form action="" method="">
-                                <input type="time-minute" placeholder="00" required>
-                            </form>
-                            <form action="" method="">
-                                <input type="time-sun" placeholder="AM" required>
-                            </form>
+                            <form action="" method=""><input type="time" required></form>
                         </div>
                     </div>
-                    <div class="time-area">
-                        <i class=""></i>
-                        <h3>Makassar</h3>
+                    
+                    <div class="time-area card-box">
+                        <i class="fa-solid fa-globe"></i>
+                        <h4>GMT+08:00</h4>
+                        <p>Makassar</p>
                     </div>
                 </div>
-                <div class="desc-wrapper">
-                    <i class=""></i>
-                    <form action="" method="">
+                
+                <div class="desc-wrapper card-box">
+                    <i class="fa-solid fa-align-left"></i> <form action="" method="">
                         <input type="text" placeholder="Add Description">
                     </form>
                 </div>
+                
                 <h4>Event Options</h4>
-                <div class="event-options-wrapper">
-                    <div class="ticket-wrapper">
+                <div class="event-options-wrapper card-box">
+                    <div class="ticket-wrapper" style="position: relative;">
                         <div class="ticket-wrapper-left">
-                            <i class=""></i>
+                            <i class="fa-solid fa-ticket"></i> 
                             <h3>Ticket Price</h3>
                         </div>
-                        <div class="ticket-wrapper-right">
-                            <form action="" method="">
-                                <input type="numeric" placeholder="Free">
-                            </form>
-                            <i class=""></i>
+                        
+                        <div class="ticket-wrapper-right" id="ticket-trigger" style="cursor: pointer; display: flex; gap: 8px; align-items: center;">
+                            <input type="text" id="ticket-display" value="Free" readonly style="cursor: pointer; background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px; width: 140px; pointer-events: none;">
+                            <i class="fa-solid fa-pen" style="font-size: 12px; color: #a0a0a0;"></i>
+                        </div>
+
+                        <div class="ticket-dropdown" id="ticket-dropdown">
+                            <div class="ticket-type-selector">
+                                <label class="cap-radio">
+                                    <input type="radio" name="ticket_type" value="Free" checked>
+                                    <span>Free</span>
+                                </label>
+                                <label class="cap-radio">
+                                    <input type="radio" name="ticket_type" value="Paid">
+                                    <span>Paid</span>
+                                </label>
+                            </div>
+                            
+                            <div class="payment-details" id="payment-details-container" style="display: none;">
+                                
+                                <div class="input-group">
+                                    <label>Payout Method:</label>
+                                    <select id="payout_method" class="custom-select">
+                                        <option value="">Select Bank / E-Wallet</option>
+                                        <option value="BCA">BCA Bank</option>
+                                        <option value="Mandiri">Mandiri Bank</option>
+                                        <option value="BNI">BNI Bank</option>
+                                        <option value="BRI">BRI Bank</option>
+                                        <option value="DANA">DANA</option>
+                                        <option value="OVO">OVO</option>
+                                        <option value="GoPay">GoPay</option>
+                                        </select>
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Account Number / E-Wallet ID:</label>
+                                    <input type="number" id="payout_account" placeholder="Example: 08123456789">
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Ticket Price (Rp):</label>
+                                    <input type="number" id="ticket_price_input" min="0" placeholder="e.g., 50000">
+                                </div>
+                            </div>
+
+                            <div class="ticket-actions">
+                                <button type="button" class="cancel-btn" id="cancel-ticket">Cancel</button>
+                                <button type="button" class="apply-btn" id="apply-ticket">Save Changes</button>
+                            </div>
                         </div>
                     </div>
                     <hr>
                     <div class="approval-wrapper">
                         <div class="approval-wrapper-left">
-                            <i class=""></i>
+                            <i class="fa-solid fa-user-check"></i>
                             <h3>Require Approval</h3>
                         </div>
                         <div class="approval-wrapper-right">
-                            <button type=""></button>
+                            <button type="button" class="switch-btn" id="approval-switch"></button>
                         </div>
                     </div>
                     <hr>
-                    <div class="capacity-wrapper">
+                    <div class="capacity-wrapper" style="position: relative;">
                         <div class="capacity-wrapper-left">
-                            <i class=""></i>
+                            <i class="fa-solid fa-users"></i> 
                             <h3>Capacity</h3>
                         </div>
-                        <div class="capacity-wrapper-right">
-                            <form action="" method="">
-                                <input type="numeric" placeholder="Free">
-                            </form>
-                            <i class=""></i>
+                        
+                        <div class="capacity-wrapper-right" id="capacity-trigger" style="cursor: pointer; display: flex; gap: 8px; align-items: center;">
+                            <input type="text" id="capacity-display" value="Unlimited" readonly style="cursor: pointer; background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px; width: 160px; pointer-events: none;">
+                            <i class="fa-solid fa-pen" style="font-size: 12px; color: #a0a0a0;"></i>
+                        </div>
+
+                        <div class="capacity-dropdown" id="capacity-dropdown">
+                            <div class="capacity-type-selector">
+                                <label class="cap-radio">
+                                    <input type="radio" name="cap_type" value="Unlimited" checked>
+                                    <span>Unlimited / Open Seating</span>
+                                </label>
+                                <label class="cap-radio">
+                                    <input type="radio" name="cap_type" value="Limited">
+                                    <span>Limited / Assigned Seating</span>
+                                </label>
+                            </div>
+                            
+                            <div class="capacity-number-input" id="capacity-number-container" style="display: none;">
+                                <label for="cap_amount">Capacity Limit:</label>
+                                <input type="number" id="cap_amount" min="1" placeholder="e.g., 100">
+                                
+                                <label style="margin-top: 8px;">Seat Assignment:</label>
+                                <div class="seat-type-options">
+                                    <label class="cap-radio">
+                                        <input type="radio" name="seat_type" value="Bebas" checked>
+                                        <span style="font-size: 12px; color: #ccc;">General Admission (First come, first served)</span>
+                                    </label>
+                                    <label class="cap-radio">
+                                        <input type="radio" name="seat_type" value="Pilih">
+                                        <span style="font-size: 12px; color: #ccc;">Select Seat Number</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="button" class="apply-btn" id="apply-capacity">Apply</button>
                         </div>
                     </div>
-                    <div class="submit-wrapper">
-                        <button type="submit">Submit</button>
-                    </div>
+                </div>
+                
+                <div class="submit-wrapper">
+                    <button type="submit">Create Event</button>
                 </div>
             </div>
         </div>
