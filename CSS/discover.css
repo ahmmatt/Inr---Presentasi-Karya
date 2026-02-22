@@ -583,6 +583,23 @@ ul {
     width: 100%; 
 }
 
+/* Menargetkan pembungkus (wrapper) gambarnya */
+.event-card-img {
+    width: 70%; 
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    overflow: hidden;
+    border-radius: 8px; /* Radius diperkecil agar proporsional */
+    margin-bottom: 16px; 
+    margin-top: 10px;    
+}
+.event-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* AUTHOR */
 
 /* Wrapper ini penting untuk memisahkan Kiri (Author) dan Kanan (Go) */
@@ -590,7 +607,6 @@ ul {
     display: flex;
     justify-content: space-between; /* PENDORONG UTAMA: Kiri mentok kiri, Kanan mentok kanan */
     align-items: center;
-    margin-bottom: 12px; /* Jarak ke judul diperkecil */
     width: 100%;
 }
 
@@ -663,13 +679,42 @@ ul {
 .card-info-blocks {
     display: flex;
     flex-direction: column;
-    gap: 16px; /* Jarak antar info diperkecil */
+    gap: 0x; /* Jarak antar info diperkecil */
+    margin-top: 5px;
+}
+
+/* =========================================
+   HARGA TIKET SUPER MINI (TIDAK MERUBAH TINGGI CARD)
+   ========================================= */
+
+/* Wadah Harga */
+.price-mini-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;           /* Jarak sangat dekat antara ikon dan teks */
+    padding-left: 2px;  /* Sedikit digeser agar sejajar manis */
+    margin-bottom: -4px !important; /* KUNCI: Menarik batas bawah agar card tidak melar */
+}
+
+/* Ikon Tag Mini */
+.price-mini-block i {
+    font-size: 13px !important;
+    color: #22c55e !important; /* Hijau terang */
+}
+
+/* Teks Harga Mini */
+.price-mini-block span {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #22c55e !important;
+    line-height: 1 !important;
 }
 
 .info-block {
     display: flex;
     gap: 12px;
     align-items: center;
+    margin-bottom: -6px;
 }
 
 

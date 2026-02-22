@@ -311,7 +311,7 @@
         align-items: center; 
         justify-content: flex-start; 
         gap: 8px;           
-        margin-bottom: 20px; /* Jarak diperkecil */
+        margin-bottom: 10px; /* Jarak diperkecil */
         cursor: pointer;  
         text-align: left;
     }
@@ -346,17 +346,47 @@
     }
 
     /* INFO BLOCKS (DATE & LOCATION) */
-    .card-info-blocks {
-        display: flex;
-        flex-direction: column;
-        gap: 16px; /* Jarak antar info diperkecil */
-    }
+.card-info-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* Jarak antar info diperkecil */
+    margin-top: 5px;
+}
+
+/* =========================================
+   HARGA TIKET SUPER MINI (TIDAK MERUBAH TINGGI CARD)
+   ========================================= */
+
+/* Wadah Harga */
+.price-mini-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;           /* Jarak sangat dekat antara ikon dan teks */
+    padding-left: 2px;  /* Sedikit digeser agar sejajar manis */
+    margin-bottom: -4px !important; /* KUNCI: Menarik batas bawah agar card tidak melar */
+    margin-top: -8px;
+}
+
+/* Ikon Tag Mini */
+.price-mini-block i {
+    font-size: 13px !important;
+    color: #22c55e !important; /* Hijau terang */
+}
+
+/* Teks Harga Mini */
+.price-mini-block span {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #22c55e !important;
+    line-height: 1 !important;
+}
 
     .info-block {
         display: flex;
         gap: 12px;
         align-items: center;
     }
+
 
 
     .block-icon {

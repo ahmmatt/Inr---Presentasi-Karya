@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title><link rel="stylesheet" href="../CSS/ticket.css">
+    <title>SecureGate - Ticket View</title>
+    <link rel="stylesheet" href="../CSS/ticket.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -16,7 +17,6 @@
             <div class="main-nav-event"><i class="fa-solid fa-ticket"></i><a href="mainpage.html">Event</a></div>
         </div>
         <div class="right-nav">
-            <a href="create.html">Create Event</a>
             <i class="fa-regular fa-bell"></i>
             <a href=""><img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="Profile"></a>
         </div>
@@ -27,134 +27,182 @@
             
             <div class="left-layout">
                 
-                <div class="add-pict-card">
-                    <form action="" method="">
-                        <input type="file" accept="image/*" required>
-                    </form>
-                    <div class="pict-action-select">
-                        <i class="fa-solid fa-image"></i> </div>
+                <div class="add-pict-card view-mode">
+                    <img src="../Media/09071799-7231-4faa-883e-a1eb2d01ef9b.avif" alt="Event Cover">
                 </div>
+
                 <div class="presented-wrapper">
                     <div class="presented-left">
                         <div class="presented-logo">
-                            <img src="" alt="presented-log0">
+                            <img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="presented-logo">
                         </div>
                         <div class="presented-detail">
                             <p>Presented By</p>
-                            <h3>AI Center Makassar <i class></i></h3>
+                            <h3>AI Center Makassar <i class="fa-solid fa-circle-check" style="color: #1d9bf0;"></i></h3>
                         </div>
                     </div>
                     <div class="presented-right">
                         <button>Subscribe</button>
                     </div>
                 </div>
+                
                 <hr>
-                <div class="3d-event">
+                
+                <div class="event-3d">
                     <h3>3D Event Space Preview</h3>
-                    <hr>
-                    <video src="" muted></video>
+                    <video src="" muted controls></video>
                 </div>
+                <hr>
                 <div class="maps-or-link-card">
-                    <div class="maps-card">
-                        <a href="">Maps</a>
-                        <div class="maps-large">
-                            <a href="">View Larger Maps</a>
+                    <h4>Location or Virtual Link</h4>
+                    
+                    <div class="maps-container-static">
+                        <a href="https://maps.app.goo.gl/ULycyvPXWMdciwoR6" target="_blank" class="map-click-overlay" title="Buka di Google Maps"></a>    
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d127165.70378149718!2d119.5525361!3d-5.1152671!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbefbcebbcac701%3A0xf030bfcad763610!2sBandar%20Udara%20Internasional%20Sultan%20Hasanuddin!5e0!3m2!1sid!2sch!4v1771658483728!5m2!1sid!2sch" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>  
+                    </div>
+                    
+                    <div class="link-wrapper">
+                        <i class="fa-solid fa-link" style="color: #a0a0a0; font-size: 16px;"></i>
+                        
+                        <div class="url-box">
+                            <span id="virtual-link-text">https://meet.google.com/aae-zhag-gik</span>
+                            <i class="fa-regular fa-copy" id="copy-link-btn" title="Copy Link"></i>
                         </div>
                     </div>
-                    <div class="link-wrapper">
-                        <p>www.google.com</p>
-                        <i class=""></i>
-                    </div>
                 </div>
+                
                 <h4>Hosted By</h4>
-                <hr>
                 <div class="host-wrapper">
-                    <img src="" alt="host-logo">
+                    <img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="host-logo">
                     <h3>Telkom AI Connect</h3>
                 </div>
+                
                 <hr>
+                
                 <div class="participant-logos-wrapper">
                     <div class="participant-logos">
-                        <img src="" alt="">
-                        <img src="" alt="">
+                        <img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="">
+                        <img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="">
                     </div>
                     <div class="participant-names">
-                        <h4>Putri</h4>
-                        <h4>Tqail</h4>
+                        <h4>Putri, Tqail, and 38 others</h4>
                     </div>
                 </div>
+                
                 <div class="category-card">
-                    <i class=""></i>
-                    <h3>AI</h3>
+                    <i class="fa-solid fa-microchip"></i>
+                    <h3>Tech & AI</h3>
                 </div>  
             </div>
 
             <div class="right-layout">    
-                <div class="event-name">
-                    <form action="" method="">
-                        <input type="text" placeholder="Your Event Name" required>
-                    </form>
+                <div class="event-name view-mode-title">
+                    <h1>AI Connect Offline Series - Build Your First Web Portfolio with AI</h1>
                 </div>
                 
-                <div class="time-date-wrapper">
-                    <div class="time-date-card">
-                        <span>FEB</span>
-                        <h4>5</h4>
+                <div class="time-loc-and-price-wrapper">
+                    <div class="time-loc-left">
+                        <div class="time-date-wrapper">
+                            <div class="time-date-card">
+                                <span>FEB</span>
+                                <h4>19</h4>
+                            </div>
+                            <div class="time-date-detail">
+                                <h3>Thursday, February 19</h3>
+                                <p>9:00 AM - 4:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="event-loc-wrapper">
+                            <div class="event-loc-icon">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div class="time-date-detail">
+                                <h3>IndigoHub Makassar <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px; margin-left: 4px; color: #666;"></i></h3>
+                                <p>Kota Makassar, Sulawesi Selatan</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="time-date-detail">
-                        <h3>Thrusday, February 5</h3>
-                        <p>9:00 AM - 4:00 PM</p>
-                    </div>
-                </div>
-
-                <div class="event-loc-wrapper">
-                    <div class="event-loc-icon">
-                        <i class=""></i>
-                    </div>
-                    <div class="time-date-detail">
-                        <h3>IndigoHub Makassar <i class=""></i></h3>
-                        <p>Kota Makassar, Sulawesi Selatan</p>
+                    
+                    <div class="price-right-card">
+                        <i class="fa-solid fa-ticket"></i>
+                        <p>Ticket Price</p>
+                        <h3>Rp 50.000</h3>
                     </div>
                 </div>
 
                 <div class="register-card">
-                    <h4>Registration</h4>
+                    <div class="register-header">
+                        <h4>Registration</h4>
+                    </div>
                     <h3>Welcome! To join the event, please register below.</h3>
                     <div class="profile-detail">
-                        <img src="" alt="">
+                        <img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="">
                         <h3>Ahmad Mubasysyir Yuz</h3>
-                        <h3>ahamd@gmail.com</h3>
+                        <h3 class="email-text">ahmad@gmail.com</h3>
                     </div>
-                    <a href="">Register</a>
-                    <div class="register-form">
-                        <h3>Your Info</h3>
+                    <a href="#" class="btn-register" id="open-register-modal">Register</a>
+                </div>
+
+                <div class="register-modal" id="register-modal">
+                    <i class="fa-solid fa-xmark close-modal" id="close-register-modal"></i>
+
+                    <div id="step-1-form" class="modal-step">
+                        <h3 class="modal-step-title">Your Info</h3>
                         <div class="your-info-wrapper">
-                            <img src="" alt="">
+                            <img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="">
                             <div class="your-info-details">
                                 <h4>Ahmad Mubasysyir Yuz</h4>
                                 <p>ahmad@gmail.com</p>
                             </div>
                         </div>
-                        <form action="" method="">
-                            <span>a question</span>
-                            <input type="text" placeholder="a question" required >
-                            <button type="submit">Submit</button>
-                        </form>
+                        <div class="first-quest">
+                            <form id="registration-form">
+                                <span>What is your college/company?</span>
+                                <input type="text" placeholder="e.g. Telkom University" required>
+                                <span>Choose your seat (Row)</span>
+                                <input type="number" placeholder="1-10" required>
+                                <span>Choose your seat (Number)</span>
+                                <input type="number" placeholder="1-100" required>
+                                <button type="submit" class="btn-proceed">Proceed to Payment</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="step-2-payment" class="modal-step payment-step hidden-step">
+                        <h2 class="payment-title">Complete Payment</h2>
+                        <p class="payment-subtitle">Scan this QRIS to pay for your ticket.</p>
+                        
+                        <div class="qr-wrapper">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="QRIS Code" class="qr-img">
+                        </div>
+                        
+                        <p class="time-text">
+                            Time remaining: <span id="countdown-timer" class="timer-countdown">10:00</span>
+                        </p>
+                        
+                        <div class="instruction-box">
+                            <p>1. Open your Banking/E-Wallet app.</p>
+                            <p>2. Scan the QR code above.</p>
+                            <p>3. Pay exactly <strong>Rp 50.000</strong>.</p>
+                        </div>
+                        <button type="button" id="btn-payment-done" class="btn-proceed">I Have Paid (Done)</button>
+                    </div>
+
+                    <div id="step-3-success" class="modal-step success-step hidden-step">
+                        <i class="fa-solid fa-circle-check success-icon"></i>
+                        <h2 class="success-title">Payment Successful!</h2>
+                        <p class="success-desc">Your e-ticket has been sent to your email.</p>
+                        <button type="button" id="btn-close-success" class="btn-close-done">Close</button>
                     </div>
                 </div>
                 
-                <div class="desc-wrapper card-box">
-                    <i class="fa-solid fa-align-left"></i> <form action="" method="">
-                        <input type="text" placeholder="Add Description">
-                    </form>
-                </div>
-                <h4>About Event</h4>
                 <div class="event-description">
-                    <h3>Subjdudul</h3>
-                    <p>paragraf</p>
+                    <h4 style="color: #fff; margin-bottom: 12px; font-size: 16px;">About Event</h4>
+                    <p>Not only are we attending, but we are sponsoring this amazing DeveloperWeek, and we can't wait to meet you in person! Stop by our booth to connect directly with our senior leaders for a candid conversation about where our products — and the industry — are headed.</p>
                 </div>  
             </div>
         </div>
+        
         <hr>
         <div class="page-footer">
             <div class="left-footer">
@@ -168,6 +216,7 @@
             </div>
         </div>
     </div>
+    
+    <script src="../JS/ticket.js"></script>
 </body>
-<script src="../JS/ticket.js"></script>
 </html>

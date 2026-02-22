@@ -106,7 +106,7 @@ body {
     padding: 0 2px;
 }
 
-#dynamic-label {
+.dynamic-label-span {
     font-size: 13px;
     font-weight: 600;
     color: #ffffff;

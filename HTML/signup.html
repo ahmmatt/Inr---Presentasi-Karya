@@ -21,21 +21,21 @@
         <h1>Welcome to SecureGate</h1>
         <p>Please enter your details to get started.</p>
         <form action="signup.php" method="POST">
-           <span id="dynamic-label">Name</span>
+            <span class="dynamic-label-span">Name</span>
             <input type="text" name="name" placeholder="Adam" required>
-            <span id="dynamic-label">Gender</span>
+            <span class="dynamic-label-span">Gender</span>
             <input type="text" name="gender" placeholder="Male/Female" required>
-            <span id="dynamic-label">Username</span>
+            <span class="dynamic-label-span">Username</span>
             <input type="text" name="username" placeholder="adam" required>
             <div class="input-header">
-                <span id="dynamic-label">Email</span> 
+                <span class="dynamic-label-span" id="dynamic-label">Email</span> 
                 <span id="toggle-mode" class="toggle-link">
                     <i class="fa-solid fa-mobile-screen"></i> Use Phone Number
                 </span> 
             </div>
             <input type="email" id="input-email" name="email" placeholder="you@gmail.com" required>
             <input type="tel" id="input-phone" name="number" placeholder="+62.." pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="hidden">
-            <span id="dynamic-label">Password</span>
+            <span class="dynamic-label-span">Password</span>
             <input type="password" name="password" placeholder="Use Strong Password" required>
             <button type="submit" name="submit">Sign In</button>
         </form>
