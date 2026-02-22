@@ -134,6 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const capNumContainer = document.getElementById("capacity-number-container");
     const capAmountInput = document.getElementById("cap_amount");
     const applyCapacityBtn = document.getElementById("apply-capacity");
+    const closeCapacityBtn = document.getElementById("close-capacity-modal");
 
     if (capacityTrigger && capacityDropdown) {
         // Buka tutup menu saat tulisan "Unlimited" atau ikon Pen diklik
@@ -155,6 +156,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
         });
+
+
+        // Tombol X (Tutup Modal Kapasitas)
+        if (closeCapacityBtn) {
+            closeCapacityBtn.addEventListener("click", function(e) {
+                e.stopPropagation();
+                capacityDropdown.classList.remove("show");
+            });
+        }   
 
         // Ketika tombol "Terapkan" ditekan
         applyCapacityBtn.addEventListener("click", function(e) {
@@ -202,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const paymentContainer = document.getElementById("payment-details-container");
     const cancelTicketBtn = document.getElementById("cancel-ticket");
     const applyTicketBtn = document.getElementById("apply-ticket");
+    const closeTicketBtn = document.getElementById("close-ticket-modal");
     const priceInput = document.getElementById("ticket_price_input");
 
     if (ticketTrigger && ticketDropdown) {
@@ -223,6 +234,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
         });
+
+        // Tombol X (Tutup Modal Tiket)
+        if (closeTicketBtn) {
+            closeTicketBtn.addEventListener("click", function(e) {
+                e.stopPropagation();
+                ticketDropdown.classList.remove("show");
+            });
+        }
 
         // Tombol Batal
         cancelTicketBtn.addEventListener("click", function(e) {

@@ -702,7 +702,23 @@ input[type="number"] {
     flex: 1; /* Lebar seimbang */
 }
 
+/* =========================================
+   TOMBOL CLOSE (X) PADA MODAL CREATE EVENT
+   ========================================= */
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #888;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.2s ease;
+    z-index: 10;
+}
 
+.close-modal:hover { 
+    color: #ffffff; 
+}
 
 /* Switch Toggle (Require Approval) */
 .approval-wrapper-right button {

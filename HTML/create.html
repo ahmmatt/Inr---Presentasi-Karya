@@ -77,24 +77,6 @@
             </div>
 
             <div class="right-layout">
-                
-                <div class="visibility-wrapper">
-                    <div class="event-type" id="visibility-toggle">
-                        <i class="fa-solid fa-globe" id="visibility-icon"></i>
-                        <h4 id="visibility-text">Public</h4>
-                        <i class="fa-solid fa-chevron-down" id="visibility-arrow" style="transition: transform 0.3s;"></i>
-                    </div>
-                    
-                    <div class="visibility-dropdown" id="visibility-dropdown">
-                        <div class="visibility-option" data-value="Public" data-icon="fa-globe">
-                            <i class="fa-solid fa-globe"></i> Public
-                        </div>
-                        <div class="visibility-option" data-value="Private" data-icon="fa-lock">
-                            <i class="fa-solid fa-lock"></i> Private
-                        </div>
-                    </div>
-                </div>
-                
                 <div class="event-name">
                     <form action="" method="">
                         <input type="text" placeholder="Your Event Name" required>
@@ -155,6 +137,10 @@
                         </div>
 
                         <div class="ticket-dropdown" id="ticket-dropdown">
+                            <i class="fa-solid fa-xmark close-modal" id="close-ticket-modal"></i>
+                            
+                            <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">Ticket Price</h3>
+
                             <div class="ticket-type-selector">
                                 <label class="cap-radio">
                                     <input type="radio" name="ticket_type" value="Free" checked>
@@ -167,7 +153,6 @@
                             </div>
                             
                             <div class="payment-details" id="payment-details-container" style="display: none;">
-                                
                                 <div class="input-group">
                                     <label>Payout Method:</label>
                                     <select id="payout_method" class="custom-select">
@@ -179,7 +164,7 @@
                                         <option value="DANA">DANA</option>
                                         <option value="OVO">OVO</option>
                                         <option value="GoPay">GoPay</option>
-                                        </select>
+                                    </select>
                                 </div>
 
                                 <div class="input-group">
@@ -194,8 +179,7 @@
                             </div>
 
                             <div class="ticket-actions">
-                                <button type="button" class="cancel-btn" id="cancel-ticket">Cancel</button>
-                                <button type="button" class="apply-btn" id="apply-ticket">Save Changes</button>
+                                <button type="button" class="apply-btn" id="apply-ticket" style="width: 100%;">Apply</button>
                             </div>
                         </div>
                     </div>
@@ -222,6 +206,10 @@
                         </div>
 
                         <div class="capacity-dropdown" id="capacity-dropdown">
+                            <i class="fa-solid fa-xmark close-modal" id="close-capacity-modal"></i>
+                            
+                            <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">Set Capacity</h3>
+
                             <div class="capacity-type-selector">
                                 <label class="cap-radio">
                                     <input type="radio" name="cap_type" value="Unlimited" checked>
@@ -250,7 +238,7 @@
                                 </div>
                             </div>
 
-                            <button type="button" class="apply-btn" id="apply-capacity">Apply</button>
+                            <button type="button" class="apply-btn" id="apply-capacity" style="margin-top: 16px; width: 100%;">Apply</button>
                         </div>
                     </div>
                 </div>
