@@ -141,32 +141,48 @@ document.addEventListener("DOMContentLoaded", function() {
         const badgeCount = document.querySelector(".badge-count");
         if (badgeCount) badgeCount.innerText = pendingCount;
         
-        // Kembalikan filter tab ke "All Guests" setiap kali ganti event
+        // Kembalikan filter tab ke "All Guests" dan kosongkan kolom pencarian setiap ganti event
         document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
         document.querySelector(".tab-btn[data-tab='all']").classList.add("active");
+        if(searchInput) searchInput.value = ""; // Kosongkan ketikan lama
+        
+        // Terapkan filter agar tabel langsung rapi
+        applyTableFilters();
     }
 
     // ==========================================
-    // 4. LOGIKA EVENT SWITCHER (PILIH EVENT)
+    // 4. LOGIKA EVENT SWITCHER (PILIH EVENT) & PENCARIAN
     // ==========================================
+    const dropdownSearchInput = document.getElementById("dropdown-search-input");
+
+    // A. Buka/Tutup Dropdown Event
     eventSwitcherBtn.addEventListener("click", function(e) {
         e.stopPropagation();
         eventDropdown.classList.toggle("show");
         const icon = eventSwitcherBtn.querySelector("i");
-        icon.style.transform = eventDropdown.classList.contains("show") ? "rotate(180deg)" : "rotate(0deg)";
+        
+        if (eventDropdown.classList.contains("show")) {
+            icon.style.transform = "rotate(180deg)";
+            if(dropdownSearchInput) dropdownSearchInput.focus(); // Otomatis fokus ke kolom ketik
+        } else {
+            icon.style.transform = "rotate(0deg)";
+            resetDropdownSearch(); // Bersihkan pencarian jika ditutup
+        }
     });
 
+    // B. Tutup dropdown jika klik di luar area
     window.addEventListener("click", function(e) {
         if (!eventSwitcherBtn.contains(e.target) && !eventDropdown.contains(e.target)) {
             eventDropdown.classList.remove("show");
             eventSwitcherBtn.querySelector("i").style.transform = "rotate(0deg)";
+            resetDropdownSearch(); // Bersihkan pencarian jika ditutup
         }
     });
 
-    // Mengganti event saat list dropdown diklik
+    // C. Mengganti event saat list dropdown diklik
     dropdownList.addEventListener("click", function(e) {
         const clickedLi = e.target.closest("li");
-        if (!clickedLi) return;
+        if (!clickedLi || clickedLi.id === "no-event-found-msg") return; // Abaikan jika mengklik tulisan Not Found
 
         // Ganti UI Centang pada Dropdown
         dropdownList.querySelectorAll("li").forEach(li => {
@@ -176,7 +192,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         clickedLi.classList.add("active-event");
-        // Hanya tambahkan icon check jika event tersebut BUKAN event yang sudah selesai
+        
+        // Hanya tambahkan icon check jika event tersebut BUKAN event yang sudah selesai (Tidak ada badge Ended)
         if (!clickedLi.querySelector('.badge-ended')) {
             clickedLi.insertAdjacentHTML('afterbegin', '<i class="fa-solid fa-check"></i> ');
         }
@@ -185,10 +202,60 @@ document.addEventListener("DOMContentLoaded", function() {
         currentEventId = clickedLi.getAttribute("data-id");
         renderEventData(currentEventId);
         
-        // Tutup dropdown
+        // Tutup dropdown & bersihkan pencarian
         eventDropdown.classList.remove("show");
         eventSwitcherBtn.querySelector("i").style.transform = "rotate(0deg)";
+        resetDropdownSearch();
     });
+
+    // D. Fitur Pencarian di dalam Dropdown
+    if (dropdownSearchInput) {
+        dropdownSearchInput.addEventListener("input", function() {
+            const keyword = this.value.toLowerCase();
+            const listItems = dropdownList.querySelectorAll("li:not(#no-event-found-msg)");
+            let visibleCount = 0;
+
+            listItems.forEach(li => {
+                const text = li.textContent.toLowerCase();
+                if (text.includes(keyword)) {
+                    li.style.display = ""; // Munculkan
+                    visibleCount++;
+                } else {
+                    li.style.display = "none"; // Sembunyikan
+                }
+            });
+
+            // Tampilkan pesan jika event tidak ditemukan
+            let noEventMsg = document.getElementById("no-event-found-msg");
+            if (visibleCount === 0) {
+                if (!noEventMsg) {
+                    noEventMsg = document.createElement("li");
+                    noEventMsg.id = "no-event-found-msg";
+                    noEventMsg.style.textAlign = "center";
+                    noEventMsg.style.color = "#888";
+                    noEventMsg.style.padding = "20px";
+                    noEventMsg.style.pointerEvents = "none"; // Agar tidak bisa diklik
+                    noEventMsg.innerHTML = "Event not found";
+                    dropdownList.appendChild(noEventMsg);
+                }
+                noEventMsg.style.display = "";
+            } else if (noEventMsg) {
+                noEventMsg.style.display = "none";
+            }
+        });
+    }
+
+    // E. Fungsi untuk membersihkan pencarian saat dropdown ditutup
+    function resetDropdownSearch() {
+        if (dropdownSearchInput) {
+            dropdownSearchInput.value = ""; // Kosongkan teks
+            // Munculkan kembali semua list
+            dropdownList.querySelectorAll("li").forEach(li => li.style.display = "");
+            // Sembunyikan pesan not found jika ada
+            const noEventMsg = document.getElementById("no-event-found-msg");
+            if (noEventMsg) noEventMsg.style.display = "none";
+        }
+    }
 
     // ==========================================
     // 5. LOGIKA HAPUS EVENT
@@ -235,31 +302,88 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // ==========================================
-    // 6. LOGIKA FILTER TABEL (TABS)
+    // 6. LOGIKA PENCARIAN & FILTER TABEL (GABUNGAN)
     // ==========================================
     const tabBtns = document.querySelectorAll(".tab-btn");
+    const searchInput = document.getElementById("search-input");
+
+    // Fungsi Utama untuk menyaring data & menampilkan "Not Found"
+    function applyTableFilters() {
+        const searchQuery = searchInput.value.toLowerCase();
+        const activeTab = document.querySelector(".tab-btn.active").getAttribute("data-tab");
+        
+        // Ambil SEMUA baris kecuali baris "Not Found" dan baris "Kosong dari awal"
+        const tableRows = tableBody.querySelectorAll("tr:not(#no-results-row):not(.empty-event-row)");
+        
+        let visibleCount = 0; // Variabel untuk menghitung baris yang lolos filter
+
+        tableRows.forEach(row => {
+            // --- 1. CEK KONDISI TAB ---
+            let matchesTab = true;
+            if (activeTab === "pending" && !row.querySelector(".status-badge.pending")) {
+                matchesTab = false;
+            } else if (activeTab === "checked-in" && !row.querySelector(".status-badge.present")) {
+                matchesTab = false;
+            }
+
+            // --- 2. CEK KONDISI PENCARIAN ---
+            let matchesSearch = false;
+            const ticketIdText = row.querySelector(".t-id") ? row.querySelector(".t-id").textContent.toLowerCase() : "";
+            const attendeeInfoText = row.querySelector(".attendee-cell") ? row.querySelector(".attendee-cell").textContent.toLowerCase() : "";
+            const combinedText = ticketIdText + " " + attendeeInfoText;
+
+            if (combinedText.includes(searchQuery)) {
+                matchesSearch = true;
+            }
+
+            // --- 3. TERAPKAN KE BARIS ---
+            if (matchesTab && matchesSearch) {
+                row.style.display = "";
+                visibleCount++; // Tambah 1 jika baris ini berhasil ditampilkan
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        // --- 4. LOGIKA MENAMPILKAN PESAN "NOT FOUND" ---
+        let noResultsRow = document.getElementById("no-results-row");
+        
+        // Jika tidak ada data yang lolos filter, DAN tabel aslinya memang punya data tamu
+        if (visibleCount === 0 && tableRows.length > 0) {
+            if (!noResultsRow) {
+                // Buat baris baru khusus untuk pesan Not Found jika belum ada
+                noResultsRow = document.createElement("tr");
+                noResultsRow.id = "no-results-row";
+                noResultsRow.innerHTML = `
+                    <td colspan="5" style="text-align:center; padding: 60px 20px; color:#888;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 32px; color: #444; margin-bottom: 16px;"></i><br>
+                        <h4 style="color: #fff; font-size: 16px; margin-bottom: 4px;">No guests found</h4>
+                        <p style="font-size: 13px;">We couldn't find anyone matching your search or filter criteria.</p>
+                    </td>`;
+                tableBody.appendChild(noResultsRow);
+            }
+            noResultsRow.style.display = ""; // Tampilkan pesannya
+        } else if (noResultsRow) {
+            noResultsRow.style.display = "none"; // Sembunyikan pesannya jika ada data yang ketemu
+        }
+    }
+
+    // Event Listener saat Tab diklik
     tabBtns.forEach(btn => {
         btn.addEventListener("click", function() {
             tabBtns.forEach(b => b.classList.remove("active"));
             this.classList.add("active");
             
-            const filterValue = this.getAttribute("data-tab"); 
-            const tableRows = tableBody.querySelectorAll("tr"); // Ambil baris yang baru dirender
-
-            tableRows.forEach(row => {
-                if (filterValue === "all") {
-                    row.style.display = ""; 
-                } else if (filterValue === "pending") {
-                    row.style.display = row.querySelector(".status-badge.pending") ? "" : "none";
-                } else if (filterValue === "checked-in") {
-                    row.style.display = row.querySelector(".status-badge.present") ? "" : "none";
-                }
-            });
+            applyTableFilters(); // Jalankan penyaringan ulang
         });
     });
 
-    // PANGGIL RENDER PERTAMA KALI SAAT WEB DIBUKA
-    renderEventData(currentEventId);
+    // Event Listener saat kita mengetik di kolom pencarian
+    if (searchInput) {
+        // 'input' akan mendeteksi setiap kali ada huruf yang diketik atau dihapus
+        searchInput.addEventListener("input", applyTableFilters); 
+    }
+
 
     // ==========================================
     // 7. LOGIKA AKSI TOMBOL TABEL (APPROVE, DELETE, EDIT)
@@ -374,5 +498,10 @@ document.addEventListener("DOMContentLoaded", function() {
             renderEventData(currentEventId);
         }
     });
+
+    // PANGGIL RENDER PERTAMA KALI SAAT WEB DIBUKA
+    renderEventData(currentEventId);
+
+    
 
 });
