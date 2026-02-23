@@ -460,31 +460,41 @@ ul {
     margin-bottom: 0 !important;
 }
 
-/* 3. Bagian Kanan (Card Harga) */
+/* =========================================
+   BAGIAN KANAN: WADAH BANYAK CARD HARGA
+   ========================================= */
+
+/* Wadah pembungkus agar card sejajar ke samping */
+.price-cards-wrapper {
+    display: flex;
+    gap: 12px;          /* Jarak antar kartu */
+    align-items: stretch; /* Memastikan tinggi kedua kartu selalu sama/sejajar */
+}
+
+/* Desain Dasar Card Harga */
 .price-right-card {
     background-color: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
-    padding: 20px;
+    padding: 20px 16px; /* Padding samping sedikit dikurangi agar muat 2 card */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 160px; /* Lebar minimal card harga */
-    flex-shrink: 0; /* Mencegah card terhimpit/mengecil */
+    min-width: 130px; /* Lebar minimal diatur ulang agar tidak terlalu memakan tempat */
+    flex-shrink: 0;
     text-align: center;
     transition: 0.2s ease;
 }
 
 .price-right-card:hover {
     background-color: rgba(255, 255, 255, 0.06);
-    border-color: rgba(34, 197, 94, 0.3); /* Sedikit glow hijau saat disorot */
+    border-color: rgba(34, 197, 94, 0.3); /* Glow hijau */
 }
 
-/* 4. Gaya Teks dan Ikon di dalam Card Harga */
 .price-right-card i {
     font-size: 22px;
-    color: #22c55e; /* Hijau terang */
+    color: #22c55e; /* Hijau terang (Default) */
     margin-bottom: 12px;
 }
 
@@ -497,8 +507,23 @@ ul {
 .price-right-card h3 {
     font-size: 17px;
     font-weight: 600;
-    color: #22c55e;
+    color: #22c55e; /* Hijau terang (Default) */
     margin: 0;
+}
+
+/* =========================================
+   GAYA KHUSUS VIP CARD (PREMIUM GOLD)
+   ========================================= */
+.price-right-card.vip-card i {
+    color: #eab308; /* Warna Emas */
+}
+
+.price-right-card.vip-card h3 {
+    color: #eab308; /* Warna Emas */
+}
+
+.price-right-card.vip-card:hover {
+    border-color: rgba(234, 179, 8, 0.4); /* Glow emas saat disorot */
 }
 
 /* Registration Card (Kotak Pendaftaran) */
@@ -518,6 +543,42 @@ ul {
     display: block; text-align: center; background-color: #fff; color: #000; padding: 14px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: 0.2s; font-size: 15px; margin-top: 5px;
 }
 .btn-register:hover { background-color: #e0e0e0; }
+
+
+/* =========================================
+   EFEK PILIHAN PADA CARD TIKET
+   ========================================= */
+.ticket-option-card {
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.08); /* Border awal lebih tebal sedikit */
+}
+
+/* Saat Card Regular Dipilih */
+.ticket-option-card.selected-regular {
+    border-color: #22c55e !important;
+    background-color: rgba(34, 197, 94, 0.1) !important;
+    transform: scale(1.02);
+}
+
+/* Saat Card VIP Dipilih */
+.ticket-option-card.selected-vip {
+    border-color: #eab308 !important;
+    background-color: rgba(234, 179, 8, 0.1) !important;
+    transform: scale(1.02);
+}
+
+/* Perbaiki Select Dropdown di dalam modal ticket.html agar rapi */
+#registration-form select {
+    background-color: #121212; 
+    border: 1px solid #333; 
+    padding: 12px; 
+    border-radius: 8px; 
+    color: #fff; 
+    outline: none; 
+    font-size: 13px;
+    width: 100%;
+    margin-bottom: 8px;
+}
 
 /* =========================================
    GAYA UNTUK MODAL REGISTRASI & PAYMENT

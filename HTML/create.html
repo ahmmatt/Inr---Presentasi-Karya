@@ -47,9 +47,10 @@
                     </div>
                     
                     <div class="loc-options" id="loc-expand-area">
-                        <button type="button" class="loc-btn maps-btn" onclick="window.open('https://maps.google.com', '_blank')">
-                            <i class="fa-solid fa-map-location-dot"></i> Pick on Google Maps
-                        </button>
+                        <div class="virtual-link-input">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <input type="url" placeholder="Paste Google Maps link here...">
+                        </div>
                         
                         <div class="loc-divider"><span>OR</span></div>
                         
@@ -139,8 +140,13 @@
                         <div class="ticket-dropdown" id="ticket-dropdown">
                             <i class="fa-solid fa-xmark close-modal" id="close-ticket-modal"></i>
                             
-                            <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">Ticket Price</h3>
-
+                            <div class="modal-header-intro">
+                                <div class="modal-header-icon">
+                                    <i class="fa-solid fa-ticket"></i>
+                                </div>
+                                <h2>Ticket Price</h2>
+                                <p>Set the cost of your event. You can offer free tickets or create paid tiers like Regular and VIP.</p>
+                            </div>
                             <div class="ticket-type-selector">
                                 <label class="cap-radio">
                                     <input type="radio" name="ticket_type" value="Free" checked>
@@ -172,9 +178,18 @@
                                     <input type="number" id="payout_account" placeholder="Example: 08123456789">
                                 </div>
 
-                                <div class="input-group">
-                                    <label>Ticket Price (Rp):</label>
-                                    <input type="number" id="ticket_price_input" min="0" placeholder="e.g., 50000">
+                                <div class="ticket-tiers-wrapper">
+                                    <label style="font-size: 12px; color: #a0a0a0; margin-bottom: 6px; display: block;">Ticket Categories & Prices:</label>
+                                    
+                                    <div id="ticket-tiers-container">
+                                        <div class="ticket-tier-row">
+                                            <input type="text" class="tier-name custom-input" value="Regular" readonly required style="cursor: not-allowed; color: #a0a0a0;">
+                                            <input type="number" class="tier-price custom-input" placeholder="Price (Rp)" required>
+                                            <i class="fa-solid fa-trash-can remove-tier-btn" style="display: none;" title="Remove"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="button" id="add-tier-btn" class="add-tier-btn"><i class="fa-solid fa-plus"></i> Add VIP Tier</button>
                                 </div>
                             </div>
 
@@ -208,8 +223,13 @@
                         <div class="capacity-dropdown" id="capacity-dropdown">
                             <i class="fa-solid fa-xmark close-modal" id="close-capacity-modal"></i>
                             
-                            <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">Set Capacity</h3>
-
+                            <div class="modal-header-intro">
+                                <div class="modal-header-icon">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <h2>Max Capacity</h2>
+                                <p>Limit the number of attendees for your event. You can also assign specific seat numbers.</p>
+                            </div>
                             <div class="capacity-type-selector">
                                 <label class="cap-radio">
                                     <input type="radio" name="cap_type" value="Unlimited" checked>
@@ -236,9 +256,53 @@
                                         <span style="font-size: 12px; color: #ccc;">Select Seat Number</span>
                                     </label>
                                 </div>
+                                <div class="seat-allocation-wrapper" id="seat-allocation-container" style="display: none; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">
+                                    <label style="font-size: 12px; color: #a0a0a0; margin-bottom: 8px; display: block;">Define Seat Ranges:</label>
+                                    
+                                    <div id="seat-tiers-container">
+                                        <div class="seat-tier-row">
+                                            <input type="text" class="seat-tier-name custom-input" value="Regular" readonly required style="cursor: not-allowed; color: #a0a0a0;">
+                                            <input type="text" class="seat-tier-range custom-input" placeholder="e.g., 51-100" required>
+                                            <i class="fa-solid fa-trash-can remove-seat-tier-btn" style="display: none;" title="Remove"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="button" id="add-seat-tier-btn" class="add-tier-btn" style="margin-top: 4px;"><i class="fa-solid fa-plus"></i> Add VIP Seat</button>
+                                </div>
                             </div>
 
                             <button type="button" class="apply-btn" id="apply-capacity" style="margin-top: 16px; width: 100%;">Apply</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="question-wrapper" style="position: relative; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="question-wrapper-left" style="display: flex; align-items: center; gap: 12px; color: #a0a0a0;">
+                            <i class="fa-solid fa-clipboard-list"></i> 
+                            <h3 style="margin: 0; font-size: 14px; font-weight: 500; color: #e0e0e0;">Registration Form</h3>
+                        </div>
+                        
+                        <div class="question-wrapper-right" id="question-trigger" style="cursor: pointer; display: flex; gap: 8px; align-items: center; color: #a0a0a0;">
+                            <input type="text" id="question-display" value="Profile Info Only" readonly style="cursor: pointer; background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px; width: 170px; pointer-events: none;">
+                            <i class="fa-solid fa-pen" style="font-size: 12px; color: #a0a0a0;"></i>
+                        </div>
+
+                        <div class="ticket-dropdown" id="question-dropdown"> <i class="fa-solid fa-xmark close-modal" id="close-question-modal"></i>
+                            
+                            <div class="modal-header-intro">
+                                <div class="modal-header-icon">
+                                    <i class="fa-solid fa-clipboard-question"></i>
+                                </div>
+                                <h2>Registration Form</h2>
+                                <p>Ask custom questions to your attendees during checkout (e.g., "College/Company?", "Dietary Requirements?").</p>
+                            </div>
+
+                            <div id="questions-container" style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                                <label style="font-size: 14px; color: #b0b0b0; margin-bottom: 4px; display: block;">Custom Questions:</label>
+                                </div>
+                            
+                            <button type="button" id="add-question-btn" class="add-tier-btn" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Question</button>
+
+                            <button type="button" class="apply-btn" id="apply-question" style="width: 100%;">Apply</button>
                         </div>
                     </div>
                 </div>

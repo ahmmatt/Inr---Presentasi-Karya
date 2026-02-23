@@ -41,9 +41,6 @@
                             <h3>AI Center Makassar <i class="fa-solid fa-circle-check" style="color: #1d9bf0;"></i></h3>
                         </div>
                     </div>
-                    <div class="presented-right">
-                        <button>Subscribe</button>
-                    </div>
                 </div>
                 
                 <hr>
@@ -123,10 +120,18 @@
                         </div>
                     </div>
                     
-                    <div class="price-right-card">
-                        <i class="fa-solid fa-ticket"></i>
-                        <p>Ticket Price</p>
-                        <h3>Rp 50.000</h3>
+                    <div class="price-cards-wrapper">
+                        <div class="price-right-card ticket-option-card" data-type="Regular" data-price="50000" id="card-regular">
+                            <i class="fa-solid fa-ticket"></i>
+                            <p>Regular</p>
+                            <h3>Rp 50.000</h3>
+                        </div>
+                        
+                        <div class="price-right-card vip-card ticket-option-card" data-type="VIP" data-price="150000" id="card-vip">
+                            <i class="fa-solid fa-crown"></i>
+                            <p>VIP Access</p>
+                            <h3>Rp 150.000</h3>
+                        </div>
                     </div>
                 </div>
 
@@ -159,10 +164,19 @@
                             <form id="registration-form">
                                 <span>What is your college/company?</span>
                                 <input type="text" placeholder="e.g. Telkom University" required>
+                                
+                                <span>Choose your ticket type</span>
+                                <select id="ticket-type-select" class="custom-select" required>
+                                    <option value="" disabled selected>Select ticket category</option>
+                                    <option value="Regular" data-price="50000">Regular - Rp 50.000</option>
+                                    <option value="VIP" data-price="150000">VIP - Rp 150.000</option>
+                                </select>
+
                                 <span>Choose your seat (Row)</span>
-                                <input type="number" placeholder="1-10" required>
+                                <input type="text" id="seat-row-input" placeholder="e.g. A" required>
                                 <span>Choose your seat (Number)</span>
-                                <input type="number" placeholder="1-100" required>
+                                <input type="number" id="seat-num-input" placeholder="1-100" required>
+                                
                                 <button type="submit" class="btn-proceed">Proceed to Payment</button>
                             </form>
                         </div>
@@ -183,7 +197,7 @@
                         <div class="instruction-box">
                             <p>1. Open your Banking/E-Wallet app.</p>
                             <p>2. Scan the QR code above.</p>
-                            <p>3. Pay exactly <strong>Rp 50.000</strong>.</p>
+                            <p>3. Pay exactly <strong id="dynamic-payment-price">Rp 0</strong>.</p>
                         </div>
                         <button type="button" id="btn-payment-done" class="btn-proceed">I Have Paid (Done)</button>
                     </div>
