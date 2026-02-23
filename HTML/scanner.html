@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureGate - Scan Ticket</title>
+    <link rel="stylesheet" href="../CSS/scanner.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="left-nav">
+            <h1>SecureGate</h1>
+        </div>
+        <div class="main-nav">
+            <div class="main-nav-discover"><i class="fa-regular fa-compass"></i><a href="adminevent.html">Home</a></div>
+            <div class="main-nav-event"><i class="fa-solid fa-ticket"></i><a href="adminevent.html">Event</a></div>
+        </div>
+        <div class="right-nav">
+            <a href="create.html">Create Event</a>
+            <i class="fa-regular fa-bell"></i>
+            <a href=""><img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="Profile"></a>
+        </div>
+    </nav>
+
+    <div class="page-frame">
+        <div class="page-frame-nav">
+            <div>
+                <h1>Ticket Scanner</h1>
+                <p style="color: #a0a0a0; margin-top: 8px; font-size: 14px;">Scan attendee QR codes to verify and check-in.</p>
+            </div>
+        </div>
+
+        <div class="scanner-layout">
+            
+            <div class="scanner-section">
+                <div class="camera-container" id="camera-container">
+                    
+                    <div id="reader"></div>
+                    
+                    <div class="laser-beam" id="laser-beam"></div>
+                    <div class="viewfinder"></div>
+                    
+                    <div class="camera-overlay-text" id="camera-overlay">
+                        <i class="fa-solid fa-camera camera-icon" id="camera-icon"></i>
+                        <p id="camera-text">Camera Standby</p>
+                    </div>
+
+                </div>
+
+                <button class="btn-action btn-scan" id="btn-start-scan">
+                    <i class="fa-solid fa-qrcode"></i> Start Scanning
+                </button>
+            </div>
+
+            <div class="result-section">
+                
+                <div class="empty-state" id="empty-state">
+                    <i class="fa-solid fa-expand"></i>
+                    <h3>Awaiting Scan</h3>
+                    <p>Point the camera at the attendee's e-ticket.</p>
+                </div>
+
+                <div class="scan-result-card" id="scan-result-card" style="display: none;">
+                    <div class="status-badge pending" id="ticket-status">
+                        <i class="fa-solid fa-clock"></i> Pending (Not Checked In)
+                    </div>
+
+                    <div class="attendee-info">
+                        <img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="Profile" class="attendee-pict">
+                        <div>
+                            <h2>Ahmad Mubasysyir Yuz</h2>
+                            <p>ahmad@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <hr class="divider">
+
+                    <div class="ticket-details-grid">
+                        <div class="detail-item">
+                            <span>Ticket Type</span>
+                            <h4>VIP Access</h4>
+                        </div>
+                        <div class="detail-item">
+                            <span>Seat Number</span>
+                            <h4>Row A - 12</h4>
+                        </div>
+                        <div class="detail-item">
+                            <span>Event</span>
+                            <h4>AI Connect Offline Series</h4>
+                        </div>
+                        <div class="detail-item">
+                            <span>Ticket ID</span>
+                            <h4 style="font-family: monospace;">#SG-8829-XV</h4>
+                        </div>
+                    </div>
+
+                    <button class="btn-action btn-approve" id="btn-approve">
+                        <i class="fa-solid fa-check-circle"></i> Approve & Check-In
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <div class="page-footer">
+            <div class="left-footer">
+                <a href="">Discover</a>
+                <a href="">Help</a>
+            </div>
+            <div class="right-footer">
+                <a href=""><i class="fab fa-x"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../JS/scanner.js"></script>
+</body>
+</html>

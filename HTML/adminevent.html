@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureGate - Admin Dashboard</title>
+    <link rel="stylesheet" href="../CSS/adminevent.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="left-nav">
+            <h1>SecureGate</h1>
+        </div>
+        <div class="main-nav">
+            <div class="main-nav-discover"><i class="fa-solid fa-house"></i><a href="adminevent.html">Home</a></div>
+            <div class="main-nav-event"><i class="fa-solid fa-ticket"></i><a href="adminevent.html">Event</a></div>
+        </div>
+        <div class="right-nav">
+            <a href="create.html">Create Event</a>
+            <i class="fa-regular fa-bell"></i>
+            <a href=""><img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="Profile"></a>
+        </div>
+    </nav>
+
+    <div class="page-frame">
+        
+        <div class="page-frame-nav admin-header">
+            <div class="event-switcher-wrapper">
+                <p>Currently Managing:</p>
+                <div class="event-switcher" id="event-switcher-btn">
+                    <h1>AI Connect Offline Series</h1>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                
+                <div class="event-dropdown" id="event-dropdown">
+                    <div class="search-event">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Search other events...">
+                    </div>
+                    <ul class="event-list" id="dropdown-event-list">
+                        <li class="active-event" data-id="event_1"><i class="fa-solid fa-check"></i> AI Connect Offline Series</li>
+                        <li data-id="event_2">Tech Startup Mixer 2026</li>
+                        <li data-id="event_3">Web3 Developer Summit</li>
+                        <li data-id="event_4">Design System Workshop <span class="badge-ended">Ended</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <a href="scanner.html" class="btn-primary"><i class="fa-solid fa-qrcode"></i> Open Scanner</a>
+                <button class="btn-danger" id="delete-event-btn"><i class="fa-solid fa-trash"></i> Delete Event</button>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon"><i class="fa-solid fa-ticket"></i></div>
+                <div class="metric-info">
+                    <p>Total Registrations</p>
+                    <h3 id="metric-total-reg">0 <span class="metric-total">/ 0</span></h3>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon"><i class="fa-solid fa-user-clock"></i></div>
+                <div class="metric-info">
+                    <p>Need Approval</p>
+                    <h3 id="metric-pending">0</h3>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon"><i class="fa-solid fa-user-check"></i></div>
+                <div class="metric-info">
+                    <p>Checked-In</p>
+                    <h3 id="metric-checkedin">0</h3>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon"><i class="fa-solid fa-wallet"></i></div>
+                <div class="metric-info">
+                    <p>Est. Revenue</p>
+                    <h3 id="metric-revenue">Rp 0</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-workspace">
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="all">All Guests</button>
+                <button class="tab-btn" data-tab="pending">Need Approval <span class="badge-count">12</span></button>
+                <button class="tab-btn" data-tab="checked-in">Checked-In</button>
+            </div>
+
+            <div class="table-tools">
+                <div class="search-box">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" placeholder="Search by name, email, or Ticket ID...">
+                </div>
+                <button class="btn-filter"><i class="fa-solid fa-filter"></i> Filter</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="master-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Attendee Info</th>
+                            <th>Category & Seat</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendee-table-body">
+                        
+                            <td class="t-id">#SG-8829</td>
+                            <td>
+                                <div class="attendee-cell">
+                                    <img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="Profile">
+                                    <div>
+                                        <h4>Budi Santoso</h4>
+                                        <p>budi@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="t-category">VIP</span><br>
+                                <span class="t-seat">Row A - 12</span>
+                            </td>
+                            <td><span class="status-badge pending">Pending</span></td>
+                            <td class="action-cell">
+                                <button class="action-btn approve" title="Approve & Check-In"><i class="fa-solid fa-check"></i></button>
+                                <button class="action-btn edit" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                                <button class="action-btn delete" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        
+
+                        
+                            <td class="t-id">#SG-5511</td>
+                            <td>
+                                <div class="attendee-cell">
+                                    <img src="../Media/09071799-7231-4faa-883e-a1eb2d01ef9b.avif" alt="Profile">
+                                    <div>
+                                        <h4>Sarah Jenkins</h4>
+                                        <p>sarah.j@company.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="t-category text-vvip">VVIP</span><br>
+                                <span class="t-seat">Row 1 - 01</span>
+                            </td>
+                            <td><span class="status-badge present">Checked-In</span></td>
+                            <td class="action-cell">
+                                <button class="action-btn revert" title="Cancel Check-In (Revert to Pending)"><i class="fa-solid fa-rotate-left"></i></button>
+                                <button class="action-btn edit" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                                <button class="action-btn delete" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <hr>
+        <div class="page-footer">
+            <div class="left-footer">
+                <a href="">Discover</a>
+                <a href="">Help</a>
+            </div>
+            <div class="right-footer">
+                <a href=""><i class="fab fa-x"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="edit-modal-overlay"></div>
+
+    <div class="edit-modal" id="edit-modal">
+        <div class="modal-header-intro">
+            <div class="modal-header-icon">
+                <i class="fa-solid fa-user-pen"></i>
+            </div>
+            <h2>Edit Attendee</h2>
+            <p>Modify guest details, ticket category, or manually check them in.</p>
+        </div>
+
+        <div class="edit-form-group">
+            <label>Full Name</label>
+            <input type="text" id="edit-name" class="custom-input">
+        </div>
+        
+        <div class="edit-form-group">
+            <label>Email Address</label>
+            <input type="email" id="edit-email" class="custom-input">
+        </div>
+
+        <div class="edit-form-row">
+            <div class="edit-form-group">
+                <label>Category</label>
+                <select id="edit-category" class="custom-select">
+                    <option value="VIP">VIP</option>
+                    <option value="REGULAR">REGULAR</option>
+                </select>
+            </div>
+            <div class="edit-form-group">
+                <label>Seat</label>
+                <input type="text" id="edit-seat" class="custom-input">
+            </div>
+        </div>
+
+        <div class="edit-form-toggle">
+            <div>
+                <h4>Check-In Status</h4>
+            </div>
+            <button class="switch-btn" id="edit-status-toggle"></button>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-cancel" id="close-modal-btn">Cancel</button>
+            <button class="btn-confirm" id="save-edit-btn">Confirm</button>
+        </div>
+    </div>
+    <script src="../JS/adminevent.js"></script>
+</body>
+</html>
