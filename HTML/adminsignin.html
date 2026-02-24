@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureGate</title>
+    <link rel="stylesheet" href="../CSS/sign.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="left-nav">
+            <h1>SecureGate</h1>
+        </div>
+        <div class="right-nav">
+            <a href="adminsignup.html">Sign Up</a>
+        </div>
+    </nav>
+    <nav class="sign-card">
+        <img src="../Media/SVG.png" alt="entry door image">
+        <h1>Welcome to SecureGate</h1>
+        <p>Please sign in below:</p>
+        <form action="signin.php" method="POST">
+            <span class="dynamic-label-span">Username</span>
+            <input type="password" name="password" placeholder="Use the username provided" required>
+            <span class="dynamic-label-span">Password</span>
+            <input type="password" name="password" placeholder="Use Strong Password" required>
+            <button type="submit" name="submit">Sign In</button>
+        </form>
+        <hr>
+        <div class="bottom-button-sign"><i class="fab fa-google"></i><a href="">Sign In with Google</a></div>
+        <div class="bottom-button-sign"><i class="fas fa-user"></i><a href="../HTML/adminsignup.html">Not Have Account?</a></div>
+    </nav>
+</body>
+<script src="../JS/sign.js"></script>
+</html>

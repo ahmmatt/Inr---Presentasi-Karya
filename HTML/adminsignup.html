@@ -13,18 +13,20 @@
             <h1>SecureGate</h1>
         </div>
         <div class="right-nav">
-            <a href="signin.html">Sign In</a>
+            <a href="adminsignin.html">Sign In</a>
         </div>
     </nav>
     <nav class="sign-card">
         <img src="../Media/SVG.png" alt="entry door image">
         <h1>Welcome to SecureGate</h1>
-        <p>Please enter your details to get started.</p>
-        <form action="signup.php" method="POST">
+        <p>Please enter your details to get started as admin or event organizer.</p>
+        <form onsubmit="window.location.href='adminwaiting.html'; return false;">
             <span class="dynamic-label-span">Name</span>
             <input type="text" name="name" placeholder="Adam" required>
             <span class="dynamic-label-span">Gender</span>
             <input type="text" name="gender" placeholder="Male/Female" required>
+            <span class="dynamic-label-span">Event Profile</span>
+            <input type="text" name="gender" placeholder="Instagram or other" required>
             <div class="input-header">
                 <span class="dynamic-label-span" id="dynamic-label">Email</span> 
                 <span id="toggle-mode" class="toggle-link">
@@ -39,7 +41,7 @@
         </form>
         <hr>
         <div class="bottom-button-sign"><i class="fab fa-google"></i><a href="">Sign Up with Google</a></div>
-        <div class="bottom-button-sign"><i class="fas fa-user"></i><a href="../HTML/signin.html">Have Account?</a></div>
+        <div class="bottom-button-sign"><i class="fas fa-user"></i><a href="../HTML/adminsignin.html">Have Account?</a></div>
     </nav>
 </body>
 <script src="../JS/sign.js"></script>

@@ -1,0 +1,151 @@
+/* =========================================
+   1. RESET & GLOBAL VARIABLES (Dari Anda)
+   ========================================= */
+:root {
+    --bg-body: #050505;
+    --bg-card: #121212;
+    --bg-card-hover: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-orange: #f97316; 
+    --accent-green: #22c55e;  
+    --border-color: #2a2a2a;
+    --content-width: 1000px;
+    --edge-spacing: 40px;
+    --content-padding: 20px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+body {
+    background-color: #050505;
+    background-image: radial-gradient(ellipse at center, #050505 30%, #131722 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding-top: 60px; /* Sesuai tinggi navbar */
+    display: flex;
+    flex-direction: column;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* =========================================
+   2. NAVBAR STYLING (Dari Anda)
+   ========================================= */
+.navbar {
+    position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 1000;
+    background-color: transparent; border-bottom: 1px solid transparent; 
+    transition: 0.4s ease; display: grid;
+    grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
+    align-items: center; padding: 0 var(--edge-spacing); box-sizing: border-box;
+}
+.left-nav { grid-column: 1; justify-self: start; }
+.left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
+.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 20px; }
+.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; text-decoration: none; }
+
+/* =========================================
+   3. FOOTER & PAGE FRAME (Dari Anda)
+   ========================================= */
+.page-frame { max-width: var(--content-width); margin: 0 auto; padding: 0 var(--content-padding); width: 100%; }
+hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
+.page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
+.left-footer, .right-footer { display: flex; gap: 20px; }
+.right-footer a:hover { color: var(--text-primary); }
+
+/* =========================================
+   4. WAITING CARD STYLING (Gaya Baru)
+   ========================================= */
+.waiting-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh; /* Memastikan posisinya di tengah layar vertikal */
+}
+
+.waiting-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 50px 40px;
+    text-align: center;
+    max-width: 480px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    
+}
+
+/* =========================================
+   GAYA IKON BARU (GRADIENT TONE)
+   ========================================= */
+.waiting-icon {
+    /* 1. Perbesar ukuran agar lebih mirip referensi gambar */
+    font-size: 80px; 
+    margin-bottom: 24px;
+    
+    /* Keep animation */
+    animation: pulse 2s infinite;
+}
+
+/* Terapkan teknik gradien pada elemen <i> di dalamnya */
+.waiting-icon i {
+    /* 2. Buat latar belakang gradien linear
+       - Warna atas: #FFC76C (Oranye kekuningan terang)
+       - Warna bawah: #FF8E53 (Oranye kemerahan yang lebih dalam)
+       Anda bisa menyesuaikan kode hex ini jika ingin tone yang berbeda.
+    */
+    background: linear-gradient(180deg, #FFC76C 0%, #FF8E53 100%);
+    
+    /* 3. KUNCI TEKNIK INI: Memotong background agar hanya muncul sesuai bentuk teks/ikon */
+    -webkit-background-clip: text;
+    background-clip: text;
+    
+    /* 4. Membuat warna asli ikon transparan agar background gradien di belakangnya terlihat */
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback untuk browser lain */
+
+    /* 5. Opsional: Menambahkan sedikit bayangan lembut berwarna oranye agar lebih "pop" */
+    filter: drop-shadow(0 4px 6px rgba(255, 142, 83, 0.3));
+}
+
+/* Animasi tetap sama */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.waiting-card h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 16px;
+}
+
+.waiting-card p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.btn-return {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 24px;
+    transition: 0.2s;
+}
+
+.btn-return:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}

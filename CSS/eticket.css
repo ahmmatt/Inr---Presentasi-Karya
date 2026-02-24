@@ -1,0 +1,208 @@
+/* =========================================
+   1. RESET & GLOBAL VARIABLES (Dari Base Anda)
+   ========================================= */
+:root {
+    --bg-body: #050505;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-orange: #f97316; 
+    --accent-green: #22c55e;  
+    --border-color: #2a2a2a;
+    --content-width: 1000px;
+    --edge-spacing: 40px;
+    --content-padding: 20px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+body { background-color: #050505; background-image: radial-gradient(ellipse at center, #050505 30%, #131722 100%); background-attachment: fixed; background-size: cover; background-repeat: no-repeat; color: var(--text-primary); min-height: 100vh; padding-top: 80px; display: flex; flex-direction: column;}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* =========================================
+   2. NAVBAR STYLING (Dari Base Anda)
+   ========================================= */
+.navbar { position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 1000; background-color: rgba(19, 23, 34, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: grid; grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr; align-items: center; padding: 0 var(--edge-spacing); }
+.left-nav { grid-column: 1; justify-self: start; }
+.left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
+.main-nav { grid-column: 2; justify-self: start; margin-left: 14px; display: flex; gap: 30px; }
+.main-nav div { display: flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
+.main-nav div:hover { color: #ffffff; }
+.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 20px; }
+.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; }
+.right-nav img { width: 32px; height: 32px; border-radius: 50%; display: block; }
+
+/* =========================================
+   3. FOOTER & PAGE FRAME
+   ========================================= */
+.page-frame { max-width: var(--content-width); margin: 0 auto; padding: 0 var(--content-padding); width: 100%; }
+hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
+.page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
+.left-footer, .right-footer { display: flex; gap: 20px; }
+.right-footer a:hover { color: var(--text-primary); }
+
+/* ========================================================================= */
+/* E-TICKET SPECIFIC STYLING (Desain Baru) */
+/* ========================================================================= */
+
+.ticket-page-frame {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.ticket-actions-top {
+    width: 100%;
+    max-width: 850px; /* Lebar maksimal tiket */
+    display: flex;
+    justify-content: flex-start;
+}
+
+.btn-back {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+.btn-back:hover { color: #fff; }
+.btn-back i { margin-right: 6px; }
+
+/* KOTAK TIKET UTAMA */
+.ticket-card {
+    background: #121212; /* Dark solid base */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px; /* Sudut melengkung besar khas Apple */
+    width: 100%;
+    max-width: 850px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+/* Header Tiket */
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 40px 20px 40px;
+}
+.ticket-header h2 { font-size: 24px; font-weight: 700; color: #fff; }
+.organizer-logo { display: flex; align-items: center; gap: 10px; color: var(--text-secondary); font-weight: 600; font-size: 14px; }
+.organizer-logo i { font-size: 20px; color: #fff; }
+
+/* Garis Pemisah (Seperti sobekan tiket) */
+.ticket-divider {
+    border: none;
+    border-top: 2px dashed rgba(255, 255, 255, 0.1); /* Garis putus-putus */
+    margin: 0;
+    position: relative;
+}
+/* Bolongan di ujung garis putus-putus */
+.ticket-divider::before, .ticket-divider::after {
+    content: ''; position: absolute; top: -12px; width: 24px; height: 24px;
+    background-color: #080a0e; /* Warna harus sama dengan background body web Anda */
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.ticket-divider::before { left: -13px; border-right-color: transparent; border-top-color: transparent; transform: rotate(-45deg); }
+.ticket-divider::after { right: -13px; border-left-color: transparent; border-bottom-color: transparent; transform: rotate(-45deg); }
+
+/* Body Tiket (Grid Kiri Kanan) */
+.ticket-body {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 40px 40px 40px;
+    gap: 40px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Sisi Kiri (Teks) */
+.ticket-info { flex: 1; }
+.ticket-subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.5; }
+.event-title { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 24px; line-height: 1.3; }
+
+.event-datetime-location { margin-bottom: 40px; }
+.event-datetime-location p { font-size: 14px; color: #d0d0d0; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+.event-datetime-location i { color: var(--text-secondary); margin-top: 2px; }
+
+/* Grid Informasi Pemesan */
+.attendee-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.detail-box { display: flex; flex-direction: column; gap: 4px; }
+.detail-label { font-size: 11px; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.detail-value { font-size: 15px; color: #fff; font-weight: 600; }
+.detail-sub-value { font-size: 12px; color: #888; }
+.text-free { color: var(--accent-green); font-weight: 700; }
+
+/* Sisi Kanan (QR Code) */
+.ticket-qr-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    min-width: 200px;
+}
+.qr-code-box {
+    background-color: #ffffff; /* WAJIB PUTIH AGAR MUDAH DI-SCAN */
+    padding: 16px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+}
+/* Placeholder ikon jika belum ada gambar QR asli */
+.qr-placeholder { font-size: 150px; color: #000; } 
+
+.ticket-qr-section p { font-size: 12px; color: #888; font-weight: 500; }
+
+/* Footer Tiket */
+.ticket-footer {
+    background: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 16px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+}
+.ticket-footer p { font-size: 11px; color: #666; }
+
+/* =========================================
+   ACTION BUTTONS
+   ========================================= */
+.ticket-actions-bottom {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+}
+.btn-primary, .btn-secondary {
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+    border: none;
+}
+.btn-primary { background: #fff; color: #000; }
+.btn-primary:hover { background: #e0e0e0; transform: translateY(-2px); }
+.btn-secondary { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+.btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+/* RESPONSIVE DESIGN UNTUK HP */
+@media (max-width: 768px) {
+    .ticket-header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 24px; }
+    .ticket-body { flex-direction: column; padding: 24px; gap: 30px; }
+    .attendee-details-grid { grid-template-columns: 1fr; gap: 16px; }
+    .ticket-qr-section { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; }
+    .ticket-actions-bottom { flex-direction: column; width: 100%; max-width: 850px; }
+    .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+}
