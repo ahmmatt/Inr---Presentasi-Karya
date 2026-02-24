@@ -26,14 +26,22 @@
 }
 
 body {
-    background-color: #050505;
-    background-image: radial-gradient(ellipse at center, #050505 30%, #131722 100%);
+    background-color: #050505; 
+    
+    /* MENGGABUNGKAN 2 GRADIEN (Tumpukan) */
+    background-image: 
+        /* Tumpukan 1 (Paling Atas): Cahaya dari atap memudar ke transparan di ketinggian 25% layar */
+        linear-gradient(to bottom, rgba(30, 40, 55, 0.6) 0%, transparent 25%),
+        
+        /* Tumpukan 2 (Dasar): Gradien radial asli Anda (Tengah ke ujung) */
+        radial-gradient(ellipse at center, #050505 30%, #131722 100%);
+    
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
     color: var(--text-primary);
     min-height: 100vh;
-    padding-top: 50px; 
+    padding-top: 80px; 
 }
 
 a { text-decoration: none; color: inherit; }

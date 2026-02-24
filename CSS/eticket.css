@@ -13,7 +13,24 @@
     --content-padding: 20px;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-body { background-color: #050505; background-image: radial-gradient(ellipse at center, #050505 30%, #131722 100%); background-attachment: fixed; background-size: cover; background-repeat: no-repeat; color: var(--text-primary); min-height: 100vh; padding-top: 80px; display: flex; flex-direction: column;}
+body {
+    background-color: #050505; 
+    
+    /* MENGGABUNGKAN 2 GRADIEN (Tumpukan) */
+    background-image: 
+        /* Tumpukan 1 (Paling Atas): Cahaya dari atap memudar ke transparan di ketinggian 25% layar */
+        linear-gradient(to bottom, rgba(30, 40, 55, 0.6) 0%, transparent 25%),
+        
+        /* Tumpukan 2 (Dasar): Gradien radial asli Anda (Tengah ke ujung) */
+        radial-gradient(ellipse at center, #050505 30%, #131722 100%);
+    
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding-top: 80px; 
+}
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
@@ -71,9 +88,16 @@ hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
 
 /* KOTAK TIKET UTAMA */
 .ticket-card {
-    background: #121212; /* Dark solid base */
+    /* 1. Ubah warna solid menjadi hitam semi-transparan */
+    background: rgba(18, 18, 18, 0.6); 
+    
+    /* 2. Tambahkan efek blur untuk latar belakang yang tembus pandang */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    
+    /* Properti lama Anda tetap dipertahankan */
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px; /* Sudut melengkung besar khas Apple */
+    border-radius: 24px; 
     width: 100%;
     max-width: 850px;
     overflow: hidden;

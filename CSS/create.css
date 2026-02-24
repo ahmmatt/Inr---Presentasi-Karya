@@ -700,30 +700,30 @@ body.no-scroll {
    ========================================= */
 .ticket-dropdown {
     display: none; 
-    /* INI KUNCI YANG HILANG: Sembunyikan secara default! */
-    display: none; 
     flex-direction: column;
     gap: 16px;
-    
-    /* Mengambang bebas di tengah layar */
     position: fixed; 
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); 
-    
-    /* Ukuran Card */
-    width: 460px;  /* Sebelumnya 380px */
+    width: 460px;  
     max-width: 90vw; 
-    padding: 30px; /* Sebelumnya 24px */
+    padding: 30px; 
     
-    /* Tampilan Visual */
-    background-color: #1a1a1a;
-    border: 1px solid #333;
+    /* --- UPDATE UNTUK EFEK LEBIH PEKAT --- */
+    /* 1. Warna hitam dibuat lebih pekat (0.85 atau 85%) */
+    background-color: rgba(18, 18, 18, 0.85); 
+    
+    /* 2. Efek blur ditingkatkan (32px) agar lebih buram */
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     z-index: 9999; 
     
-    /* Menggelapkan sisa layar di belakang card (Overlay) */
-    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 12px 40px rgba(0, 0, 0, 0.6);
+    /* Shadow dibuat sedikit lebih tegas */
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 25px 60px rgba(0, 0, 0, 0.6);
 }
 
 .ticket-dropdown.show {
@@ -954,34 +954,33 @@ input[type="number"] {
 /* =========================================
    DROPDOWN PENGATURAN KAPASITAS
    ========================================= */
-/* Kotak Menu Melayang */
 .capacity-dropdown {
-    /* INI KUNCI YANG HILANG: Sembunyikan secara default! */
     display: none; 
     flex-direction: column;
     gap: 16px;
-    
-    /* Mengambang bebas di tengah layar */
     position: fixed; 
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); 
-    
-    /* Ukuran Card */
-    width: 460px;  /* Sebelumnya 380px */
+    width: 460px;  
     max-width: 90vw; 
-    padding: 30px; /* Sebelumnya 24px */
+    padding: 30px; 
     
-    /* Tampilan Visual */
-    background-color: #1a1a1a;
-    border: 1px solid #333;
+    /* --- UPDATE UNTUK EFEK LEBIH PEKAT --- */
+    /* 1. Warna hitam dibuat lebih pekat (0.85 atau 85%) */
+    background-color: rgba(18, 18, 18, 0.85); 
+    
+    /* 2. Efek blur ditingkatkan (32px) agar lebih buram */
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     z-index: 9999; 
     
-    /* Menggelapkan sisa layar di belakang card (Overlay) */
-    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 12px 40px rgba(0, 0, 0, 0.6);
+    /* Shadow dibuat sedikit lebih tegas */
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 25px 60px rgba(0, 0, 0, 0.6);
 }
-
 /* Munculkan jika ada class .show */
 .capacity-dropdown.show {
     display: flex;

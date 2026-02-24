@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureGate - Settings</title>
+    <link rel="stylesheet" href="../CSS/userevent.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="left-nav">
+            <h1>SecureGate</h1>
+        </div>
+        <div class="main-nav">
+            <div class="main-nav-discover"><i class="fa-regular fa-compass"></i><a href="discover.html">Discover</a></div>
+            <div class="main-nav-event"><i class="fa-solid fa-ticket"></i><a href="mainpage.html">Event</a></div>
+        </div>
+        <div class="right-nav">
+            <i class="fa-regular fa-bell"></i>
+            <a href=""><img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="Profile"></a>
+        </div>
+    </nav>
+
+    <div class="page-frame">
+        <div class="page-frame-nav">
+            <h1>Settings</h1>
+            <div class="toggle-select-settings">
+                <a href="#" class="tab-link active" data-target="account-setting">Account</a>
+                <a href="#" class="tab-link" data-target="preference-setting">Preferences</a>
+            </div>
+        </div>
+
+        <div class="settings-section active" id="account-setting">
+            <form action="" method="">
+                
+                <div class="section-block">
+                    <h2>Your Profile</h2>
+                    <p class="section-desc">Manage your personal information and profile picture.</p>
+                    
+                    <div class="profile-wrapper">
+                        <div class="img-input">
+                            <div class="img-container">
+                                <img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="Profile">
+                                <label for="profile-upload" class="upload-overlay">
+                                    <i class="fa-solid fa-camera"></i>
+                                </label>
+                                <input type="file" id="profile-upload" accept="image/*" hidden>
+                            </div>
+                        </div>
+
+                        <div class="name-input">
+                            <div class="input-group">
+                                <span>First Name</span>
+                                <input type="text" placeholder="Adam" value="Adam">
+                            </div>
+                            <div class="input-group">
+                                <span>Last Name</span>
+                                <input type="text" placeholder="Smith" value="Smith">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+                </div>
+                
+                <hr>
+
+                <div class="section-block">
+                    <div class="layout-header">
+                        <div>
+                            <h2>Emails</h2>
+                            <p class="section-desc">Manage the email addresses linked to your account.</p>
+                        </div>
+                        <button type="button" class="btn-add" id="btn-add-email"><i class="fa-solid fa-plus"></i> Add Email</button>
+                    </div>
+                    
+                    <div class="display-card">
+                        <div class="card-atas">
+                            <h3 id="display-email-text">mubasysyirmlyrd@gmail.com</h3>
+                            <span class="badge-primary">Primary</span>
+                        </div>
+                        <p>This email will be shared with hosts when you register for their events.</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="section-block">
+                    <div class="layout-header">
+                        <div>
+                            <h2>Phone Number</h2>
+                            <p class="section-desc">Add a phone number for quick login and security.</p>
+                        </div>
+                        <button type="button" class="btn-add" id="btn-add-phone"><i class="fa-solid fa-plus"></i> Add Phone Number</button>
+                    </div>
+                    
+                    <div class="display-card">
+                        <div class="card-atas">
+                            <h3 id="display-phone-text">+62 812 3456 7890</h3>
+                            <span class="badge-primary">Primary</span>
+                        </div>
+                        <p>Used for verification and event updates.</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="section-block">
+                    <div class="layout-header pass-layout">
+                        <div class="pass-info">
+                            <div class="icon-circle"><i class="fa-solid fa-lock"></i></div>
+                            <div>
+                                <h2>Account Password</h2>
+                                <p class="section-desc">Please follow the instructions in the email to finish setting your password.</p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-secondary" id="btn-set-password"><i class="fa-solid fa-key"></i> Set Password</button>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="section-block">
+                    <h2>Delete Account</h2>
+                    <p class="section-desc">Permanently delete your account and all associated data.</p>
+                    <button type="button" class="btn-danger"><i class="fa-solid fa-trash"></i> Delete My Account</button>
+                </div>
+                
+            </form>
+        </div>
+
+        <div class="settings-section" id="preference-setting" style="display: none;">
+            <div class="section-block">
+                <h2>Appearance</h2>
+                <p class="section-desc">Customize the look and feel of SecureGate.</p>
+                
+                <div class="display-card appearance-card">
+                    <div>
+                        <h3>Light Theme</h3>
+                        <p>Change the website theme from dark to light mode.</p>
+                    </div>
+                    <button class="switch-btn" id="theme-toggle"></button>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="page-footer">
+            <div class="left-footer">
+                <a href="">Discover</a>
+                <a href="">Help</a>
+            </div>
+            <div class="right-footer">
+                <a href=""><i class="fab fa-x"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="settings-modal-overlay"></div>
+
+    <div class="edit-modal" id="modal-add-email">
+        <button class="modal-close-icon close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+
+        <div class="modal-header-intro">
+            <div class="modal-header-icon"><i class="fa-solid fa-envelope"></i></div>
+            <h2>Add New Email</h2>
+            <p>Enter the email address you want to link to your account.</p>
+        </div>
+        <div class="edit-form-group">
+            <label>Email Address</label>
+            <input type="email" id="input-new-email" class="custom-input" placeholder="e.g., hello@example.com">
+        </div>
+        <div class="modal-actions">
+            <button type="button" class="btn-cancel close-modal-btn">Cancel</button>
+            <button type="button" class="btn-confirm" id="save-email-btn">Add Email</button>
+        </div>
+    </div>
+
+    <div class="edit-modal" id="modal-add-phone">
+        <button class="modal-close-icon close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+
+        <div class="modal-header-intro">
+            <div class="modal-header-icon"><i class="fa-solid fa-phone"></i></div>
+            <h2>Add Phone Number</h2>
+            <p>Enter a valid phone number for verification.</p>
+        </div>
+        <div class="edit-form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="input-new-phone" class="custom-input" placeholder="+62 8...">
+        </div>
+        <div class="modal-actions">
+            <button type="button" class="btn-cancel close-modal-btn">Cancel</button>
+            <button type="button" class="btn-confirm" id="save-phone-btn">Add Phone</button>
+        </div>
+    </div>
+
+    <div class="edit-modal" id="modal-set-password">
+        <button class="modal-close-icon close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+
+        <div class="modal-header-intro">
+            <div class="modal-header-icon"><i class="fa-solid fa-lock"></i></div>
+            <h2>Set Password</h2>
+            <p>Create a strong password for your account.</p>
+        </div>
+        <div class="edit-form-group">
+            <label>New Password</label>
+            <input type="password" id="input-new-pass" class="custom-input" placeholder="••••••••">
+        </div>
+        <div class="edit-form-group" style="margin-top: 12px;">
+            <label>Confirm Password</label>
+            <input type="password" id="input-confirm-pass" class="custom-input" placeholder="••••••••">
+        </div>
+        <div class="modal-actions">
+            <button type="button" class="btn-cancel close-modal-btn">Cancel</button>
+            <button type="button" class="btn-confirm" id="save-password-btn">Save Password</button>
+        </div>
+    </div>
+    <script src="../JS/userevent.js"></script>
+</body>
+</html>

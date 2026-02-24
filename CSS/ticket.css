@@ -21,24 +21,22 @@
 }
 
 body {
-    /* 1. Warna Dasar (sebagai fallback jika gradien gagal dimuat) */
-    background-color: #050505;
+    background-color: #050505; 
+    
+    /* MENGGABUNGKAN 2 GRADIEN (Tumpukan) */
+    background-image: 
+        /* Tumpukan 1 (Paling Atas): Cahaya dari atap memudar ke transparan di ketinggian 25% layar */
+        linear-gradient(to bottom, rgba(30, 40, 55, 0.6) 0%, transparent 25%),
         
-    /* 2. Warna Gradien */
-    /* Menggunakan Radial Gradient agar ada efek 'glow' halus di tengah atas seperti gambar referensi */
-    background-image: radial-gradient(ellipse at center, #050505 30%, #131722 100%);
-        
-    /* 3. KUNCI AGAR BACKGROUND TIDAK IKUT SCROLL */
+        /* Tumpukan 2 (Dasar): Gradien radial asli Anda (Tengah ke ujung) */
+        radial-gradient(ellipse at center, #050505 30%, #131722 100%);
+    
     background-attachment: fixed;
-        
-    /* 4. Memastikan background menutupi seluruh area layar */
     background-size: cover;
     background-repeat: no-repeat;
-        
-    /* Properti bawaan Anda sebelumnya (jangan dihapus) */
     color: var(--text-primary);
     min-height: 100vh;
-    padding-top: 50px; /* Saya kembalikan ke 100px agar tidak tertutup navbar yang sticky */
+    padding-top: 80px; 
 }
 a {
     text-decoration: none;
