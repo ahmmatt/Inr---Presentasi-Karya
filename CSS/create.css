@@ -40,6 +40,11 @@ body {
     min-height: 100vh;
     padding-top: 50px; /* Saya kembalikan ke 100px agar tidak tertutup navbar yang sticky */
 }
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -551,6 +556,35 @@ ul {
 }
 
 /* Event Options Card */
+/* =========================================
+   GAYA INPUT DATALIST (KATEGORI)
+   ========================================= */
+.category-wrapper {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
+/* Memastikan datalist input memiliki background gelap yang sama */
+input[list] {
+    background-color: #121212 !important;
+    border: 1px solid #333 !important;
+    color: #fff !important;
+}
+
+input[list]:focus {
+    border-color: #555 !important;
+}
+
+/* Memperbaiki panah bawaan datalist pada browser Chrome/Edge */
+input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.5;
+    cursor: pointer;
+}
+input::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}   
 .right-layout > h4 { font-size: 14px; color: #ffffff; margin: 10px 0 -5px 0; }
 .event-options-wrapper { display: flex; flex-direction: column; gap: 16px; }
 .ticket-wrapper, .approval-wrapper, .capacity-wrapper { display: flex; justify-content: space-between; align-items: center; }

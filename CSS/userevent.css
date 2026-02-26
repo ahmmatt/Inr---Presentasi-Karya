@@ -32,6 +32,11 @@ body {
     min-height: 100vh;
     padding-top: 80px; 
 }
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
 a { text-decoration: none; color: inherit; }
 
 /* NAVBAR & FOOTER (Standar) */

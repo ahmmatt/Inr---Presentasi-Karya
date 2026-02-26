@@ -464,5 +464,78 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     }
+    // ==========================================
+    // 8. FITUR MENU EVENT CATEGORY (DROPDOWN + TYPE)
+    // ==========================================
+    const categoryTrigger = document.getElementById("category-trigger");
+    const categoryDropdown = document.getElementById("category-dropdown");
+    const categoryDisplay = document.getElementById("category-display");
+    const categorySelect = document.getElementById("category_select");
+    const categoryOtherInput = document.getElementById("category_other_input");
+    const closeCategoryBtn = document.getElementById("close-category-modal");
+    const applyCategoryBtn = document.getElementById("apply-category");
 
-}); // AKHIR DARI DOMContentLoaded
+    if (categoryTrigger && categoryDropdown) {
+        
+        // Buka Menu & Kunci Scroll
+        categoryTrigger.addEventListener("click", function(e) {
+            e.stopPropagation();
+            categoryDropdown.classList.toggle("show");
+            if (categoryDropdown.classList.contains("show")) {
+                document.body.classList.add("no-scroll");
+            } else {
+                document.body.classList.remove("no-scroll");
+            }
+        });
+
+        // LOGIKA BARU: Pantau Pilihan Dropdown Select
+        if (categorySelect) {
+            categorySelect.addEventListener("change", function() {
+                // Jika pilih 'Other', munculkan kotak input teks
+                if (this.value === "Other") {
+                    categoryOtherInput.style.display = "block";
+                    categoryOtherInput.focus();
+                } else {
+                    categoryOtherInput.style.display = "none";
+                }
+            });
+        }
+
+        // Tombol X (Tutup Modal Kategori)
+        if (closeCategoryBtn) {
+            closeCategoryBtn.addEventListener("click", function(e) {
+                e.stopPropagation();
+                categoryDropdown.classList.remove("show");
+                document.body.classList.remove("no-scroll"); 
+            });
+        }
+
+        // Tombol Apply (Terapkan Kategori)
+        if (applyCategoryBtn) {
+            applyCategoryBtn.addEventListener("click", function(e) {
+                e.stopPropagation();
+                
+                let selectedCategory = categorySelect.value;
+                
+                // Jika user memilih 'Other', ambil nilai dari kotak input teksnya
+                if (selectedCategory === "Other") {
+                    selectedCategory = categoryOtherInput.value.trim();
+                }
+                
+                // Cek apakah ada yang diisi/dipilih
+                if (selectedCategory !== "") {
+                    categoryDisplay.value = selectedCategory;
+                    categoryDisplay.style.color = "#ffffff"; // Ubah warna jadi putih
+                } else {
+                    categoryDisplay.value = "Select Category";
+                    categoryDisplay.style.color = "#a0a0a0"; // Kembali abu-abu
+                }
+                
+                // Tutup modal
+                categoryDropdown.classList.remove("show"); 
+                document.body.classList.remove("no-scroll"); 
+            });
+        }
+    }
+
+});

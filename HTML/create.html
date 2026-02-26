@@ -125,6 +125,53 @@
                 
                 <h4>Event Options</h4>
                 <div class="event-options-wrapper card-box">
+                    
+                    <div class="category-wrapper" style="position: relative;">
+                        <div class="category-wrapper-left" style="display: flex; align-items: center; gap: 12px; color: #a0a0a0;">
+                            <i class="fa-solid fa-layer-group"></i> 
+                            <h3 style="margin: 0; font-size: 14px; font-weight: 500; color: #e0e0e0;">Event Category</h3>
+                        </div>
+                        
+                        <div class="category-wrapper-right" id="category-trigger" style="cursor: pointer; display: flex; gap: 8px; align-items: center;">
+                            <input type="text" id="category-display" value="Select Category" readonly style="cursor: pointer; background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px; width: 140px; pointer-events: none;">
+                            <i class="fa-solid fa-pen" style="font-size: 12px; color: #a0a0a0;"></i>
+                        </div>
+
+                        <div class="ticket-dropdown" id="category-dropdown">
+                            <i class="fa-solid fa-xmark close-modal" id="close-category-modal"></i>
+                            
+                            <div class="modal-header-intro">
+                                <div class="modal-header-icon">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                </div>
+                                <h2>Event Category</h2>
+                                <p>Help attendees discover your event by assigning it to a category. Choose from the list or select "Other" to type your own.</p>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Select Category:</label>
+                                <select id="category_select" class="custom-select">
+                                    <option value="">Choose a category...</option>
+                                    <option value="Music Concert">Music Concert</option>
+                                    <option value="Tech Seminar">Tech Seminar</option>
+                                    <option value="Workshop & Training">Workshop & Training</option>
+                                    <option value="Festival / Exhibition">Festival / Exhibition</option>
+                                    <option value="Sports & E-Sports">Sports & E-Sports</option>
+                                    <option value="Arts & Theater">Arts & Theater</option>
+                                    <option value="Religious / Kajian">Religious / Kajian</option>
+                                    <option value="Other">Other (Type your own)</option>
+                                </select>
+                                
+                                <input type="text" id="category_other_input" class="custom-input" placeholder="Type your category name here..." style="display: none; margin-top: 8px;">
+                            </div>
+                            
+                            <div class="ticket-actions" style="margin-top: 24px;">
+                                <button type="button" class="apply-btn" id="apply-category" style="width: 100%;">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
                     <div class="ticket-wrapper" style="position: relative;">
                         <div class="ticket-wrapper-left">
                             <i class="fa-solid fa-ticket"></i> 
@@ -174,7 +221,7 @@
 
                                 <div class="input-group">
                                     <label>Account Number / E-Wallet ID:</label>
-                                    <input type="number" id="payout_account" placeholder="Example: 08123456789">
+                                    <input type="number" id="payout_account" placeholder="Example: 08123456789" class="custom-input">
                                 </div>
 
                                 <div class="ticket-tiers-wrapper">
@@ -198,6 +245,7 @@
                         </div>
                     </div>
                     <hr>
+                    
                     <div class="approval-wrapper">
                         <div class="approval-wrapper-left">
                             <i class="fa-solid fa-user-check"></i>
@@ -208,6 +256,7 @@
                         </div>
                     </div>
                     <hr>
+                    
                     <div class="capacity-wrapper" style="position: relative;">
                         <div class="capacity-wrapper-left">
                             <i class="fa-solid fa-users"></i> 
@@ -242,7 +291,7 @@
                             
                             <div class="capacity-number-input" id="capacity-number-container" style="display: none;">
                                 <label for="cap_amount">Capacity Limit:</label>
-                                <input type="number" id="cap_amount" min="1" placeholder="e.g., 100">
+                                <input type="number" id="cap_amount" min="1" placeholder="e.g., 100" class="custom-input">
                                 
                                 <label style="margin-top: 8px;">Seat Assignment:</label>
                                 <div class="seat-type-options">
@@ -274,6 +323,7 @@
                         </div>
                     </div>
                     <hr>
+                    
                     <div class="question-wrapper" style="position: relative; display: flex; justify-content: space-between; align-items: center;">
                         <div class="question-wrapper-left" style="display: flex; align-items: center; gap: 12px; color: #a0a0a0;">
                             <i class="fa-solid fa-clipboard-list"></i> 
@@ -285,7 +335,8 @@
                             <i class="fa-solid fa-pen" style="font-size: 12px; color: #a0a0a0;"></i>
                         </div>
 
-                        <div class="ticket-dropdown" id="question-dropdown"> <i class="fa-solid fa-xmark close-modal" id="close-question-modal"></i>
+                        <div class="ticket-dropdown" id="question-dropdown"> 
+                            <i class="fa-solid fa-xmark close-modal" id="close-question-modal"></i>
                             
                             <div class="modal-header-intro">
                                 <div class="modal-header-icon">
@@ -297,7 +348,7 @@
 
                             <div id="questions-container" style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
                                 <label style="font-size: 14px; color: #b0b0b0; margin-bottom: 4px; display: block;">Custom Questions:</label>
-                                </div>
+                            </div>
                             
                             <button type="button" id="add-question-btn" class="add-tier-btn" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Question</button>
 

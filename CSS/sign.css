@@ -1,28 +1,28 @@
-    /* =========================================
-    1. RESET & GLOBAL VARIABLES
-    ========================================= */
-    :root {
-        --bg-body: #050505;
-        --bg-card: #121212;
-        --bg-card-hover: #1a1a1a;
-        --text-primary: #ffffff;
-        --text-secondary: #a0a0a0;
-        --accent-orange: #f97316; /* Warna status Pending */
-        --accent-green: #22c55e;  /* Warna status Going */
-        --border-color: #2a2a2a;
-        --content-width: 1000px;
-        --edge-spacing: 40px;
-        --content-padding: 20px;
-    }
+/* =========================================
+1. RESET & GLOBAL VARIABLES
+========================================= */
+:root {
+    --bg-body: #050505;
+    --bg-card: #121212;
+    --bg-card-hover: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-orange: #f97316; /* Warna status Pending */
+    --accent-green: #22c55e;  /* Warna status Going */
+    --border-color: #2a2a2a;
+    --content-width: 1000px;
+    --edge-spacing: 40px;
+    --content-padding: 20px;
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
-    body {
+body {
     background-color: #050505; 
     
     /* MENGGABUNGKAN 2 GRADIEN (Tumpukan) */
@@ -39,6 +39,10 @@
     color: var(--text-primary);
     min-height: 100vh;
     padding-top: 80px; 
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
     a {
@@ -140,6 +144,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+    margin-bottom: 60px;
 }
 
 .sign-card img {

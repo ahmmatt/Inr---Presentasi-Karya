@@ -1,38 +1,32 @@
-    /* =========================================
-    1. RESET & GLOBAL VARIABLES
-    ========================================= */
-    :root {
-        --bg-body: #050505;
-        --bg-card: #121212;
-        --bg-card-hover: #1a1a1a;
-        --text-primary: #ffffff;
-        --text-secondary: #a0a0a0;
-        --accent-orange: #f97316; /* Warna status Pending */
-        --accent-green: #22c55e;  /* Warna status Going */
-        --border-color: #2a2a2a;
-        --content-width: 1000px;
-        --edge-spacing: 40px;
-        --content-padding: 20px;
-    }
+/* =========================================
+   1. RESET & GLOBAL VARIABLES
+   ========================================= */
+:root {
+    --bg-body: #050505;
+    --bg-card: #121212;
+    --bg-card-hover: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-orange: #f97316; 
+    --accent-green: #22c55e;  
+    --border-color: #2a2a2a;
+    --content-width: 1000px;
+    --edge-spacing: 40px;
+    --content-padding: 20px;
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
-    body {
-    background-color: #050505; 
-    
-    /* MENGGABUNGKAN 2 GRADIEN (Tumpukan) */
+body {
+    background-color: var(--bg-body); 
     background-image: 
-        /* Tumpukan 1 (Paling Atas): Cahaya dari atap memudar ke transparan di ketinggian 25% layar */
         linear-gradient(to bottom, rgba(30, 40, 55, 0.6) 0%, transparent 25%),
-        
-        /* Tumpukan 2 (Dasar): Gradien radial asli Anda (Tengah ke ujung) */
         radial-gradient(ellipse at center, #050505 30%, #131722 100%);
-    
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
@@ -41,145 +35,55 @@
     padding-top: 80px; 
 }
 
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
+body::-webkit-scrollbar {
+    display: none;
+}
 
-    ul {
-        list-style: none;
-    }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
 
-    /* =========================================
-    2. NAVBAR STYLING
-    ========================================= */
-    .navbar {
-        /* 1. Membuat Navbar Menempel di Atas */
-        position: fixed; 
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 60px; /* Tinggi fix diperlukan agar layout stabil */
-        z-index: 1000;
-        /* Background transparan murni dan tanpa garis bawah */
-        background-color: transparent; 
-        border-bottom: 1px solid transparent; 
-        /* PENTING: Efek transisi agar perubahan blur-nya halus (smooth) */
-        transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
-        /* Layout */
-        display: grid;
-        grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
-        align-items: center;
-        padding: 0 var(--edge-spacing); 
-        box-sizing: border-box;
-    }
+/* =========================================
+   2. NAVBAR STYLING
+   ========================================= */
+.navbar {
+    position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 1000;
+    background-color: transparent; border-bottom: 1px solid transparent; 
+    transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+    display: grid; grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
+    align-items: center; padding: 0 var(--edge-spacing); 
+}
 
-    /* B. KONDISI SCROLLED (Saat di-scroll) */
-    .navbar.scrolled {
-        /* UBAH: Menggunakan warna RGB dari #131722 dengan transparansi 60% */
-        background-color: rgba(19, 23, 34, 0.6); 
-        
-        /* Efek Kaca (Blur) */
-        backdrop-filter: blur(16px); /* Tingkatkan blur sedikit agar lebih halus */
-        -webkit-backdrop-filter: blur(16px);  
-        
-        /* Garis bawah yang sangat tipis dan elegan */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
-        
-        /* Tambahan efek bayangan (shadow) halus untuk memisahkan navbar dan konten */
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-    }
+.navbar.scrolled {
+    background-color: rgba(19, 23, 34, 0.6); 
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);  
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
 
-    /* 1. POSISI KIRI (SecureGate) */
-    .left-nav {
-        grid-column: 1;      /* Masuk kolom pertama */
-        justify-self: start; /* Mentok ke Kiri */
-    }
+.left-nav { grid-column: 1; justify-self: start; }
+.left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
 
-    .left-nav h1 {
-        font-size: 20px;
-        font-weight: 700;
-        color: #e0e0e0;
-    }
+.main-nav { grid-column: 2; justify-self: start; padding-left: var(--inner-padding); margin-left: 14px; display: flex; gap: 30px; }
+.main-nav div { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
+.main-nav div:hover { color: var(--text-primary); }
 
-    /* 2. POSISI TENGAH (Main Nav) */
-    .main-nav {
-        grid-column: 2;      /* Masuk kolom tengah (1000px) */
-        justify-self: start; /* Mulai dari awal kolom 1000px ini */
-        padding-left: var(--inner-padding); 
-        margin-left: 14px;
-        display: flex;
-        gap: 30px;
-    }
+.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 20px; }
+.right-nav a { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+.right-nav img { width: 32px; height: 32px; border-radius: 50%; background-color: #333; display: block; }
 
-    /* 3. POSISI KANAN (Profile/Create Event) */
-    .right-nav {
-        grid-column: 3;      /* Masuk kolom ketiga */
-        justify-self: end;   /* Mentok ke Kanan */
-        
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    /* Sisa styling navbar (warna text dll) tetap sama */
-    .main-nav div {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: #a0a0a0;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
-
-    .main-nav div:hover {
-        color: #ffffff;
-    }
-
-    .right-nav a {
-        font-size: 14px;
-        font-weight: 500;
-        color: #ffffff;
-        text-decoration: none;
-    }
-
-    .right-nav img {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background-color: #333;
-        display: block;
-    }
-
-    /* =========================================
-    3. PAGE FRAME & TAB HEADER
-    ========================================= */
-    .page-frame {
-        max-width: var(--content-width);
-        margin: 40px auto;
-        padding: 0 var(--content-padding);
-    }
-
-    .page-frame-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 40px;
-    }
-
-    .page-frame-nav h1 {
-        font-size: 32px;
-        font-weight: 700;
-    }
+/* =========================================
+   3. PAGE FRAME & TAB HEADER
+   ========================================= */
+.page-frame { max-width: var(--content-width); margin: 40px auto; padding: 0 var(--content-padding); }
+.page-frame-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+.page-frame-nav h1 { font-size: 32px; font-weight: 700; }
 
 /* =========================================
    LAYOUT SCANNER (GRID RESPONSIVE)
    ========================================= */
 .scanner-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Membagi dua layar pada Desktop */
+    grid-template-columns: 1fr 1fr; 
     gap: 40px;
     align-items: start;
 }
@@ -191,7 +95,7 @@
 
 .camera-container {
     width: 100%;
-    aspect-ratio: 1 / 1; /* Kotak sempurna */
+    aspect-ratio: 1 / 1; 
     background-color: #0a0a0a;
     border: 2px dashed rgba(255, 255, 255, 0.2);
     border-radius: 16px;
@@ -200,16 +104,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    transition: 0.3s;
+    /* PERBAIKAN: Pastikan video tidak meluap keluar batas lengkungan */
+    overflow: hidden; 
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .camera-container.scanning {
-    border-color: #22c55e;
+    border-color: var(--accent-green);
     box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
 }
 
-.camera-icon { font-size: 48px; color: #333; margin-bottom: 12px; transition: 0.3s; }
+.camera-icon { font-size: 48px; color: #333; margin-bottom: 12px; transition: color 0.3s; }
 .camera-container.scanning .camera-icon { color: rgba(34, 197, 94, 0.5); }
 #camera-text { color: #555; font-size: 14px; font-weight: 500; z-index: 2; }
 
@@ -224,26 +129,23 @@
 }
 
 /* =========================================
-   PERBAIKAN FINAL TAMPILAN KAMERA (MENGHILANGKAN GARIS PUTIH)
+   PERBAIKAN FINAL TAMPILAN KAMERA LIBRARI
    ========================================= */
-
-/* 1. Reset total wadah #reader agar tidak ada padding/margin */
 #reader {
     width: 100% !important;
     height: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
     border: none !important;
-    border-radius: 14px; /* Menyamakan curve dengan induknya */
-    overflow: hidden;
-    background: transparent !important; /* Pastikan tidak ada background putih */
-    position: absolute; /* Pastikan dia menempel di layout */
+    border-radius: 14px; 
+    overflow: hidden !important;
+    background: transparent !important; 
+    position: absolute; 
     top: 0;
     left: 0;
 }
 
-/* 2. TARGET UTAMA: Sembunyikan total "Dashboard" bawaan library (ini biang kerok garis putihnya) */
-/* Selektor ini memilih semua div yang ID-nya dimulai dengan 'reader__dashboard' */
+/* Sembunyikan total "Dashboard" bawaan library */
 div[id^="reader__dashboard"] { 
     display: none !important;
     height: 0 !important;
@@ -253,18 +155,15 @@ div[id^="reader__dashboard"] {
     overflow: hidden !important;
 }
 
-/* 3. Paksa elemen Video asli mengisi penuh area tanpa celah */
 #reader video {
     width: 100% !important;
     height: 100% !important;
-    /* 'cover' memastikan video memenuhi kotak tanpa terlihat gepeng, meskipun sedikit terpotong */
     object-fit: cover !important; 
     margin: 0 !important;
     padding: 0 !important;
-    border-radius: 14px; /* Opsional: memastikan video juga melengkung */
+    border-radius: 14px; 
 }
 
-/* 4. Memastikan wrapper region tempat video berada juga penuh */
 #reader__scan_region {
     width: 100% !important;
     height: 100% !important;
@@ -273,78 +172,61 @@ div[id^="reader__dashboard"] {
     margin: 0 !important;
 }
 
-/* 5. Sembunyikan elemen gambar lain jika library mencoba menampilkannya */
-#reader img {
-    display: none !important;
-}
-/* Menyembunyikan border bawaan library scanner */
+#reader img { display: none !important; }
 #reader__dashboard_section_csr span,
-#reader__dashboard_section_swaplink {
-    display: none !important;
-}
+#reader__dashboard_section_swaplink { display: none !important; }
 
 /* =========================================
-   PERBAIKAN POSISI IKON & TEKS KAMERA (SELALU DI TENGAH)
+   PERBAIKAN POSISI IKON & TEKS KAMERA
    ========================================= */
 .camera-overlay-text {
-    position: absolute; /* Lepaskan dari arus bawah agar tidak terdorong */
+    position: absolute; 
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Tarik tepat ke tengah titik x dan y */
+    transform: translate(-50%, -50%); 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 10; /* Pastikan selalu berada di paling atas */
-    pointer-events: none; /* Agar klik mouse/sentuhan tembus ke kamera di belakangnya */
+    z-index: 10; 
+    pointer-events: none; 
 }
 
-/* Pastikan tidak ada margin bentrok pada ikon dan teks */
-.camera-overlay-text .camera-icon {
-    margin-bottom: 12px !important;
-}
+.camera-overlay-text .camera-icon { margin-bottom: 12px !important; }
+.camera-overlay-text p { margin: 0 !important; }
 
-.camera-overlay-text p {
-    margin: 0 !important;
-}
-
-/* Animasi Laser Pemindai */
+/* Animasi Laser Pemindai (Diperhalus) */
 .laser-beam {
     position: absolute;
     width: 100%;
     height: 2px;
-    background-color: #22c55e;
-    box-shadow: 0 0 15px 2px #22c55e;
+    background-color: var(--accent-green);
+    box-shadow: 0 0 15px 2px var(--accent-green);
     top: 0;
     left: 0;
     z-index: 5;
-    display: none; /* Disembunyikan secara default */
+    /* PERBAIKAN: Ganti display:none dengan opacity:0 agar transisi lebih mulus */
+    opacity: 0; 
+    pointer-events: none;
 }
 
-/* Class untuk mengaktifkan animasi laser */
 .scanning .laser-beam {
-    display: block;
-    animation: scanAnimation 2s linear infinite;
+    opacity: 1;
+    animation: scanAnimation 2.5s ease-in-out infinite;
 }
 
 @keyframes scanAnimation {
     0% { top: 10%; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
     100% { top: 90%; opacity: 0; }
 }
 
 /* =========================================
    GAYA TOMBOL CANCEL SCANNER
    ========================================= */
-.btn-cancel-scan {
-    background-color: #ef4444 !important; /* Warna Merah */
-    color: #ffffff !important;
-}
-
-.btn-cancel-scan:hover {
-    background-color: #dc2626 !important; /* Merah lebih gelap saat dihover */
-}
+.btn-cancel-scan { background-color: #ef4444 !important; color: #ffffff !important; }
+.btn-cancel-scan:hover { background-color: #dc2626 !important; }
 
 /* =========================================
    BAGIAN KANAN (HASIL & INFO)
@@ -368,7 +250,7 @@ div[id^="reader__dashboard"] {
     text-align: center;
 }
 .empty-state i { font-size: 40px; margin-bottom: 16px; }
-.empty-state h3 { font-size: 18px; color: #a0a0a0; margin-bottom: 8px;}
+.empty-state h3 { font-size: 18px; color: var(--text-secondary); margin-bottom: 8px;}
 
 /* Kartu Hasil Scan */
 .scan-result-card { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
@@ -389,15 +271,11 @@ div[id^="reader__dashboard"] {
 .attendee-info { display: flex; align-items: center; gap: 16px; }
 .attendee-pict { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
 .attendee-info h2 { font-size: 18px; margin: 0 0 4px 0; color: #fff; }
-.attendee-info p { font-size: 14px; margin: 0; color: #a0a0a0; }
+.attendee-info p { font-size: 14px; margin: 0; color: var(--text-secondary); }
 
 .divider { border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 0; }
 
-.ticket-details-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
+.ticket-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .detail-item span { font-size: 12px; color: #888; display: block; margin-bottom: 4px; }
 .detail-item h4 { font-size: 14px; color: #e0e0e0; margin: 0; font-weight: 500; }
 
@@ -430,35 +308,16 @@ div[id^="reader__dashboard"] {
    ========================================= */
 @media (max-width: 768px) {
     .scanner-layout {
-        grid-template-columns: 1fr; /* Berubah jadi atas-bawah di layar kecil */
+        grid-template-columns: 1fr; 
         gap: 24px;
     }
-    .camera-container { aspect-ratio: 4 / 3; } /* Di HP, kotak kamera sedikit lebih pipih */
+    .camera-container { aspect-ratio: 4 / 3; } 
 }
 
-    /* =========================================
-    6. FOOTER
-    ========================================= */
-    hr {
-        border: 0;
-        border-top: 1px solid #2a2a2a;
-        margin: 40px 0;
-        width: 100%;
-    }
-
-    .page-footer {
-        display: flex;
-        justify-content: space-between;
-        padding-bottom: 40px;
-        font-size: 14px;
-        color: var(--text-secondary);
-    }
-
-    .left-footer, .right-footer {
-        display: flex;
-        gap: 20px;
-    }
-
-    .right-footer a:hover {
-        color: var(--text-primary);
-    }
+/* =========================================
+   6. FOOTER
+   ========================================= */
+hr { border: 0; border-top: 1px solid var(--border-color); margin: 40px 0; width: 100%; }
+.page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
+.left-footer, .right-footer { display: flex; gap: 20px; }
+.right-footer a:hover { color: var(--text-primary); }
