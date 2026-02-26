@@ -1,35 +1,33 @@
-    /* =========================================
-    1. RESET & GLOBAL VARIABLES
-    ========================================= */
-    :root {
-        --bg-body: #050505;
-        --bg-card: #121212;
-        --bg-card-hover: #1a1a1a;
-        --text-primary: #ffffff;
-        --text-secondary: #a0a0a0;
-        --accent-orange: #f97316; /* Warna status Pending */
-        --accent-green: #22c55e;  /* Warna status Going */
-        --border-color: #2a2a2a;
-        --content-width: 1000px;
-        --edge-spacing: 40px;
-        --content-padding: 20px;
-    }
+/* =========================================
+   1. RESET & GLOBAL VARIABLES
+   ========================================= */
+:root {
+    --bg-body: #050505;
+    --bg-card: #121212;
+    --bg-card-hover: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-orange: #f97316; /* Warna status Pending */
+    --accent-green: #22c55e;  /* Warna status Going */
+    --border-color: #2a2a2a;
+    --content-width: 1000px;
+    --edge-spacing: 40px;
+    --content-padding: 20px;
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
-    body {
+body {
     background-color: #050505; 
-    
     /* MENGGABUNGKAN 2 GRADIEN (Tumpukan) */
     background-image: 
         /* Tumpukan 1 (Paling Atas): Cahaya dari atap memudar ke transparan di ketinggian 25% layar */
         linear-gradient(to bottom, rgba(30, 40, 55, 0.6) 0%, transparent 25%),
-        
         /* Tumpukan 2 (Dasar): Gradien radial asli Anda (Tengah ke ujung) */
         radial-gradient(ellipse at center, #050505 30%, #131722 100%);
     
@@ -41,651 +39,201 @@
     padding-top: 80px; 
 }
 
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
+body::-webkit-scrollbar {
+    display: none;
+}
 
-    ul {
-        list-style: none;
-    }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
 
-    /* =========================================
-    2. NAVBAR STYLING
-    ========================================= */
-    .navbar {
-        /* 1. Membuat Navbar Menempel di Atas */
-        position: fixed; 
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 60px; /* Tinggi fix diperlukan agar layout stabil */
-        z-index: 1000;
-        /* Background transparan murni dan tanpa garis bawah */
-        background-color: transparent; 
-        border-bottom: 1px solid transparent; 
-        /* PENTING: Efek transisi agar perubahan blur-nya halus (smooth) */
-        transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
-        /* Layout */
-        display: grid;
-        grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
-        align-items: center;
-        padding: 0 var(--edge-spacing); 
-        box-sizing: border-box;
-    }
+/* =========================================
+   2. NAVBAR STYLING
+   ========================================= */
+.navbar {
+    position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 1000;
+    background-color: transparent; border-bottom: 1px solid transparent; 
+    transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+    display: grid; grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
+    align-items: center; padding: 0 var(--edge-spacing); 
+}
 
-    /* B. KONDISI SCROLLED (Saat di-scroll) */
-    .navbar.scrolled {
-        /* UBAH: Menggunakan warna RGB dari #131722 dengan transparansi 60% */
-        background-color: rgba(19, 23, 34, 0.6); 
-        
-        /* Efek Kaca (Blur) */
-        backdrop-filter: blur(16px); /* Tingkatkan blur sedikit agar lebih halus */
-        -webkit-backdrop-filter: blur(16px);  
-        
-        /* Garis bawah yang sangat tipis dan elegan */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
-        
-        /* Tambahan efek bayangan (shadow) halus untuk memisahkan navbar dan konten */
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-    }
+.navbar.scrolled {
+    background-color: rgba(19, 23, 34, 0.6); 
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);  
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
 
-    /* 1. POSISI KIRI (SecureGate) */
-    .left-nav {
-        grid-column: 1;      /* Masuk kolom pertama */
-        justify-self: start; /* Mentok ke Kiri */
-    }
+.left-nav { grid-column: 1; justify-self: start; }
+.left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
 
-    .left-nav h1 {
-        font-size: 20px;
-        font-weight: 700;
-        color: #e0e0e0;
-    }
+.main-nav { grid-column: 2; justify-self: start; margin-left: 14px; display: flex; gap: 30px; }
+.main-nav div { display: flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
+.main-nav div:hover { color: #ffffff; }
 
-    /* 2. POSISI TENGAH (Main Nav) */
-    .main-nav {
-        grid-column: 2;      /* Masuk kolom tengah (1000px) */
-        justify-self: start; /* Mulai dari awal kolom 1000px ini */
-        padding-left: var(--inner-padding); 
-        margin-left: 14px;
-        display: flex;
-        gap: 30px;
-    }
+.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 20px; }
+.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; }
+.right-nav img { width: 32px; height: 32px; border-radius: 50%; background-color: #333; display: block; }
 
-    /* 3. POSISI KANAN (Profile/Create Event) */
-    .right-nav {
-        grid-column: 3;      /* Masuk kolom ketiga */
-        justify-self: end;   /* Mentok ke Kanan */
-        
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
+/* =========================================
+   3. PAGE FRAME & TAB HEADER
+   ========================================= */
+.page-frame { max-width: var(--content-width); margin: 40px auto; padding: 0 var(--content-padding); }
+.page-frame-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+.page-frame-nav h1 { font-size: 32px; font-weight: 700; }
 
-    /* Sisa styling navbar (warna text dll) tetap sama */
-    .main-nav div {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: #a0a0a0;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
+.toggle-select-event { background-color: #1f1f1f; padding: 4px; border-radius: 8px; display: flex; }
+.toggle-select-event a { padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 6px; color: var(--text-secondary); transition: all 0.2s; }
+.toggle-select-event a.active { background-color: #333; color: var(--text-primary); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+.toggle-select-event a:hover { color: var(--text-primary); }
 
-    .main-nav div:hover {
-        color: #ffffff;
-    }
+/* =========================================
+   4. UPCOMING EVENT (EMPTY STATE)
+   ========================================= */
+.upcoming-event { display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; gap: 20px; padding: 20px 0; }
 
-    .right-nav a {
-        font-size: 14px;
-        font-weight: 500;
-        color: #ffffff;
-        text-decoration: none;
-    }
+.event-card-detail {
+    width: 100%; max-width: 300px; margin: 0; background-color: #121212; border: 1px solid #2a2a2a; border-radius: 12px;
+    padding: clamp(16px, 4vw, 20px); transition: border-color 0.2s; 
+}
 
-    .right-nav img {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background-color: #333;
-        display: block;
-    }
+.card-top-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; }
+.card-top-header h4 { font-size: clamp(12px, 4vw, 14px); font-weight: 600; color: #ffffff; letter-spacing: 0.3px; }
+.header-right h4 { color: #e0e0e0; }
 
-    /* =========================================
-    3. PAGE FRAME & TAB HEADER
-    ========================================= */
-    .page-frame {
-        max-width: var(--content-width);
-        margin: 40px auto;
-        padding: 0 var(--content-padding);
-    }
+.card-divider { border: 0; border-top: 1px solid #2a2a2a; margin: 0 0 16px 0; width: 100%; }
 
-    .page-frame-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 40px;
-    }
+.card-hero-img { width: 70%; margin-left: auto; margin-right: auto; display: block; overflow: hidden; border-radius: 8px; margin-bottom: 16px; margin-top: 10px; }
+.card-hero-img img { width: 100%; height: 100%; object-fit: cover; }
 
-    .page-frame-nav h1 {
-        font-size: 32px;
-        font-weight: 700;
-    }
+.card-title { font-size: clamp(18px, 5vw, 22px); font-weight: 700; color: #ffffff; text-align: left; margin-bottom: 10px; line-height: 1.3; width: 100%; }
 
-    /* Styling Tombol Toggle (Upcoming / Past) */
+.card-author { display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 10px; cursor: pointer; text-align: left; }
+.card-author img { width: 20px; height: 20px; border-radius: 4px; background-color: #fff; object-fit: contain; flex-shrink: 0; }
+.card-author span { font-size: clamp(11px, 3vw, 13px); font-weight: 500; color: #e0e0e0; white-space: nowrap; }
+.card-author i { font-size: 10px; color: #666; }
 
+/* Container untuk Info (Lokasi & Harga) */
+.card-info-blocks { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 14px; /* UBAH: Memberikan jarak nyata antar elemen agar tidak bertumpuk */
+    margin-top: 12px; /* Jarak yang pas dari profil author */
+}
 
-    .toggle-select-event {
-        background-color: #1f1f1f;
-        padding: 4px;
-        border-radius: 8px;
-        display: flex;
-    }
+/* Wadah Harga Tiket (Sekarang punya ruang sendiri) */
+.event-card-detail .price-mini-block { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    /* UBAH: Menghapus margin negatif yang menyebabkan overlap! */
+    margin: 0; 
+    padding-left: 2px;
+}
 
-    .toggle-select-event a {
-        padding: 8px 24px;
-        font-size: 14px;
-        font-weight: 500;
-        border-radius: 6px;
-        color: var(--text-secondary);
-        transition: all 0.2s;
-    }
+.event-card-detail .price-mini-block i { 
+    font-size: 14px; 
+    color: #22c55e; 
+}
 
-    /* Class 'active' akan ditambahkan via JS */
-    .toggle-select-event a.active {
-        background-color: #333;
-        color: var(--text-primary);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
+.event-card-detail .price-mini-block span { 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: #22c55e; 
+    line-height: 1; 
+}/* Container untuk Info (Lokasi & Harga) */
+.card-info-blocks { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 14px; /* UBAH: Memberikan jarak nyata antar elemen agar tidak bertumpuk */
+    margin-top: 12px; /* Jarak yang pas dari profil author */
+}
 
-    .toggle-select-event a:hover {
-        color: var(--text-primary);
-    }
+/* Wadah Harga Tiket (Sekarang punya ruang sendiri) */
+.event-card-detail .price-mini-block { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    /* UBAH: Menghapus margin negatif yang menyebabkan overlap! */
+    margin: 0; 
+    padding-left: 2px;
+}
 
-    /* =========================================
-    4. UPCOMING EVENT (EMPTY STATE)
-    ========================================= */
-    .upcoming-event {
-        display: flex;
-        
-        /* INI KUNCINYA: Membiarkan elemen turun ke baris baru jika penuh */
-        flex-wrap: wrap; 
-        
-        /* Sejajarkan kartu dari Kiri ke Kanan, dan menempel ke atas */
-        justify-content: flex-start; 
-        align-items: flex-start;
-        
-        gap: 20px; /* Jarak antar kartu (kiri-kanan dan atas-bawah) */
-        padding: 20px 0;
-    }
+.event-card-detail .price-mini-block i { 
+    font-size: 14px; 
+    color: #22c55e; 
+}
 
-    /* Styling Kartu Detail */
-    .event-card-detail {
-        width: 100%;
-        
-        /* UBAH: Turunkan menjadi 300px agar 3 kartu muat dalam ruang 960px */
-        max-width: 300px; 
-        
-        margin: 0; 
-        
-        background-color: #121212;
-        border: 1px solid #2a2a2a;
-        border-radius: 12px;
-        
-        padding: clamp(16px, 4vw, 20px); 
-        box-sizing: border-box; 
-        transition: border-color 0.2s; /* Tambahan agar hover border mulus */
-    }
+.event-card-detail .price-mini-block span { 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: #22c55e; 
+    line-height: 1; 
+}
 
-    /* Opsional: Efek hover pada kartu utama */
-    .event-card-detail:hover {
-        border-color: #444;
-    }
+.info-block { display: flex; gap: 12px; align-items: center; }
 
-    /* 1. Container Header Atas */
-    .card-top-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 12px; /* Jarak diperkecil sedikit */
-    }
+/* PERBAIKAN: Menghapus !important */
+.event-card-detail .block-icon {
+    width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;
+    background-color: #1a1a1a; border: 1px solid #333; border-radius: 8px; font-size: 22px; color: #838383; flex-shrink: 0; margin: 0;
+}
 
-    /* Teks Tanggal & Waktu */
-    .card-top-header h4 {
-        /* Font size mengecil otomatis jika layar sempit: Minimal 12px, Ideal 4vw, Maksimal 14px */
-        font-size: clamp(12px, 4vw, 14px); 
-        font-weight: 600;
-        color: #ffffff;
-        letter-spacing: 0.3px;
-    }
+.block-text h3 { margin: 0 0 2px 0; font-size: clamp(13px, 4vw, 15px); font-weight: 600; color: #fff; display: flex; align-items: center; gap: 6px; }
+.block-text p { margin: 0; font-size: clamp(11px, 3.5vw, 13px); color: #888; line-height: 1.2; }
 
-    .header-right h4 {
-        color: #e0e0e0; 
-    }
+/* =========================================
+   5. PAST EVENT (LIST VIEW)
+   ========================================= */
+.past-event { display: none; flex-direction: column; gap: 30px; margin-bottom: 30px; }
+.timeline-row { display: flex; flex-direction: row; gap: 20px; width: 100%; }
 
-    /* 2. Garis Pemisah */
-    .card-divider {
-        border: 0;
-        border-top: 1px solid #2a2a2a;
-        margin: 0 0 16px 0; /* Margin diperkecil */
-        width: 100%;
-    }
+.past-event .timeline-row:last-child .left-info::before { height: 24px !important; }
 
-    /* Menargetkan pembungkus (wrapper) gambarnya */
-    .card-hero-img {
-        width: 70%; 
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-        overflow: hidden;
-        border-radius: 8px; /* Radius diperkecil agar proporsional */
-        margin-bottom: 16px; 
-        margin-top: 10px;    
-    }
+.left-info { min-width: 100px; text-align: left; padding-top: 10px; position: relative; align-self: stretch; }
+.left-info::before { content: ""; position: absolute; top: 0; right: -1px; width: 1px; height: calc(100% + 30px); border-right: 1px dashed #333; z-index: 1; }
+.left-info::after { content: ""; position: absolute; top: 20px; right: -5px; width: 9px; height: 9px; background-color: #555; border-radius: 50%; border: 2px solid #050505; z-index: 2; }
+.left-info h3 { font-size: 14px; font-weight: 600; color: #ffffff; margin-bottom: 4px; }
+.left-info h3:last-child { font-weight: 400; color: #a0a0a0; }
 
-    .card-hero-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+.right-info { flex-grow: 1; background-color: #121212; border: 1px solid #2a2a2a; border-radius: 12px; overflow: hidden; display: flex; justify-content: space-between; transition: background-color 0.2s; }
+.past-event-card { padding: 24px; display: flex; flex-direction: column; justify-content: center; flex: 1; }
+.left-past-card { display: flex; flex-direction: column; gap: 12px; }
 
-    /* JUDUL */
-    .card-title {
-        /* Font Title Responsif: Minimal 18px, Maksimal 22px */
-        font-size: clamp(18px, 5vw, 22px); 
-        font-weight: 700;
-        color: #ffffff;   
-        text-align: left; 
-        margin-bottom: 10px;
-        line-height: 1.3;   
-        width: 100%; 
-    }
+.time-event { display: flex; gap: 5px; font-size: 13px; color: #f97316; font-weight: 500; }
+.time-event .begin-time{ color: #bbbbbb; }
+.past-event-card h2 { font-size: 18px; line-height: 1.4; font-weight: 600; margin: 8px 0; }
 
-    /* AUTHOR */
-    .card-author {
-        display: flex;       
-        align-items: center; 
-        justify-content: flex-start; 
-        gap: 8px;           
-        margin-bottom: 10px; /* Jarak diperkecil */
-        cursor: pointer;  
-        text-align: left;
-    }
+.author-past { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
+.author-past img { width: 20px; height: 20px; border-radius: 50%; }
 
-    .card-author img {
-        /* Logo ikut mengecil sedikit jika perlu, atau tetap fix kecil */
-        width: 20px;   
-        height: 20px;
-        border-radius: 4px; 
-        background-color: #fff;
-        object-fit: contain; 
-        flex-shrink: 0;      
-    }
+.past-location { font-size: 13px; color: #666; display: flex; align-items: center; gap: 6px; }
 
-    .card-author span {
-        /* Font Author Responsif */
-        font-size: clamp(11px, 3vw, 13px);
-        font-weight: 500;
-        color: #e0e0e0;
-        white-space: nowrap; 
-    }
+/* PERBAIKAN: Sistem pewarnaan status yang benar (Dapat diubah via class HTML) */
+.status-past { display: inline-block; margin-top: 12px; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; width: fit-content; color: #fff; }
+.status-past.pending { background-color: var(--accent-orange); }
+.status-past.going { background-color: var(--accent-green); }
 
-    .card-author:hover span {
-        color: #fff;
-        text-decoration: underline;
-    }
+.right-past-card { width: 180px; position: relative; display: flex; height: auto; }
+.right-past-card img { align-self: center; width: 85%; height: 80%; object-fit: cover; display: block; border-radius: 10px;  }
 
-    .card-author i {
-        font-size: 10px;
-        color: #666;
-        /* margin-top dihapus/disesuaikan karena align-items:center sudah menangani tengah */
-    }
-
-    /* INFO BLOCKS (DATE & LOCATION) */
-.card-info-blocks {
-    display: flex;
-    flex-direction: column;
-    gap: 0px; /* Jarak antar info diperkecil */
-    margin-top: 5px;
+/* =========================================
+   HOVER EFFECTS (Hanya aktif di perangkat dengan mouse)
+   ========================================= */
+@media (hover: hover) {
+    .event-card-detail:hover { border-color: #444; }
+    .right-info:hover { background-color: #1a1a1a; border-color: #444; }
+    .card-author:hover span { color: #fff; text-decoration: underline; }
+    .block-text h3:hover { text-decoration: underline; cursor: pointer; }
 }
 
 /* =========================================
-   HARGA TIKET SUPER MINI (TIDAK MERUBAH TINGGI CARD)
+   6. FOOTER
    ========================================= */
+hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
+.page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
+.left-footer, .right-footer { display: flex; gap: 20px; }
+.right-footer a:hover { color: var(--text-primary); }
 
-/* Wadah Harga */
-.price-mini-block {
-    display: flex;
-    align-items: center;
-    gap: 8px;           /* Jarak sangat dekat antara ikon dan teks */
-    padding-left: 2px;  /* Sedikit digeser agar sejajar manis */
-    margin-bottom: -4px !important; /* KUNCI: Menarik batas bawah agar card tidak melar */
-    margin-top: -8px;
-}
-
-/* Ikon Tag Mini */
-.price-mini-block i {
-    font-size: 13px !important;
-    color: #22c55e !important; /* Hijau terang */
-}
-
-/* Teks Harga Mini */
-.price-mini-block span {
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    color: #22c55e !important;
-    line-height: 1 !important;
-}
-
-    .info-block {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-    }
-
-
-
-    .block-icon {
-        width: 40px !important;
-        height: 40px !important;
-
-        display: flex !important;
-        justify-content: center !important; /* Tengah Kiri-Kanan */
-        align-items: center !important;     /* Tengah Atas-Bawah */
-
-        background-color: #1a1a1a; /* Warna Kotak */
-        border: 1px solid #333;
-        border-radius: 8px;
-        font-size: 22px !important; 
-        color: #838383 !important;
-        flex-shrink: 0;
-        margin: 0;
-    }
-
-    /* Text Detail */
-    .block-text h3 {
-        margin: 0 0 2px 0; /* Margin bawah kecil saja */
-        /* Sisa properti font tetap sama */
-        font-size: clamp(13px, 4vw, 15px);
-        font-weight: 600;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .block-text p {
-        margin: 0;
-        /* Sisa properti font tetap sama */
-        font-size: clamp(11px, 3.5vw, 13px);
-        color: #888;
-        line-height: 1.2;
-    }
-
-    .block-text h3:hover {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-    /* Menyembunyikan kartu di dalam upcoming (karena kita mau tampilan kosong sesuai gambar 1) */
-    .upcoming-event .event-card {
-        display: none; 
-    }
-
-    /* Styling icon kosong (jika ada i class kosong di html kamu, kita beri style) */
-    .upcoming-event i { 
-        font-size: 48px;
-        color: #333;
-        margin-bottom: 20px;
-    }
-
-    .upcoming-event p {
-        font-size: 14px;
-        color: #555;
-        margin-bottom: 24px;
-    }
-
-    .create-event a {
-        background-color: #2a2a2a;
-        color: var(--text-primary);
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 500;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        transition: background 0.2s;
-    }
-
-    .create-event a::before {
-        content: "+";
-        font-size: 16px;
-    }
-
-    .create-event a:hover {
-        background-color: #333;
-    }
-
-    /* =========================================
-    5. PAST EVENT (LIST VIEW)
-    ========================================= */
-    .past-event {
-        display: none; 
-        flex-direction: column; 
-        gap: 30px; /* KEMBALIKAN GAP INI */
-        margin-bottom: 30px;
-    }
-
-    .timeline-row {
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-        width: 100%;
-        /* padding-bottom dihapus, kita murni pakai gap lagi */
-    }
-
-    /* =========================================
-    PERBAIKAN GARIS AKHIR TIMELINE (STOP DI TITIK)
-    ========================================= */
-    .past-event .timeline-row:last-child .left-info::before {
-        /* Titik kita berada di top: 20px dengan ukuran 9px. 
-        Jadi titik tengahnya ada di sekitar 24px.
-        Kita paksa garisnya putus tepat di 24px! 
-        */
-        height: 24px !important; 
-    }
-
-    /* Kiri: Tanggal Timeline */
-    .left-info {
-        min-width: 100px;
-        text-align: left;
-        padding-top: 10px;
-        
-        /* HAPUS border-right di sini, kita pindahkan ke ::before */
-        
-        position: relative;
-        align-self: stretch;
-    }
-
-    /* KUNCI UTAMA: GARIS MENGGUNAKAN ::before */
-    .left-info::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: -1px;
-        width: 1px;
-        /* Tinggi garis = 100% tinggi kartu DITAMBAH 30px untuk menyeberangi gap! */
-        height: calc(100% + 30px); 
-        border-right: 1px dashed #333;
-        z-index: 1;
-    }
-
-    /* Titik timeline (Bulatan) */
-    .left-info::after {
-        content: "";
-        position: absolute;
-        top: 20px;
-        right: -5px; /* Menempatkan titik pas di tengah garis */
-        width: 9px;
-        height: 9px;
-        background-color: #555;
-        border-radius: 50%;
-        border: 2px solid #050505; /* Warna background body agar terlihat memotong garis */
-        z-index: 2; /* Pastikan titik ada di atas garis */
-    }
-
-    .left-info h3 {
-        font-size: 14px;
-        font-weight: 600;
-        color: #ffffff;
-        margin-bottom: 4px;
-    }
-
-    .left-info h3:last-child {
-        font-weight: 400;
-        color: #a0a0a0;
-    }
-
-    /* Kanan: Kartu Event */
-    .right-info {
-        flex-grow: 1; 
-        background-color: #121212;
-        border: 1px solid #2a2a2a;
-        border-radius: 12px;
-        overflow: hidden;
-        display: flex;
-        justify-content: space-between;
-        transition: background-color 0.2s;
-    }
-
-    .right-info:hover {
-        background-color: #1a1a1a;
-        border-color: #444;
-    }
-
-    /* Bagian Teks dalam Kartu */
-    .past-event-card {
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        flex: 1;
-    }
-
-    .left-past-card {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .time-event {
-        display: flex;
-        gap: 5px;
-        font-size: 13px;
-        color: #f97316; 
-        font-weight: 500;
-    }
-    .time-event .begin-time{
-        color: #bbbbbb; 
-    }
-
-    .past-event-card h2 {
-        font-size: 18px;
-        line-height: 1.4;
-        font-weight: 600;
-        margin: 8px 0;
-    }
-
-    .author-past {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 13px;
-        color: var(--text-secondary);
-    }
-
-    .author-past img {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-    }
-
-    .past-location {
-        font-size: 13px;
-        color: #666;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    /* Label Status (Going/Pending) */
-    .status-past {
-        display: inline-block;
-        margin-top: 12px;
-        padding: 4px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 600;
-        width: fit-content;
-    }
-
-    /* Logika warna status */
-    .right-info:nth-child(1) .status-past {
-        background-color: var(--accent-orange);
-        color: #fff;
-    }
-
-    /* Bagian Wadah Gambar (Kanan) */
-    .right-past-card {
-        width: 180px;
-        position: relative;
-        display: flex; 
-        height: auto;
-    }
-
-    /* Bagian Gambar Itu Sendiri */
-    .right-past-card img {
-        align-self: center;
-        width: 85%;
-        height: 80%;
-        object-fit: cover;
-        display: block;
-        border-radius: 10px;  
-    }
-    /* =========================================
-    6. FOOTER
-    ========================================= */
-    hr {
-        border: 0;
-        border-top: 1px solid #2a2a2a;
-        margin: 40px 0;
-        width: 100%;
-    }
-
-    .page-footer {
-        display: flex;
-        justify-content: space-between;
-        padding-bottom: 40px;
-        font-size: 14px;
-        color: var(--text-secondary);
-    }
-
-    .left-footer, .right-footer {
-        display: flex;
-        gap: 20px;
-    }
-
-    .right-footer a:hover {
-        color: var(--text-primary);
-    }
-
-    /* Utility Class untuk JS */
-    .hidden {
-        display: none !important;
-    }
-
-    .visible-flex {
-        display: flex !important;
-    }
+.hidden { display: none !important; }
+.visible-flex { display: flex !important; }
