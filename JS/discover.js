@@ -1,61 +1,54 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Ambil elemen yang dibutuhkan
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // ==========================================
+    // 1. LOGIKA SLIDER (UPCOMING EVENT)
+    // ==========================================
     const track = document.querySelector('.upcoming-event');
     const leftBtn = document.getElementById('slide-left');
     const rightBtn = document.getElementById('slide-right');
 
-    // Menghitung jarak geser (lebar card 300px + gap 20px)
-    const scrollAmount = 320; 
+    // Pengecekan: Hanya jalankan slider jika elemen-elemennya ada di halaman ini
+    if (track && leftBtn && rightBtn) {
+        const scrollAmount = 320; 
 
-    // Fungsi klik tombol Kanan
-    rightBtn.addEventListener('click', () => {
-        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
+        // Fungsi terpisah untuk mengecek kapan tombol muncul/hilang
+        const updateButtonState = () => {
+            // Jika scroll lebih dari 0, munculkan tombol kiri
+            leftBtn.style.display = track.scrollLeft > 0 ? 'flex' : 'none';
+            
+            // Cek batas mentok kanan (dengan toleransi 5px)
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            rightBtn.style.display = track.scrollLeft >= maxScroll - 5 ? 'none' : 'flex';
+        };
 
-    // Fungsi klik tombol Kiri
-    leftBtn.addEventListener('click', () => {
-        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    });
+        // Panggil fungsi sekali saat halaman baru dimuat (agar tombol kiri otomatis hilang di awal)
+        updateButtonState();
 
-    // Fungsi untuk memantau kapan tombol harus muncul/hilang
-    track.addEventListener('scroll', () => {
-        // 1. Logika Tombol Kiri: Muncul jika sudah digeser dari ujung kiri (> 0)
-        if (track.scrollLeft > 0) {
-            leftBtn.style.display = 'flex'; // Munculkan tombol
-        } else {
-            leftBtn.style.display = 'none'; // Sembunyikan jika mentok kiri
-        }
+        // Event Klik Tombol Geser
+        rightBtn.addEventListener('click', () => {
+            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
 
-        // 2. Logika Tombol Kanan: Hilang jika sudah mentok ujung kanan
-        // Menghitung batas maksimal scroll
-        const maxScroll = track.scrollWidth - track.clientWidth;
-        
-        // Kita beri toleransi 5 pixel karena kadang perhitungan browser ada desimal
-        if (track.scrollLeft >= maxScroll - 5) {
-            rightBtn.style.display = 'none'; // Sembunyikan jika mentok kanan
-        } else {
-            rightBtn.style.display = 'flex'; // Munculkan tombol
-        }
-    });
-});
-// Menunggu sampai seluruh elemen HTML selesai dimuat
-document.addEventListener("DOMContentLoaded", function() {
-    
-    // Mengambil elemen navbar
+        leftBtn.addEventListener('click', () => {
+            track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+
+        // Event Scroll untuk memantau pergeseran
+        track.addEventListener('scroll', updateButtonState);
+    }
+
+    // ==========================================
+    // 2. LOGIKA NAVBAR EFEK KACA
+    // ==========================================
     const navbar = document.querySelector('.navbar');
 
-    // Memantau event 'scroll' pada halaman
-    window.addEventListener('scroll', function() {
-        
-        // Jika halaman di-scroll lebih dari 50 pixel ke bawah
-        if (window.scrollY > 50) {
-            // Tambahkan class 'scrolled' (navbar jadi blur)
-            navbar.classList.add('scrolled');
-        } else {
-            // Jika kembali ke paling atas, hapus class 'scrolled' (navbar jadi transparan lagi)
-            navbar.classList.remove('scrolled');
-        }
-        
-    });
+    // Pengecekan: Hanya jalankan jika ada navbar di halaman ini
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            // classList.toggle akan menempelkan class 'scrolled' jika window.scrollY > 50 (true), 
+            // dan akan menghapusnya otomatis jika kurang dari 50 (false). Jauh lebih rapi!
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    }
 
 });

@@ -1,54 +1,52 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Ambil elemen
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // ==========================================
+    // 1. LOGIKA TAB (UPCOMING vs PAST EVENT)
+    // ==========================================
     const btnUpcoming = document.getElementById('btn-upcoming');
     const btnPast = document.getElementById('btn-past');
     const viewUpcoming = document.getElementById('view-upcoming');
     const viewPast = document.getElementById('view-past');
 
-    // Fungsi saat tombol Upcoming ditekan
-    btnUpcoming.addEventListener('click', function(e) {
-        e.preventDefault();
-            
-        // Ganti style tombol
-        btnUpcoming.classList.add('active');
-        btnPast.classList.remove('active');
+    // Pengecekan Keamanan: Hanya jalankan jika semua elemen tab ada di halaman ini
+    if (btnUpcoming && btnPast && viewUpcoming && viewPast) {
+        
+        // Fungsi pembantu agar kode tidak berulang
+        const switchTab = (isUpcomingActive) => {
+            // Mengatur state tombol (nyala/mati)
+            btnUpcoming.classList.toggle('active', isUpcomingActive);
+            btnPast.classList.toggle('active', !isUpcomingActive);
 
-        // Ganti tampilan konten
-        viewUpcoming.style.display = 'flex'; // Munculkan empty state
-        viewPast.style.display = 'none';     // Sembunyikan list
-    });
+            // Mengatur tampilan konten (muncul/hilang)
+            viewUpcoming.style.display = isUpcomingActive ? 'flex' : 'none';
+            viewPast.style.display = isUpcomingActive ? 'none' : 'flex';
+        };
 
-    // Fungsi saat tombol Past ditekan
-    btnPast.addEventListener('click', function(e) {
-        e.preventDefault();
+        // Event Klik Tombol Upcoming
+        btnUpcoming.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab(true); // true = Upcoming aktif
+        });
 
-        // Ganti style tombol
-        btnPast.classList.add('active');
-        btnUpcoming.classList.remove('active');
+        // Event Klik Tombol Past
+        btnPast.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab(false); // false = Past aktif (Upcoming mati)
+        });
+    }
 
-        // Ganti tampilan konten
-        viewUpcoming.style.display = 'none';
-        viewPast.style.display = 'flex'; // Munculkan mode list timeline
-    });
-});
-// Menunggu sampai seluruh elemen HTML selesai dimuat
-document.addEventListener("DOMContentLoaded", function() {
-    
-    // Mengambil elemen navbar
+    // ==========================================
+    // 2. LOGIKA NAVBAR EFEK KACA (BLUR ON SCROLL)
+    // ==========================================
     const navbar = document.querySelector('.navbar');
 
-    // Memantau event 'scroll' pada halaman
-    window.addEventListener('scroll', function() {
-        
-        // Jika halaman di-scroll lebih dari 50 pixel ke bawah
-        if (window.scrollY > 50) {
-            // Tambahkan class 'scrolled' (navbar jadi blur)
-            navbar.classList.add('scrolled');
-        } else {
-            // Jika kembali ke paling atas, hapus class 'scrolled' (navbar jadi transparan lagi)
-            navbar.classList.remove('scrolled');
-        }
-        
-    });
+    // Pengecekan Keamanan: Hanya jalankan jika navbar ada
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            // classList.toggle akan otomatis menambah class 'scrolled' jika scrollY > 50, 
+            // dan menghapusnya otomatis jika kurang dari 50. Jauh lebih ringkas!
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    }
 
 });

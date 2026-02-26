@@ -472,9 +472,9 @@
     5. PAST EVENT (LIST VIEW)
     ========================================= */
     .past-event {
-        display: none; /* Default Hidden, muncul via JS */
-        flex-direction: column; /* PENTING: Susun ke bawah */
-        gap: 30px; /* Jarak antar event atas-bawah */
+        display: none; 
+        flex-direction: column; 
+        gap: 30px; /* KEMBALIKAN GAP INI */
         margin-bottom: 30px;
     }
 
@@ -483,21 +483,18 @@
         flex-direction: row;
         gap: 20px;
         width: 100%;
+        /* padding-bottom dihapus, kita murni pakai gap lagi */
     }
 
-    /* TRIK UNTUK CARD TERAKHIR: Menghilangkan garis berlebih di bawah titik terakhir */
-    .timeline-row:last-child .left-info {
-        border-right: 1px solid transparent; /* Hilangkan border */
-    }
-
-    /* Tapi kita harus membuat ulang garisnya secara manual agar stop pas di titik */
-    .timeline-row:last-child .left-info::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: -1px;
-        height: 15px; /* Hanya sepanjang sampai titik */
-        border-right: 1px dashed #444;
+    /* =========================================
+    PERBAIKAN GARIS AKHIR TIMELINE (STOP DI TITIK)
+    ========================================= */
+    .past-event .timeline-row:last-child .left-info::before {
+        /* Titik kita berada di top: 20px dengan ukuran 9px. 
+        Jadi titik tengahnya ada di sekitar 24px.
+        Kita paksa garisnya putus tepat di 24px! 
+        */
+        height: 24px !important; 
     }
 
     /* Kiri: Tanggal Timeline */
@@ -506,25 +503,37 @@
         text-align: left;
         padding-top: 10px;
         
-        /* Membuat garis putus-putus vertikal */
-        border-right: 1px dashed #333; 
+        /* HAPUS border-right di sini, kita pindahkan ke ::before */
         
         position: relative;
-        /* Agar garisnya memanjang sampai bawah mengikuti tinggi kartu */
         align-self: stretch;
     }
 
-    /* Titik timeline */
+    /* KUNCI UTAMA: GARIS MENGGUNAKAN ::before */
+    .left-info::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -1px;
+        width: 1px;
+        /* Tinggi garis = 100% tinggi kartu DITAMBAH 30px untuk menyeberangi gap! */
+        height: calc(100% + 30px); 
+        border-right: 1px dashed #333;
+        z-index: 1;
+    }
+
+    /* Titik timeline (Bulatan) */
     .left-info::after {
         content: "";
         position: absolute;
         top: 20px;
-        right: -5px; /* Menempatkan titik pas di garis */
+        right: -5px; /* Menempatkan titik pas di tengah garis */
         width: 9px;
         height: 9px;
         background-color: #555;
         border-radius: 50%;
-        border: 2px solid #050505; /* Warna background body agar terlihat terpotong */
+        border: 2px solid #050505; /* Warna background body agar terlihat memotong garis */
+        z-index: 2; /* Pastikan titik ada di atas garis */
     }
 
     .left-info h3 {
@@ -541,7 +550,7 @@
 
     /* Kanan: Kartu Event */
     .right-info {
-        flex-grow: 1; /* Mengisi sisa lebar */
+        flex-grow: 1; 
         background-color: #121212;
         border: 1px solid #2a2a2a;
         border-radius: 12px;
@@ -575,11 +584,11 @@
         display: flex;
         gap: 5px;
         font-size: 13px;
-        color: #f97316; /* Warna Oranye / Emas sesuai gambar */
+        color: #f97316; 
         font-weight: 500;
     }
     .time-event .begin-time{
-        color: #bbbbbb; /* Warna Oranye / Emas sesuai gambar */
+        color: #bbbbbb; 
     }
 
     .past-event-card h2 {
@@ -624,7 +633,7 @@
 
     /* Logika warna status */
     .right-info:nth-child(1) .status-past {
-        background-color: var(--accent-orange); /* Pending */
+        background-color: var(--accent-orange);
         color: #fff;
     }
 
