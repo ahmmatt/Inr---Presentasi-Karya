@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureGate - Withdrawal</title>
+    <link rel="stylesheet" href="../CSS/withdrawal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="left-nav">
+            <h1>SecureGate</h1>
+        </div>
+        <div class="main-nav">
+            <div class="main-nav-discover"><i class="fa-solid fa-house"></i><a href="adminevent.html">Home</a></div>
+            <div class="main-nav-event"><i class="fa-regular fa-calendar-plus"></i><a href="create.html">Create Event</a></div>
+        </div>
+        <div class="right-nav">
+            <i class="fa-regular fa-bell"></i>
+            <a href=""><img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="Profile"></a>
+        </div>
+    </nav>
+
+    <div class="page-frame">
+        <div class="page-frame-nav">
+            <a href="adminevent.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+            <h1 style="margin-top: 16px;">Revenue & Withdrawal</h1>
+            <p>Manage your event earnings and request payouts to your bank or e-wallet.</p>
+        </div>
+
+        <div class="withdrawal-layout">
+            
+            <div class="left-layout">
+                <div class="balance-card">
+                    <p>Available Balance</p>
+                    <h1 id="available-balance">Rp 1.500.000</h1>
+                </div>
+
+                <div class="form-card">
+                    <h3>Request Payout</h3>
+                    
+                    <div class="form-group">
+                        <label>Payout Method</label>
+                        <select id="payout-method" class="custom-select">
+                            <option value="">Select Bank / E-Wallet...</option>
+                            <option value="BCA">BCA Bank</option>
+                            <option value="Mandiri">Mandiri Bank</option>
+                            <option value="BNI">BNI Bank</option>
+                            <option value="BNI">BRI Bank</option>
+                            <option value="GoPay">GoPay</option>
+                            <option value="DANA">DANA</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Account Number / E-Wallet ID</label>
+                        <input type="number" id="payout-account" class="custom-input" placeholder="e.g., 08123456789">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Amount to Withdraw (Rp)</label>
+                        <div class="input-wrapper-max">
+                            <input type="number" id="withdraw-amount" class="custom-input" placeholder="Min. Rp 50.000">
+                            <button type="button" id="btn-max">MAX</button>
+                        </div>
+                    </div>
+
+                    <div class="fee-summary">
+                        <div class="fee-row">
+                            <span>Withdrawal Amount</span>
+                            <span id="summary-amount">Rp 0</span>
+                        </div>
+                        <div class="fee-row text-danger">
+                            <span>Platform Fee (5%)</span>
+                            <span id="summary-fee">- Rp 0</span>
+                        </div>
+                        <hr class="fee-divider">
+                        <div class="fee-row total-receive">
+                            <span>You will receive</span>
+                            <span id="summary-receive" class="text-green">Rp 0</span>
+                        </div>
+                    </div>
+
+                    <div class="info-alert">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <p>Funds will be transferred to your account within <strong>1-2 business days</strong> after the request is approved. A 5% platform fee applies to all withdrawals.</p>
+                    </div>
+
+                    <button id="btn-withdraw" class="btn-submit">Submit Withdrawal</button>
+                </div>
+            </div>
+
+            <div class="right-layout">
+                <div class="history-card">
+                    <h3>Withdrawal History</h3>
+                    <div class="table-responsive">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-tbody">
+                                <tr>
+                                    <td>Feb 20, 2026</td>
+                                    <td>Rp 500.000</td>
+                                    <td>BCA <br><span class="acc-text">****1234</span></td>
+                                    <td><span class="badge-done">Done</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0;">
+        <div class="page-footer" style="display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: #a0a0a0;">
+            <div style="display: flex; gap: 20px;"><a href="#" style="color:inherit; text-decoration:none;">Discover</a><a href="#" style="color:inherit; text-decoration:none;">Help</a></div>
+            <div style="display: flex; gap: 20px;"><i class="fab fa-x"></i> <i class="fab fa-youtube"></i> <i class="fab fa-instagram"></i></div>
+        </div>
+    </div>
+
+    <script src="../JS/withdrawal.js"></script>
+</body>
+</html>

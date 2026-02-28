@@ -1,3 +1,4 @@
+// Jadikan SATU wadah utama agar semua kode menunggu HTML selesai dimuat
 document.addEventListener("DOMContentLoaded", () => {
     
     // ==========================================
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
             rightBtn.style.display = track.scrollLeft >= maxScroll - 5 ? 'none' : 'flex';
         };
 
-        // Panggil fungsi sekali saat halaman baru dimuat (agar tombol kiri otomatis hilang di awal)
+        // Panggil fungsi sekali saat halaman baru dimuat
         updateButtonState();
 
         // Event Klik Tombol Geser
@@ -35,6 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Event Scroll untuk memantau pergeseran
         track.addEventListener('scroll', updateButtonState);
+        
+        // TAMBAHAN: Update tombol jika layar di-resize / HP diputar (Landscape)
+        window.addEventListener('resize', updateButtonState);
     }
 
     // ==========================================

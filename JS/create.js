@@ -1,8 +1,7 @@
-// Menunggu sampai seluruh elemen HTML selesai dimuat
 document.addEventListener("DOMContentLoaded", function() {
     
     // ==========================================
-    // --- SCROLL NAVBAR ---
+    // 1. SCROLL NAVBAR
     // ==========================================
     const navbar = document.querySelector('.navbar');
     if (navbar) {
@@ -16,52 +15,27 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // ==========================================
-    // 1. FITUR DROPDOWN VISIBILITY (PUBLIC/PRIVATE)
+    // 2. FITUR PREVIEW GAMBAR (BANNER UPLOAD)
     // ==========================================
-    const visibilityToggle = document.getElementById("visibility-toggle");
-    const visibilityDropdown = document.getElementById("visibility-dropdown");
-    const visibilityText = document.getElementById("visibility-text");
-    const visibilityIcon = document.getElementById("visibility-icon");
-    const visibilityArrow = document.getElementById("visibility-arrow");
-    const options = document.querySelectorAll(".visibility-option");
+    const bannerInput = document.getElementById("banner_image");
+    const imagePreview = document.getElementById("image-preview");
+    const pictActionSelect = document.querySelector(".pict-action-select");
 
-    if (visibilityToggle && visibilityDropdown) {
-        visibilityToggle.addEventListener("click", function(e) {
-            e.stopPropagation(); 
-            visibilityDropdown.classList.toggle("show"); 
-            if (visibilityDropdown.classList.contains("show")) {
-                visibilityArrow.style.transform = "rotate(180deg)";
+    if (bannerInput && imagePreview) {
+        bannerInput.addEventListener("change", function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block"; 
+                    if(pictActionSelect) pictActionSelect.style.zIndex = "3"; 
+                }
+                reader.readAsDataURL(file);
             } else {
-                visibilityArrow.style.transform = "rotate(0deg)";
+                imagePreview.style.display = "none";
+                imagePreview.src = "";
             }
-        });
-
-        options.forEach(option => {
-            option.addEventListener("click", function() {
-                const selectedValue = this.getAttribute("data-value");
-                const selectedIcon = this.getAttribute("data-icon");
-                if(visibilityText) visibilityText.innerText = selectedValue;
-                if(visibilityIcon) visibilityIcon.className = `fa-solid ${selectedIcon}`;
-                visibilityDropdown.classList.remove("show");
-                if(visibilityArrow) visibilityArrow.style.transform = "rotate(0deg)";
-            });
-        });
-
-        window.addEventListener("click", function(e) {
-            if (!visibilityToggle.contains(e.target)) {
-                visibilityDropdown.classList.remove("show");
-                if(visibilityArrow) visibilityArrow.style.transform = "rotate(0deg)";
-            }
-        });
-    }
-
-    // ==========================================
-    // 2. FITUR SWITCH (REQUIRE APPROVAL)
-    // ==========================================
-    const approvalSwitch = document.getElementById("approval-switch");
-    if (approvalSwitch) {
-        approvalSwitch.addEventListener("click", function() {
-            approvalSwitch.classList.toggle("active");
         });
     }
 
@@ -75,177 +49,83 @@ document.addEventListener("DOMContentLoaded", function() {
     if (locTrigger && locExpandArea) {
         locTrigger.addEventListener("click", function() {
             locExpandArea.classList.toggle("show");
-            if (locExpandArea.classList.contains("show")) {
-                if(locArrow) locArrow.style.transform = "rotate(180deg)";
-            } else {
-                if(locArrow) locArrow.style.transform = "rotate(0deg)";
-            }
+            if(locArrow) locArrow.style.transform = locExpandArea.classList.contains("show") ? "rotate(180deg)" : "rotate(0deg)";
         });
     }
 
     // ==========================================
-    // 4. PAYOUT METHOD
+    // 4. FITUR SWITCH (REQUIRE APPROVAL)
     // ==========================================
-    const payoutMethod = document.getElementById('payout_method');
-    const payoutAccount = document.getElementById('payout_account');
+    const approvalSwitch = document.getElementById("approval-switch");
+    const approvalVal = document.getElementById("require-approval-val"); 
 
-    if (payoutMethod && payoutAccount) {
-        payoutMethod.addEventListener('change', function() {
-            const selectedValue = this.value;
-            if (selectedValue === "DANA" || selectedValue === "OVO" || selectedValue === "GoPay") {
-                payoutAccount.placeholder = "Example: 08123456789";
-            } else if (selectedValue === "") {
-                payoutAccount.placeholder = "Select method first...";
-            } else {
-                payoutAccount.placeholder = "Example: 1234567890 (Bank Account Number)";
-            }
+    if (approvalSwitch && approvalVal) {
+        approvalSwitch.addEventListener("click", function() {
+            this.classList.toggle("active");
+            approvalVal.value = this.classList.contains("active") ? "true" : "false"; 
         });
     }
 
     // ==========================================
-    // 5. FITUR MENU KAPASITAS (UNLIMITED/LIMITED) + VIP SEAT
+    // 5. FITUR MENU EVENT CATEGORY (DROPDOWN + TYPE)
     // ==========================================
-    const capacityTrigger = document.getElementById("capacity-trigger");
-    const capacityDropdown = document.getElementById("capacity-dropdown");
-    const capacityDisplay = document.getElementById("capacity-display");
-    const capTypeRadios = document.querySelectorAll('input[name="cap_type"]');
-    const capNumContainer = document.getElementById("capacity-number-container");
-    const capAmountInput = document.getElementById("cap_amount");
-    const applyCapacityBtn = document.getElementById("apply-capacity");
-    const closeCapacityBtn = document.getElementById("close-capacity-modal");
+    const categoryTrigger = document.getElementById("category-trigger");
+    const categoryDropdown = document.getElementById("category-dropdown");
+    const categoryDisplay = document.getElementById("category-display");
+    const categorySelect = document.getElementById("category_select");
+    const categoryOtherInput = document.getElementById("category_other_input");
+    const realCategoryInput = document.getElementById("real_category_input"); 
+    const closeCategoryBtn = document.getElementById("close-category-modal");
+    const applyCategoryBtn = document.getElementById("apply-category");
 
-    const seatTypeRadios = document.querySelectorAll('input[name="seat_type"]');
-    const seatAllocationContainer = document.getElementById("seat-allocation-container");
-    const seatTiersContainer = document.getElementById("seat-tiers-container");
-    const addSeatTierBtn = document.getElementById("add-seat-tier-btn");
-
-    if (capacityTrigger && capacityDropdown) {
-        
-        // Buka Menu & Kunci Scroll
-        capacityTrigger.addEventListener("click", function(e) {
+    if (categoryTrigger && categoryDropdown) {
+        categoryTrigger.addEventListener("click", function(e) {
             e.stopPropagation();
-            capacityDropdown.classList.toggle("show");
-            if (capacityDropdown.classList.contains("show")) {
-                document.body.classList.add("no-scroll");
-            } else {
-                document.body.classList.remove("no-scroll");
-            }
+            categoryDropdown.classList.toggle("show");
+            document.body.classList.toggle("no-scroll", categoryDropdown.classList.contains("show"));
         });
 
-        // Pantau Pilihan Unlimited / Limited
-        capTypeRadios.forEach(radio => {
-            radio.addEventListener("change", function() {
-                if (this.value === "Limited") {
-                    if(capNumContainer) capNumContainer.style.display = "flex";
-                    if(capAmountInput) capAmountInput.focus();
+        if (categorySelect) {
+            categorySelect.addEventListener("change", function() {
+                if (this.value === "Other") {
+                    categoryOtherInput.style.display = "block";
+                    categoryOtherInput.focus();
                 } else {
-                    if(capNumContainer) capNumContainer.style.display = "none";
+                    categoryOtherInput.style.display = "none";
                 }
-            });
-        });
-
-        // Pantau Pilihan "Bebas" atau "Pilih Kursi"
-        if(seatTypeRadios) {
-            seatTypeRadios.forEach(radio => {
-                radio.addEventListener("change", function() {
-                    if (this.value === "Pilih") {
-                        if(seatAllocationContainer) seatAllocationContainer.style.display = "flex";
-                    } else {
-                        if(seatAllocationContainer) seatAllocationContainer.style.display = "none";
-                    }
-                });
             });
         }
 
-        // --- Logika Tambah Kursi VIP ---
-        if (addSeatTierBtn && seatTiersContainer) {
-            addSeatTierBtn.addEventListener("click", function(e) {
+        if (closeCategoryBtn) {
+            closeCategoryBtn.addEventListener("click", function(e) {
                 e.stopPropagation();
-                const rowCount = seatTiersContainer.querySelectorAll(".seat-tier-row").length;
-                if (rowCount < 2) {
-                    const newRow = document.createElement("div");
-                    newRow.className = "seat-tier-row";
-                    newRow.innerHTML = `
-                        <input type="text" class="seat-tier-name custom-input" value="VIP" readonly required style="color: #eab308; font-weight: bold; cursor: not-allowed; border-color: rgba(234, 179, 8, 0.3);">
-                        <input type="text" class="seat-tier-range custom-input" placeholder="e.g., 1-50" required>
-                        <i class="fa-solid fa-trash-can remove-seat-tier-btn" title="Remove"></i>
-                    `;
-                    seatTiersContainer.appendChild(newRow);
-                    updateRemoveSeatButtons(); 
-                    addSeatTierBtn.style.display = "none";
-                }
+                categoryDropdown.classList.remove("show");
+                document.body.classList.remove("no-scroll"); 
             });
-
-            seatTiersContainer.addEventListener("click", function(e) {
-                if(e.target.classList.contains("remove-seat-tier-btn") || e.target.closest(".remove-seat-tier-btn")) {
-                    e.stopPropagation();
-                    e.target.closest(".seat-tier-row").remove();
-                    updateRemoveSeatButtons();
-                    addSeatTierBtn.style.display = "block";
-                }
-            });
-
-            function updateRemoveSeatButtons() {
-                const rows = seatTiersContainer.querySelectorAll(".seat-tier-row");
-                rows.forEach((row, index) => {
-                    const btn = row.querySelector(".remove-seat-tier-btn");
-                    if (btn) {
-                        if (index === 0) {
-                            btn.style.display = "none";
-                        } else {
-                            btn.style.display = "flex"; 
-                        }
-                    }
-                });
-            }
         }
 
-        // Tombol X (Tutup Modal Kapasitas)
-        if (closeCapacityBtn) {
-            closeCapacityBtn.addEventListener("click", function(e) {
+        if (applyCategoryBtn) {
+            applyCategoryBtn.addEventListener("click", function(e) {
                 e.stopPropagation();
-                capacityDropdown.classList.remove("show");
-                document.body.classList.remove("no-scroll"); // Buka scroll
-            });
-        }   
-
-        // Tombol Apply Kapasitas
-        if (applyCapacityBtn) {
-            applyCapacityBtn.addEventListener("click", function(e) {
-                e.stopPropagation();
+                let selectedCategory = categorySelect.value === "Other" ? categoryOtherInput.value.trim() : categorySelect.value;
                 
-                const selectedTypeRadio = document.querySelector('input[name="cap_type"]:checked');
-                if (!selectedTypeRadio) return; 
-                
-                const selectedType = selectedTypeRadio.value;
-                
-                if (selectedType === "Unlimited") {
-                    if(capacityDisplay) capacityDisplay.value = "Unlimited";
+                if (selectedCategory !== "") {
+                    categoryDisplay.value = selectedCategory;
+                    categoryDisplay.style.color = "#ffffff"; 
+                    if(realCategoryInput) realCategoryInput.value = selectedCategory; 
                 } else {
-                    const amount = capAmountInput ? capAmountInput.value : "";
-                    const seatTypeRadio = document.querySelector('input[name="seat_type"]:checked');
-                    const seatType = seatTypeRadio ? seatTypeRadio.value : "Bebas";
-                    const seatText = seatType === "Bebas" ? "Bebas" : "Pilih Kursi";
-
-                    if (capacityDisplay) {
-                        if (amount && amount > 0) {
-                            capacityDisplay.value = `${amount} Seats (${seatText})`;
-                        } else {
-                            capacityDisplay.value = `Limited (${seatText})`; 
-                        }
-                    }
+                    categoryDisplay.value = "Select Category";
+                    categoryDisplay.style.color = "#a0a0a0"; 
+                    if(realCategoryInput) realCategoryInput.value = "";
                 }
-                capacityDropdown.classList.remove("show");
-                document.body.classList.remove("no-scroll"); // Buka scroll
+                categoryDropdown.classList.remove("show"); 
+                document.body.classList.remove("no-scroll"); 
             });
         }
-        
-        // FUNGSI KLIK DI LUAR CARD SUDAH DIHAPUS DARI SINI
     }
 
-
     // ==========================================
-    // 6. FITUR MENU TICKET PRICE + KATEGORI VIP
+    // 6. FITUR MENU TICKET PRICE (TANPA PAYOUT)
     // ==========================================
     const ticketTrigger = document.getElementById("ticket-trigger");
     const ticketDropdown = document.getElementById("ticket-dropdown");
@@ -259,46 +139,33 @@ document.addEventListener("DOMContentLoaded", function() {
     const addTierBtn = document.getElementById("add-tier-btn");
 
     if (ticketTrigger && ticketDropdown) {
-        
-        // Buka Menu & Kunci Scroll
         ticketTrigger.addEventListener("click", function(e) {
             e.stopPropagation();
             ticketDropdown.classList.toggle("show");
-            if (ticketDropdown.classList.contains("show")) {
-                document.body.classList.add("no-scroll");
-            } else {
-                document.body.classList.remove("no-scroll");
-            }
+            document.body.classList.toggle("no-scroll", ticketDropdown.classList.contains("show"));
         });
 
-        // Pantau Free / Paid
         ticketTypeRadios.forEach(radio => {
             radio.addEventListener("change", function() {
-                if (this.value === "Paid") {
-                    if(paymentContainer) paymentContainer.style.display = "flex"; 
-                } else {
-                    if(paymentContainer) paymentContainer.style.display = "none"; 
-                }
+                if(paymentContainer) paymentContainer.style.display = (this.value === "Paid") ? "flex" : "none"; 
             });
         });
 
-        // --- Logika Tambah Tiket VIP ---
         if (addTierBtn && ticketTiersContainer) {
             addTierBtn.addEventListener("click", function(e) {
                 e.stopPropagation();
                 const rowCount = ticketTiersContainer.querySelectorAll(".ticket-tier-row").length;
-                
-                if (rowCount < 2) {
+                if (rowCount < 2) { 
                     const newRow = document.createElement("div");
                     newRow.className = "ticket-tier-row";
                     newRow.innerHTML = `
-                        <input type="text" class="tier-name custom-input" value="VIP" readonly required style="color: #eab308; font-weight: bold; cursor: not-allowed; border-color: rgba(234, 179, 8, 0.3);">
-                        <input type="number" class="tier-price custom-input" placeholder="Price (Rp)" required>
+                        <input type="text" name="tier_name[]" class="tier-name custom-input" value="VIP" readonly required style="color: #eab308; font-weight: bold; cursor: not-allowed; border-color: rgba(234, 179, 8, 0.3);">
+                        <input type="number" name="tier_price[]" class="tier-price custom-input" placeholder="Price (Rp)" required>
                         <i class="fa-solid fa-trash-can remove-tier-btn" title="Remove"></i>
                     `;
                     ticketTiersContainer.appendChild(newRow);
                     updateRemoveButtons(); 
-                    addTierBtn.style.display = "none";
+                    addTierBtn.style.display = "none"; 
                 }
             });
 
@@ -307,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     e.stopPropagation();
                     e.target.closest(".ticket-tier-row").remove();
                     updateRemoveButtons();
-                    addTierBtn.style.display = "block";
+                    addTierBtn.style.display = "block"; 
                 }
             });
 
@@ -315,42 +182,30 @@ document.addEventListener("DOMContentLoaded", function() {
                 const rows = ticketTiersContainer.querySelectorAll(".ticket-tier-row");
                 rows.forEach((row, index) => {
                     const btn = row.querySelector(".remove-tier-btn");
-                    if (btn) {
-                        if (index === 0) {
-                            btn.style.display = "none";
-                        } else {
-                            btn.style.display = "flex"; 
-                        }
-                    }
+                    if (btn) btn.style.display = (index === 0) ? "none" : "flex"; 
                 });
             }
         }
 
-        // Tombol X (Tutup Modal Tiket)
         if (closeTicketBtn) {
             closeTicketBtn.addEventListener("click", function(e) {
                 e.stopPropagation();
                 ticketDropdown.classList.remove("show");
-                document.body.classList.remove("no-scroll"); // Buka scroll
+                document.body.classList.remove("no-scroll");
             });
         }
 
-        // Tombol Apply Tiket
         if (applyTicketBtn) {
             applyTicketBtn.addEventListener("click", function(e) {
                 e.stopPropagation();
-                
                 const selectedTypeRadio = document.querySelector('input[name="ticket_type"]:checked');
                 if (!selectedTypeRadio) return;
                 
-                const selectedType = selectedTypeRadio.value;
-                
-                if (selectedType === "Free") {
-                    if(ticketDisplay) ticketDisplay.value = "Free";
+                if (selectedTypeRadio.value === "Free") {
+                    if(ticketDisplay) { ticketDisplay.value = "Free"; ticketDisplay.style.color = "#22c55e"; }
                 } else {
                     const priceInputs = ticketTiersContainer ? ticketTiersContainer.querySelectorAll(".tier-price") : [];
                     let prices = [];
-                    
                     priceInputs.forEach(input => {
                         let val = parseInt(input.value);
                         if (!isNaN(val)) prices.push(val);
@@ -359,31 +214,90 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (ticketDisplay) {
                         if (prices.length > 0) {
                             const minPrice = Math.min(...prices);
-                            const formattedPrice = new Intl.NumberFormat('id-ID', { 
-                                style: 'currency', 
-                                currency: 'IDR', 
-                                minimumFractionDigits: 0 
-                            }).format(minPrice);
-                            
-                            if (prices.length > 1) {
-                                ticketDisplay.value = `${formattedPrice} (Start From)`;
-                            } else {
-                                ticketDisplay.value = formattedPrice;
-                            }
+                            const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(minPrice);
+                            ticketDisplay.value = (prices.length > 1) ? `${formattedPrice} (Start From)` : formattedPrice;
+                            ticketDisplay.style.color = "#ffffff";
                         } else {
                             ticketDisplay.value = "Paid (Set Price)";
+                            ticketDisplay.style.color = "#a0a0a0";
                         }
                     }
                 }
                 ticketDropdown.classList.remove("show"); 
-                document.body.classList.remove("no-scroll"); // Buka scroll
+                document.body.classList.remove("no-scroll"); 
             });
         }
-
-        // FUNGSI KLIK DI LUAR CARD SUDAH DIHAPUS DARI SINI
     }
+
     // ==========================================
-    // 7. FITUR MENU REGISTRATION FORM (CUSTOM QUESTIONS)
+    // 7. FITUR MENU KAPASITAS (UNLIMITED/LIMITED)
+    // ==========================================
+    const capacityTrigger = document.getElementById("capacity-trigger");
+    const capacityDropdown = document.getElementById("capacity-dropdown");
+    const capacityDisplay = document.getElementById("capacity-display");
+    const capTypeRadios = document.querySelectorAll('input[name="cap_type"]');
+    const capNumContainer = document.getElementById("capacity-number-container");
+    const capAmountInput = document.getElementById("cap_amount");
+    const applyCapacityBtn = document.getElementById("apply-capacity");
+    const closeCapacityBtn = document.getElementById("close-capacity-modal");
+
+    if (capacityTrigger && capacityDropdown) {
+        capacityTrigger.addEventListener("click", function(e) {
+            e.stopPropagation();
+            capacityDropdown.classList.toggle("show");
+            document.body.classList.toggle("no-scroll", capacityDropdown.classList.contains("show"));
+        });
+
+        capTypeRadios.forEach(radio => {
+            radio.addEventListener("change", function() {
+                if (this.value === "Limited") {
+                    if(capNumContainer) capNumContainer.style.display = "flex";
+                    if(capAmountInput) capAmountInput.focus();
+                } else {
+                    if(capNumContainer) capNumContainer.style.display = "none";
+                }
+            });
+        });
+
+        if (closeCapacityBtn) {
+            closeCapacityBtn.addEventListener("click", function(e) {
+                e.stopPropagation();
+                capacityDropdown.classList.remove("show");
+                document.body.classList.remove("no-scroll");
+            });
+        }   
+
+        if (applyCapacityBtn) {
+            applyCapacityBtn.addEventListener("click", function(e) {
+                e.stopPropagation();
+                const selectedTypeRadio = document.querySelector('input[name="cap_type"]:checked');
+                if (!selectedTypeRadio) return; 
+                
+                if (selectedTypeRadio.value === "Unlimited") {
+                    if(capacityDisplay) { capacityDisplay.value = "Unlimited"; capacityDisplay.style.color = "#a0a0a0"; }
+                } else {
+                    const amount = capAmountInput ? capAmountInput.value : "";
+                    const seatTypeRadio = document.querySelector('input[name="seat_type"]:checked');
+                    const seatText = (seatTypeRadio && seatTypeRadio.value === "Bebas") ? "General" : "Select Seat";
+
+                    if (capacityDisplay) {
+                        if (amount && amount > 0) {
+                            capacityDisplay.value = `${amount} Seats (${seatText})`;
+                            capacityDisplay.style.color = "#ffffff";
+                        } else {
+                            capacityDisplay.value = `Limited (${seatText})`; 
+                            capacityDisplay.style.color = "#a0a0a0";
+                        }
+                    }
+                }
+                capacityDropdown.classList.remove("show");
+                document.body.classList.remove("no-scroll");
+            });
+        }
+    }
+
+    // ==========================================
+    // 8. FITUR MENU REGISTRATION FORM (CUSTOM QUESTIONS)
     // ==========================================
     const questionTrigger = document.getElementById("question-trigger");
     const questionDropdown = document.getElementById("question-dropdown");
@@ -395,36 +309,25 @@ document.addEventListener("DOMContentLoaded", function() {
     const addQuestionBtn = document.getElementById("add-question-btn");
 
     if (questionTrigger && questionDropdown) {
-        
-        // Buka Menu & Kunci Scroll
         questionTrigger.addEventListener("click", function(e) {
             e.stopPropagation();
             questionDropdown.classList.toggle("show");
-            if (questionDropdown.classList.contains("show")) {
-                document.body.classList.add("no-scroll");
-            } else {
-                document.body.classList.remove("no-scroll");
-            }
+            document.body.classList.toggle("no-scroll", questionDropdown.classList.contains("show"));
         });
 
-        // --- Logika Tambah Pertanyaan ---
         if (addQuestionBtn && questionsContainer) {
             addQuestionBtn.addEventListener("click", function(e) {
                 e.stopPropagation();
-                
-                // Buat elemen baris input baru
                 const newRow = document.createElement("div");
                 newRow.className = "question-row";
                 newRow.innerHTML = `
-                    <input type="text" class="custom-input" placeholder="e.g., What is your role?" required>
+                    <input type="text" name="custom_questions[]" class="custom-input" placeholder="e.g., What is your role?" required>
                     <i class="fa-solid fa-trash-can remove-question-btn" title="Remove"></i>
                 `;
                 questionsContainer.appendChild(newRow);
             });
 
-            // Logika Menghapus Pertanyaan
             questionsContainer.addEventListener("click", function(e) {
-                // Gunakan e.target.closest untuk memastikan klik di dalam kotak maupun langsung di ikonnya tetap terdeteksi
                 const deleteBtn = e.target.closest(".remove-question-btn");
                 if (deleteBtn) {
                     e.stopPropagation();
@@ -433,7 +336,6 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
 
-        // Tombol X (Tutup Modal)
         if (closeQuestionBtn) {
             closeQuestionBtn.addEventListener("click", function(e) {
                 e.stopPropagation();
@@ -442,21 +344,17 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
 
-        // Tombol Apply (Simpan Perubahan)
         if (applyQuestionBtn) {
             applyQuestionBtn.addEventListener("click", function(e) {
                 e.stopPropagation();
-                
-                // Hitung berapa banyak pertanyaan yang dibuat user
                 const questionCount = questionsContainer.querySelectorAll(".question-row").length;
                 
-                // Ubah teks di layar utama
                 if (questionCount > 0) {
                     questionDisplay.value = `${questionCount} Custom Questions`;
-                    questionDisplay.style.color = "#22c55e"; // Warna hijau tanda aktif
+                    questionDisplay.style.color = "#ffffff";
                 } else {
                     questionDisplay.value = "Profile Info Only";
-                    questionDisplay.style.color = "#a0a0a0"; // Kembali abu-abu
+                    questionDisplay.style.color = "#a0a0a0"; 
                 }
                 
                 questionDropdown.classList.remove("show"); 
@@ -464,78 +362,5 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     }
-    // ==========================================
-    // 8. FITUR MENU EVENT CATEGORY (DROPDOWN + TYPE)
-    // ==========================================
-    const categoryTrigger = document.getElementById("category-trigger");
-    const categoryDropdown = document.getElementById("category-dropdown");
-    const categoryDisplay = document.getElementById("category-display");
-    const categorySelect = document.getElementById("category_select");
-    const categoryOtherInput = document.getElementById("category_other_input");
-    const closeCategoryBtn = document.getElementById("close-category-modal");
-    const applyCategoryBtn = document.getElementById("apply-category");
 
-    if (categoryTrigger && categoryDropdown) {
-        
-        // Buka Menu & Kunci Scroll
-        categoryTrigger.addEventListener("click", function(e) {
-            e.stopPropagation();
-            categoryDropdown.classList.toggle("show");
-            if (categoryDropdown.classList.contains("show")) {
-                document.body.classList.add("no-scroll");
-            } else {
-                document.body.classList.remove("no-scroll");
-            }
-        });
-
-        // LOGIKA BARU: Pantau Pilihan Dropdown Select
-        if (categorySelect) {
-            categorySelect.addEventListener("change", function() {
-                // Jika pilih 'Other', munculkan kotak input teks
-                if (this.value === "Other") {
-                    categoryOtherInput.style.display = "block";
-                    categoryOtherInput.focus();
-                } else {
-                    categoryOtherInput.style.display = "none";
-                }
-            });
-        }
-
-        // Tombol X (Tutup Modal Kategori)
-        if (closeCategoryBtn) {
-            closeCategoryBtn.addEventListener("click", function(e) {
-                e.stopPropagation();
-                categoryDropdown.classList.remove("show");
-                document.body.classList.remove("no-scroll"); 
-            });
-        }
-
-        // Tombol Apply (Terapkan Kategori)
-        if (applyCategoryBtn) {
-            applyCategoryBtn.addEventListener("click", function(e) {
-                e.stopPropagation();
-                
-                let selectedCategory = categorySelect.value;
-                
-                // Jika user memilih 'Other', ambil nilai dari kotak input teksnya
-                if (selectedCategory === "Other") {
-                    selectedCategory = categoryOtherInput.value.trim();
-                }
-                
-                // Cek apakah ada yang diisi/dipilih
-                if (selectedCategory !== "") {
-                    categoryDisplay.value = selectedCategory;
-                    categoryDisplay.style.color = "#ffffff"; // Ubah warna jadi putih
-                } else {
-                    categoryDisplay.value = "Select Category";
-                    categoryDisplay.style.color = "#a0a0a0"; // Kembali abu-abu
-                }
-                
-                // Tutup modal
-                categoryDropdown.classList.remove("show"); 
-                document.body.classList.remove("no-scroll"); 
-            });
-        }
-    }
-
-});
+}); // AKHIR DARI DOMContentLoaded

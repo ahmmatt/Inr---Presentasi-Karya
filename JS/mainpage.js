@@ -8,30 +8,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const viewUpcoming = document.getElementById('view-upcoming');
     const viewPast = document.getElementById('view-past');
 
-    // Pengecekan Keamanan: Hanya jalankan jika semua elemen tab ada di halaman ini
     if (btnUpcoming && btnPast && viewUpcoming && viewPast) {
         
-        // Fungsi pembantu agar kode tidak berulang
         const switchTab = (isUpcomingActive) => {
-            // Mengatur state tombol (nyala/mati)
             btnUpcoming.classList.toggle('active', isUpcomingActive);
             btnPast.classList.toggle('active', !isUpcomingActive);
 
-            // Mengatur tampilan konten (muncul/hilang)
-            viewUpcoming.style.display = isUpcomingActive ? 'flex' : 'none';
-            viewPast.style.display = isUpcomingActive ? 'none' : 'flex';
+            // PERBAIKAN: Gunakan string kosong ('') agar layout mengikuti file CSS asli
+            viewUpcoming.style.display = isUpcomingActive ? '' : 'none';
+            viewPast.style.display = isUpcomingActive ? 'none' : '';
         };
 
-        // Event Klik Tombol Upcoming
         btnUpcoming.addEventListener('click', (e) => {
             e.preventDefault();
-            switchTab(true); // true = Upcoming aktif
+            switchTab(true); 
         });
 
-        // Event Klik Tombol Past
         btnPast.addEventListener('click', (e) => {
             e.preventDefault();
-            switchTab(false); // false = Past aktif (Upcoming mati)
+            switchTab(false); 
         });
     }
 
@@ -40,11 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     const navbar = document.querySelector('.navbar');
 
-    // Pengecekan Keamanan: Hanya jalankan jika navbar ada
     if (navbar) {
         window.addEventListener('scroll', () => {
-            // classList.toggle akan otomatis menambah class 'scrolled' jika scrollY > 50, 
-            // dan menghapusnya otomatis jika kurang dari 50. Jauh lebih ringkas!
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
     }

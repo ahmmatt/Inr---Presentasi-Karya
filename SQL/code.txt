@@ -1,0 +1,96 @@
+-- 1. Buat Database
+CREATE DATABASE IF NOT EXISTS securegate_db;
+USE securegate_db;
+
+-- ========================================================
+-- 2. TABEL EVENTS (Menyimpan data utama acara)
+-- ========================================================
+CREATE TABLE IF NOT EXISTS events (
+    id_event INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    banner_image VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    location_type ENUM('offline', 'online') NOT NULL DEFAULT 'offline',
+    location_details TEXT NOT NULL,
+    space_3d_file VARCHAR(255) NULL, 
+    start_date DATE NOT NULL,
+    start_time TIME NOT NULL,
+    end_date DATE NOT NULL,
+    end_time TIME NOT NULL,
+    timezone VARCHAR(50) NOT NULL DEFAULT 'GMT+08:00',
+    description TEXT,
+    require_approval BOOLEAN NOT NULL DEFAULT FALSE,
+    capacity_type ENUM('unlimited', 'limited') NOT NULL DEFAULT 'unlimited',
+    max_capacity INT NULL,
+    seat_assignment ENUM('bebas', 'pilih') NOT NULL DEFAULT 'bebas',
+    status ENUM('active', 'ended') NOT NULL DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ========================================================
+-- 3. TABEL TICKET_TIERS (Menyimpan kategori tiket dan harga)
+-- ========================================================
+CREATE TABLE IF NOT EXISTS ticket_tiers (
+    id_tier INT AUTO_INCREMENT PRIMARY KEY,
+    id_event INT NOT NULL,
+    tier_name VARCHAR(100) NOT NULL, -- Contoh: 'Free', 'Regular', 'VIP'
+    price DECIMAL(15,2) NOT NULL DEFAULT 0.00,
+    FOREIGN KEY (id_event) REFERENCES events(id_event) ON DELETE CASCADE
+);
+
+-- ========================================================
+-- 4. TABEL CUSTOM_QUESTIONS (Pertanyaan tambahan form registrasi)
+-- ========================================================
+CREATE TABLE IF NOT EXISTS custom_questions (
+    id_question INT AUTO_INCREMENT PRIMARY KEY,
+    id_event INT NOT NULL,
+    question_text VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_event) REFERENCES events(id_event) ON DELETE CASCADE
+);
+
+-- ========================================================
+-- 5. TABEL ATTENDEES (Menyimpan data peserta / pembeli tiket)
+-- ========================================================
+CREATE TABLE IF NOT EXISTS attendees (
+    id_attendee INT AUTO_INCREMENT PRIMARY KEY,
+    id_event INT NOT NULL,
+    id_tier INT NOT NULL,
+    ticket_code VARCHAR(20) NOT NULL UNIQUE, -- Contoh: #SG-8829
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    seat_number VARCHAR(50) NULL, -- Contoh: 'Row A - 12'
+    
+    -- UPDATE: 4 Tahapan Status Peserta
+    status ENUM('need_approval', 'awaiting_payment', 'approved', 'present') NOT NULL DEFAULT 'need_approval',
+    
+    qr_token VARCHAR(255) NOT NULL UNIQUE, 
+    registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_event) REFERENCES events(id_event) ON DELETE CASCADE,
+    FOREIGN KEY (id_tier) REFERENCES ticket_tiers(id_tier) ON DELETE CASCADE
+);
+
+-- ========================================================
+-- 6. TABEL ATTENDEE_ANSWERS (Jawaban peserta untuk custom questions)
+-- ========================================================
+CREATE TABLE IF NOT EXISTS attendee_answers (
+    id_answer INT AUTO_INCREMENT PRIMARY KEY,
+    id_attendee INT NOT NULL,
+    id_question INT NOT NULL,
+    answer_text TEXT NOT NULL,
+    FOREIGN KEY (id_attendee) REFERENCES attendees(id_attendee) ON DELETE CASCADE,
+    FOREIGN KEY (id_question) REFERENCES custom_questions(id_question) ON DELETE CASCADE
+);
+
+-- ========================================================
+-- 7. TABEL WITHDRAWALS (Menyimpan riwayat penarikan uang admin)
+-- ========================================================
+CREATE TABLE IF NOT EXISTS withdrawals (
+    id_withdrawal INT AUTO_INCREMENT PRIMARY KEY,
+    amount DECIMAL(15,2) NOT NULL,           -- Total uang yang ditarik (misal: 1.000.000)
+    platform_fee DECIMAL(15,2) NOT NULL,     -- Potongan pajak 5% (misal: 50.000)
+    net_receive DECIMAL(15,2) NOT NULL,      -- Uang bersih yang diterima (misal: 950.000)
+    payout_method VARCHAR(50) NOT NULL,      -- Contoh: 'BCA', 'DANA', dll
+    payout_account VARCHAR(100) NOT NULL,    -- Nomor rekening / ID E-Wallet
+    status ENUM('pending', 'done', 'rejected') NOT NULL DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

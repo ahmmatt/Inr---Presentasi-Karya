@@ -1,0 +1,127 @@
+/* =========================================
+   1. RESET & GLOBAL VARIABLES
+   ========================================= */
+:root {
+    --bg-body: #050505;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-orange: #f97316; 
+    --accent-green: #22c55e;  
+    --border-color: #2a2a2a;
+    --content-width: 1000px;
+    --edge-spacing: 40px;
+    --content-padding: 20px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+
+body {
+    background-color: var(--bg-body); 
+    background-image: 
+        linear-gradient(to bottom, rgba(30, 40, 55, 0.6) 0%, transparent 25%),
+        radial-gradient(ellipse at center, #050505 30%, #131722 100%);
+    background-attachment: fixed; background-size: cover; background-repeat: no-repeat;
+    color: var(--text-primary); min-height: 100vh; padding-top: 80px; 
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* NAVBAR (SAMA DENGAN ADMINEVENT) */
+.navbar { position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 1000; background-color: transparent; border-bottom: 1px solid transparent; transition: 0.4s ease; display: grid; grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr; align-items: center; padding: 0 var(--edge-spacing); }
+.navbar.scrolled { background-color: rgba(19, 23, 34, 0.6); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); }
+.left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
+.main-nav { grid-column: 2; display: flex; gap: 30px; margin-left: 14px; }
+.main-nav div { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
+.main-nav div:hover, .main-nav a { color: #fff; text-decoration: none;}
+.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 20px; color:#fff;}
+.right-nav img { width: 32px; height: 32px; border-radius: 50%; }
+
+/* HEADER */
+.page-frame { max-width: var(--content-width); margin: 40px auto; padding: 0 var(--content-padding); }
+.page-frame-nav p { color: var(--text-secondary); font-size: 14px; margin-top: 8px; }
+.back-btn { color: var(--text-secondary); text-decoration: none; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+.back-btn:hover { color: #fff; }
+
+/* LAYOUT WITHDRAWAL */
+.withdrawal-layout { display: grid; grid-template-columns: 4fr 5fr; gap: 40px; margin-top: 30px; align-items: start; }
+
+/* KARTU SALDO */
+.balance-card { background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.02) 100%); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 16px; padding: 30px; text-align: center; margin-bottom: 20px; }
+.balance-card p { color: var(--accent-green); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.balance-card h1 { font-size: 40px; color: #fff; margin: 0; }
+
+/* KARTU FORM & INPUT */
+.form-card, .history-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 24px; }
+.form-card h3, .history-card h3 { font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px; }
+
+.form-group { margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px; }
+.form-group label { font-size: 13px; color: #a0a0a0; }
+.custom-input, .custom-select { background: #121212; border: 1px solid #333; padding: 14px; border-radius: 10px; color: #fff; font-size: 14px; outline: none; transition: 0.2s; width: 100%; }
+.custom-input:focus, .custom-select:focus { border-color: #666; }
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* =========================================
+   GAYA TOMBOL "MAX" DI DALAM INPUT
+   ========================================= */
+.input-wrapper-max {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Beri ruang padding ekstra di sebelah kanan agar teks angka tidak menabrak tombol MAX */
+.input-wrapper-max input {
+    padding-right: 64px !important;
+}
+
+#btn-max {
+    position: absolute;
+    right: 12px;
+    background-color: rgba(34, 197, 94, 0.1); /* Hijau transparan */
+    color: var(--accent-green);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+}
+
+#btn-max:hover {
+    background-color: rgba(34, 197, 94, 0.2);
+    border-color: var(--accent-green);
+}
+
+/* RINGKASAN BIAYA (FEE) */
+.fee-summary { background: #0a0a0a; border: 1px dashed #333; border-radius: 10px; padding: 16px; margin: 20px 0; display: flex; flex-direction: column; gap: 10px; }
+.fee-row { display: flex; justify-content: space-between; font-size: 14px; color: #888; }
+.text-danger { color: #ef4444; }
+.text-green { color: var(--accent-green); font-weight: 700; font-size: 16px;}
+.fee-divider { border: 0; border-top: 1px solid #333; margin: 4px 0; }
+.total-receive { color: #fff; align-items: center; }
+
+/* INFORMASI & TOMBOL */
+.info-alert { display: flex; gap: 12px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); padding: 16px; border-radius: 10px; color: #93c5fd; font-size: 12px; line-height: 1.5; margin-bottom: 20px; }
+.info-alert i { font-size: 16px; margin-top: 2px;}
+
+.btn-submit { width: 100%; background: #fff; color: #000; font-weight: 600; font-size: 15px; padding: 14px; border: none; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+.btn-submit:hover { background: #e0e0e0; }
+.btn-submit:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+/* TABEL HISTORY */
+.history-table { width: 100%; border-collapse: collapse; text-align: left; }
+.history-table th { padding: 12px; font-size: 12px; color: #666; border-bottom: 1px solid #333; }
+.history-table td { padding: 16px 12px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 14px; color: #e0e0e0; vertical-align: middle;}
+.acc-text { font-size: 11px; color: #888; }
+
+.badge-pending { background: rgba(249, 115, 22, 0.1); color: var(--accent-orange); border: 1px solid rgba(249, 115, 22, 0.2); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;}
+.badge-done { background: rgba(34, 197, 94, 0.1); color: var(--accent-green); border: 1px solid rgba(34, 197, 94, 0.2); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;}
+
+@media (max-width: 768px) {
+    .withdrawal-layout { grid-template-columns: 1fr; }
+}
