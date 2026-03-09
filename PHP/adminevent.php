@@ -1,6 +1,14 @@
 <?php
+session_start(); // WAJIB DITAMBAHKAN UNTUK MENGAMBIL DATA LOGIN
+
+// CEK KEAMANAN SUPER KETAT: Harus login DAN rolenya harus admin/superadmin
+if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'superadmin')) {
+    header("Location: admin_signin.php");
+    exit();
+}
+
 // 1. KONEKSI DATABASE
-require_once '../PHP/config/connect.php';
+require_once 'config/connect.php';
 
 // 2. MENANGANI AKSI TOMBOL (POST REQUEST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
@@ -77,9 +85,12 @@ if ($current_event_id > 0) {
         $attendees[] = $row;
         $total_reg++;
         if ($row['status'] === 'need_approval') $pending++;
-        if ($row['status'] === 'present') $checked_in++;
-        // Hitung uang jika sudah bayar
-        if (in_array($row['status'], ['approved', 'present'])) {
+        
+        // PERBAIKAN 1: Hitung status 'checked_in'
+        if ($row['status'] === 'checked_in') $checked_in++;
+        
+        // PERBAIKAN 2: Tambahkan ke revenue jika 'checked_in'
+        if (in_array($row['status'], ['approved', 'checked_in'])) {
             $revenue += (float)$row['price'];
         }
     }
@@ -91,6 +102,17 @@ function formatRupiah($num) {
     if ($num >= 1000) return "Rp " . number_format($num / 1000, 1, ',', '.') . "K";
     return "Rp " . number_format($num, 0, ',', '.');
 }
+
+// ==========================================
+// MENGAMBIL DATA PROFIL UNTUK NAVBAR
+// ==========================================
+$nav_user_id = $_SESSION['user_id'];
+$nav_query = $conn->query("SELECT full_name, profile_picture FROM users WHERE id_user = $nav_user_id");
+$nav_user_data = $nav_query->fetch_assoc();
+
+$nav_name = $nav_user_data['full_name'];
+$nav_initial = strtoupper(substr($nav_name, 0, 1));
+$nav_pic = $nav_user_data['profile_picture'];
 ?>
 
 <!DOCTYPE html>
@@ -111,9 +133,43 @@ function formatRupiah($num) {
             <div class="main-nav-discover"><i class="fa-solid fa-house"></i><a href="adminevent.php">Home</a></div>
             <div class="main-nav-event"><i class="fa-regular fa-calendar-plus"></i><a href="create.php">Create Event</a></div>
         </div>
-        <div class="right-nav">
-            <i class="fa-regular fa-bell"></i>
-            <a href=""><img src="../Media/pantai-indah-kapuk-dua-tbk--600.png" alt="Profile"></a>
+        <div class="right-nav" style="display: flex; align-items: center; gap: 15px; position: relative;">
+            <i class="fa-regular fa-bell" style="font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0a0a0'"></i>
+            
+            <div id="profile-dropdown-trigger" style="cursor: pointer; position: relative;" title="<?= htmlspecialchars($nav_name) ?>">
+                <?php if(!empty($nav_pic)): ?>
+                    <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block;">
+                <?php else: ?>
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a;">
+                        <?= $nav_initial ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div id="profile-dropdown-menu" style="display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden;">
+                
+                <div style="padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px;">
+                    <?php if(!empty($nav_pic)): ?>
+                        <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                    <?php else: ?>
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0;"><?= $nav_initial ?></div>
+                    <?php endif; ?>
+                    <div style="overflow: hidden;">
+                        <h4 style="color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= htmlspecialchars($nav_name) ?></h4>
+                        <p style="color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px;"><?= $_SESSION['role'] ?></p>
+                    </div>
+                </div>
+
+                <div style="padding: 8px;">
+                    <a href="settings.php" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s;" onmouseover="this.style.background='#222'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ccc';">
+                        <i class="fa-solid fa-gear" style="width: 16px; text-align: center;"></i> Settings
+                    </a>
+                    <a href="logout.php" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ef4444; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; margin-top: 4px;" onmouseover="this.style.background='rgba(239, 68, 68, 0.1)';" onmouseout="this.style.background='transparent';">
+                        <i class="fa-solid fa-arrow-right-from-bracket" style="width: 16px; text-align: center;"></i> Logout
+                    </a>
+                </div>
+
+            </div>
         </div>
     </nav>
 
@@ -149,7 +205,7 @@ function formatRupiah($num) {
             </div>
 
             <div class="header-actions">
-                <a href="scanner.html?event_id=<?= $current_event_id ?>" class="btn-primary"><i class="fa-solid fa-qrcode"></i> Open Scanner</a>
+                <a href="scanner.php?event_id=<?= $current_event_id ?>" class="btn-primary"><i class="fa-solid fa-qrcode"></i> Open Scanner</a>
                 
                 <form method="POST" style="display: inline;" onsubmit="return confirm('Delete this event and ALL its data?');">
                     <input type="hidden" name="action" value="delete_event">
@@ -181,7 +237,16 @@ function formatRupiah($num) {
                     <h3><?= $checked_in ?></h3>
                 </div>
             </div>
-            <div class="metric-card" style="cursor: pointer;" onclick="window.location.href='withdrawal.html'">
+            <?php
+                // Logika Cek Waktu Berakhir Event YANG BENAR (Sesuai Database)
+                date_default_timezone_set('Asia/Makassar');
+                $curr_time = date('Y-m-d H:i:s');
+                $end_time_full = $current_event['end_date'] . ' ' . $current_event['end_time'];
+                
+                // Tombol bisa diklik jika waktu sekarang lebih besar dari waktu selesai, atau status sudah ended
+                $is_ended = ($curr_time > $end_time_full || $current_event['status'] == 'ended') ? 'true' : 'false';
+            ?>
+            <div class="metric-card" style="cursor: pointer;" onclick="if(<?= $is_ended ?>){ window.location.href='withdrawal.php?event_id=<?= $current_event_id ?>'; } else { alert('Event belum selesai! Penarikan dana (Withdrawal) hanya bisa dilakukan setelah event berakhir.'); }">
                 <div class="metric-icon"><i class="fa-solid fa-wallet"></i></div>
                 <div class="metric-info">
                     <p>Est. Revenue <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 10px; margin-left: 4px;"></i></p>
@@ -196,6 +261,7 @@ function formatRupiah($num) {
                 <button class="tab-btn" data-tab="need_approval">Need Approval <?= $pending > 0 ? "<span class='badge-count'>$pending</span>" : "" ?></button>
                 <button class="tab-btn" data-tab="awaiting_payment">Awaiting Payment</button>
                 <button class="tab-btn" data-tab="approved">Approved</button>
+                
                 <button class="tab-btn" data-tab="present">Checked-In</button>
             </div>
 
@@ -244,7 +310,8 @@ function formatRupiah($num) {
                                         <span class="status-badge awaiting_payment">Awaiting Payment</span>
                                     <?php elseif($att['status'] == 'approved'): ?>
                                         <span class="status-badge approved">Approved</span>
-                                    <?php elseif($att['status'] == 'present'): ?>
+                                        
+                                    <?php elseif($att['status'] == 'checked_in'): ?>
                                         <span class="status-badge present">Checked-In</span>
                                     <?php endif; ?>
                                 </td>
@@ -255,7 +322,11 @@ function formatRupiah($num) {
                                         <input type="hidden" name="current_event_id" value="<?= $current_event_id ?>">
                                         
                                         <?php if($att['status'] == 'need_approval'): ?>
-                                            <input type="hidden" name="new_status" value="awaiting_payment">
+                                            <?php 
+                                                // LOGIKA CERDAS: Cek apakah tiket ini gratis atau berbayar
+                                                $target_status = ($att['price'] == 0) ? 'approved' : 'awaiting_payment'; 
+                                            ?>
+                                            <input type="hidden" name="new_status" value="<?= $target_status ?>">
                                             <button type="submit" class="action-btn approve-tkt" title="Approve Request"><i class="fa-solid fa-thumbs-up"></i></button>
                                         
                                         <?php elseif($att['status'] == 'awaiting_payment'): ?>
@@ -263,7 +334,7 @@ function formatRupiah($num) {
                                             <button type="submit" class="action-btn pay-confirm" title="Confirm Payment Received"><i class="fa-solid fa-money-bill-wave"></i></button>
                                             
                                         <?php elseif($att['status'] == 'approved'): ?>
-                                            <input type="hidden" name="new_status" value="present">
+                                            <input type="hidden" name="new_status" value="checked_in">
                                             <button type="submit" class="action-btn checkin" title="Manual Check-In"><i class="fa-solid fa-check-to-slot"></i></button>
                                         <?php endif; ?>
                                     </form>
@@ -275,8 +346,12 @@ function formatRupiah($num) {
                                         <input type="hidden" name="current_event_id" value="<?= $current_event_id ?>">
                                         <?php 
                                             $revert_target = 'need_approval';
-                                            if($att['status'] == 'present') $revert_target = 'approved';
-                                            if($att['status'] == 'approved') $revert_target = 'awaiting_payment';
+                                            if($att['status'] == 'checked_in') {
+                                                $revert_target = 'approved';
+                                            } elseif($att['status'] == 'approved') {
+                                                // Jika gratis kembalikan ke butuh persetujuan, jika berbayar ke nunggu bayar
+                                                $revert_target = ($att['price'] == 0) ? 'need_approval' : 'awaiting_payment';
+                                            }
                                         ?>
                                         <input type="hidden" name="new_status" value="<?= $revert_target ?>">
                                         <button type="submit" class="action-btn revert" title="Revert / Cancel"><i class="fa-solid fa-rotate-left"></i></button>
@@ -352,7 +427,8 @@ function formatRupiah($num) {
                     <option value="need_approval">Need Approval (Pending)</option>
                     <option value="awaiting_payment">Awaiting Payment (Unpaid)</option>
                     <option value="approved">Approved (Paid & Has Ticket)</option>
-                    <option value="present">Checked-In (Present)</option>
+                    
+                    <option value="checked_in">Checked-In (Present)</option>
                 </select>
             </div>
 
@@ -364,5 +440,27 @@ function formatRupiah($num) {
     </div>
     
     <script src="../JS/adminevent.js"></script>
+    <script>
+        // SCRIPT UNTUK DROPDOWN NAVBAR
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileTrigger = document.getElementById('profile-dropdown-trigger');
+            const profileMenu = document.getElementById('profile-dropdown-menu');
+
+            if (profileTrigger && profileMenu) {
+                // Munculkan menu saat foto profil diklik
+                profileTrigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+                });
+
+                // Tutup menu otomatis jika user klik area kosong di layar
+                window.addEventListener('click', function(e) {
+                    if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
+                        profileMenu.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

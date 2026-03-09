@@ -74,7 +74,7 @@ ul { list-style: none; }
 /* =========================================
    3. PAGE FRAME & TAB HEADER
    ========================================= */
-.page-frame { max-width: var(--content-width); margin: 40px auto; padding: 0 var(--content-padding); }
+.page-frame { max-width: var(--content-width); margin: 6px auto; padding: 0 var(--content-padding);}
 .page-frame-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
 .page-frame-nav h1 { font-size: 32px; font-weight: 700; }
 .page-frame-nav p { color: #a0a0a0; margin-top: 8px; font-size: 14px; }

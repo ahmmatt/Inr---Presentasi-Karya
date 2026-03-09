@@ -106,7 +106,7 @@ ul { list-style: none; }
 .card-hero-img { width: 70%; margin-left: auto; margin-right: auto; display: block; overflow: hidden; border-radius: 8px; margin-bottom: 16px; margin-top: 10px; }
 .card-hero-img img { width: 100%; height: 100%; object-fit: cover; }
 
-.card-title { font-size: clamp(18px, 5vw, 22px); font-weight: 700; color: #ffffff; text-align: left; margin-bottom: 10px; line-height: 1.3; width: 100%; }
+.card-title { font-size: clamp(16px, 5vw, 18px); font-weight: 700; color: #ffffff; text-align: left; margin-bottom: 10px; line-height: 1.3;width: 100%; }
 
 .card-author { display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 10px; cursor: pointer; text-align: left; }
 .card-author img { width: 20px; height: 20px; border-radius: 4px; background-color: #fff; object-fit: contain; flex-shrink: 0; }

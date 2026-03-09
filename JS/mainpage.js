@@ -1,4 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+
+    // ==========================================
+    // DETEKSI ZONA WAKTU USER OTOMATIS
+    // ==========================================
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    // Simpan ke dalam Cookie yang berlaku selama 30 hari
+    document.cookie = "user_tz=" + userTimeZone + "; path=/; max-age=2592000";
     
     // ==========================================
     // 1. LOGIKA TAB (UPCOMING vs PAST EVENT)
@@ -11,13 +19,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnUpcoming && btnPast && viewUpcoming && viewPast) {
         
         const switchTab = (isUpcomingActive) => {
+            // Ubah style tombol aktif
             btnUpcoming.classList.toggle('active', isUpcomingActive);
             btnPast.classList.toggle('active', !isUpcomingActive);
 
-            // PERBAIKAN: Gunakan string kosong ('') agar layout mengikuti file CSS asli
-            viewUpcoming.style.display = isUpcomingActive ? '' : 'none';
-            viewPast.style.display = isUpcomingActive ? 'none' : '';
+            // KUNCI PERBAIKAN: Keduanya wajib menggunakan 'flex'!
+            // Jika menggunakan 'block', perintah 'gap: 30px' di CSS akan mati.
+            viewUpcoming.style.display = isUpcomingActive ? 'flex' : 'none'; 
+            viewPast.style.display = isUpcomingActive ? 'none' : 'flex';  
         };
+
+        // Pastikan saat halaman pertama kali dimuat, tab Upcoming yang aktif
+        switchTab(true);
 
         btnUpcoming.addEventListener('click', (e) => {
             e.preventDefault();

@@ -1,0 +1,173 @@
+/* =========================================
+   1. RESET & GLOBAL VARIABLES
+   ========================================= */
+:root {
+    --bg-body: #050505;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-orange: #f97316; 
+    --accent-green: #22c55e;  
+    --border-color: #2a2a2a;
+    --content-width: 1000px;
+    --edge-spacing: 40px;
+    --content-padding: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #050505; 
+    
+    /* MENGGABUNGKAN 2 GRADIEN (Tumpukan) */
+    background-image: 
+        /* Tumpukan 1 (Paling Atas): Cahaya dari atap memudar ke transparan di ketinggian 25% layar */
+        linear-gradient(to bottom, rgba(30, 40, 55, 0.6) 0%, transparent 25%),
+        
+        /* Tumpukan 2 (Dasar): Gradien radial asli Anda (Tengah ke ujung) */
+        radial-gradient(ellipse at center, #050505 30%, #131722 100%);
+    
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding-top: 80px; 
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* =========================================
+   2. NAVBAR STYLING (DINAMIS)
+   ========================================= */
+.navbar {
+    /* 1. Membuat Navbar Menempel di Atas */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Tinggi fix diperlukan agar layout stabil */
+    z-index: 1000;
+    /* Background transparan murni dan tanpa garis bawah */
+    background-color: transparent; 
+    border-bottom: 1px solid transparent; 
+    /* PENTING: Efek transisi agar perubahan blur-nya halus (smooth) */
+    transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+    /* Layout */
+    display: grid;
+    grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
+    align-items: center;
+    padding: 0 var(--edge-spacing); 
+    box-sizing: border-box;
+}
+
+/* B. KONDISI SCROLLED (Saat di-scroll) */
+.navbar.scrolled {
+    /* UBAH: Menggunakan warna RGB dari #131722 dengan transparansi 60% */
+    background-color: rgba(19, 23, 34, 0.6); 
+    
+    /* Efek Kaca (Blur) */
+    backdrop-filter: blur(16px); /* Tingkatkan blur sedikit agar lebih halus */
+    -webkit-backdrop-filter: blur(16px);  
+    
+    /* Garis bawah yang sangat tipis dan elegan */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+    
+    /* Tambahan efek bayangan (shadow) halus untuk memisahkan navbar dan konten */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Navbar Items */
+.left-nav { grid-column: 1; justify-self: start; }
+.left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
+
+.main-nav {
+    grid-column: 2; 
+    justify-self: start; 
+    margin-left: 14px;
+    display: flex;
+    gap: 30px;
+}
+.main-nav div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.main-nav div:hover { color: var(--text-primary); }
+
+.right-nav {
+    grid-column: 3; 
+    justify-self: end; 
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+/* Gaya Kartu Mengikuti Desain CSS Utama (Glassmorphism + Dark Mode) */
+        .glass-card { 
+            background: rgba(18, 18, 18, 0.6); /* Warna dasar --bg-card (#121212) tembus pandang */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05); /* Border sangat halus */
+            border-radius: 20px; 
+            padding: 40px; 
+            max-width: 450px; 
+            margin: 80px auto; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);;
+        }
+        
+        .custom-input { 
+            width: 100%; 
+            padding: 12px 14px; 
+            margin-top: 8px; 
+            border-radius: 8px; 
+            background: rgba(10, 10, 10, 0.8); /* Warna dasar input sangat gelap (#0a0a0a) */
+            border: 1px solid #333; 
+            color: #ffffff; 
+            margin-bottom: 20px; 
+            outline: none; 
+            font-size: 13px;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+        
+        .custom-input:focus { 
+            border-color: #ffffff; 
+            background-color: #000000;
+        }
+        
+        /* Mencegah background putih autofill browser */
+        .custom-input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px #0a0a0a inset !important;
+            -webkit-text-fill-color: white !important;
+        }
+        
+        .btn-primary { 
+            width: 100%; 
+            padding: 14px; 
+            background: #ffffff; /* Tombol warna putih khas desain Anda */
+            color: #000000; 
+            font-weight: 700; 
+            font-size: 14px;
+            border: none; 
+            border-radius: 50px; /* Bentuk Pill */
+            cursor: pointer; 
+            transition: background-color 0.2s ease;
+        }
+        
+        .btn-primary:hover { 
+            background: #d1d1d1; 
+        }

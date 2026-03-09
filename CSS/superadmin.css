@@ -1,0 +1,164 @@
+/* =========================================
+   1. RESET & GLOBAL VARIABLES
+   ========================================= */
+:root {
+    --bg-body: #050505;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-orange: #f97316; 
+    --accent-green: #22c55e;  
+    --border-color: #2a2a2a;
+    --content-width: 1000px;
+    --edge-spacing: 40px;
+    --content-padding: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #050505; 
+    
+    /* MENGGABUNGKAN 2 GRADIEN (Tumpukan) */
+    background-image: 
+        /* Tumpukan 1 (Paling Atas): Cahaya dari atap memudar ke transparan di ketinggian 25% layar */
+        linear-gradient(to bottom, rgba(30, 40, 55, 0.6) 0%, transparent 25%),
+        
+        /* Tumpukan 2 (Dasar): Gradien radial asli Anda (Tengah ke ujung) */
+        radial-gradient(ellipse at center, #050505 30%, #131722 100%);
+    
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding-top: 80px; 
+}
+
+body::-webkit-scrollbar { display: none; }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* =========================================
+   2. NAVBAR STYLING (DINAMIS)
+   ========================================= */
+.navbar {
+    /* 1. Membuat Navbar Menempel di Atas */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Tinggi fix diperlukan agar layout stabil */
+    z-index: 1000;
+    /* Background transparan murni dan tanpa garis bawah */
+    background-color: transparent; 
+    border-bottom: 1px solid transparent; 
+    /* PENTING: Efek transisi agar perubahan blur-nya halus (smooth) */
+    transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+    /* Layout */
+    display: grid;
+    grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
+    align-items: center;
+    padding: 0 var(--edge-spacing); 
+    box-sizing: border-box;
+}
+
+/* B. KONDISI SCROLLED (Saat di-scroll) */
+.navbar.scrolled {
+    /* UBAH: Menggunakan warna RGB dari #131722 dengan transparansi 60% */
+    background-color: rgba(19, 23, 34, 0.6); 
+    
+    /* Efek Kaca (Blur) */
+    backdrop-filter: blur(16px); /* Tingkatkan blur sedikit agar lebih halus */
+    -webkit-backdrop-filter: blur(16px);  
+    
+    /* Garis bawah yang sangat tipis dan elegan */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+    
+    /* Tambahan efek bayangan (shadow) halus untuk memisahkan navbar dan konten */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Navbar Items */
+.left-nav { grid-column: 1; justify-self: start; }
+.left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
+
+.main-nav {
+    grid-column: 2; 
+    justify-self: start; 
+    margin-left: 14px;
+    display: flex;
+    gap: 30px;
+}
+.main-nav div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.main-nav div:hover { color: var(--text-primary); }
+
+.right-nav {
+    grid-column: 3; 
+    justify-self: end; 
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; }
+.right-nav img { width: 32px; height: 32px; border-radius: 50%; background-color: #333; display: block; }
+
+/* =========================================
+   3. PAGE FRAME & HEADER
+   ========================================= */
+.page-frame {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 var(--content-padding);
+    margin-top: 40px;
+}
+
+.page-frame-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    gap: 8px;
+}
+.page-frame-nav h1 { font-size: 32px; font-weight: 700; margin: 0;}
+.page-frame-nav p { color: var(--text-secondary); font-size: 14px; margin: 0;}
+
+.admin-card { background: rgba(16, 23, 33, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 30px; margin-bottom: 30px; backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+.admin-card h2 { color: #fff; margin-bottom: 20px; font-size: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+.data-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+.info h4 { color: #fff; font-size: 16px; margin-bottom: 4px; }
+.info p { color: var(--text-secondary); font-size: 13px; }
+.btn-action { padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; font-size: 13px;}
+.btn-green { background: var(--accent-green); color: black; }
+.btn-blue { background: #3b82f6; color: white; }
+.btn-red { background: transparent; color: #ef4444; border: 1px solid #ef4444; }
+.btn-red:hover { background: #ef4444; color: white; }
+
+
+/* =========================================
+   7. FOOTER
+   ========================================= */
+hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
+.page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
+.left-footer, .right-footer { display: flex; gap: 20px; }
+.right-footer a:hover { color: var(--text-primary); }

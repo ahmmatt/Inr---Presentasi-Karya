@@ -1,6 +1,76 @@
-// Jadikan SATU wadah utama agar semua kode menunggu HTML selesai dimuat
 document.addEventListener("DOMContentLoaded", () => {
     
+    // ==========================================
+    // 0. AUTO GEOLOCATION (CARI KOTA TERDEKAT)
+    // ==========================================
+    
+    // Daftar 8 kota beserta koordinat aslinya (Latitude, Longitude)
+    const cityCoords = [
+        { name: 'Jakarta', lat: -6.2088, lon: 106.8456 },
+        { name: 'Bali', lat: -8.6500, lon: 115.2167 },
+        { name: 'Bandung', lat: -6.9175, lon: 107.6191 },
+        { name: 'Surabaya', lat: -7.2504, lon: 112.7688 },
+        { name: 'Yogyakarta', lat: -7.7970, lon: 110.3705 },
+        { name: 'Makassar', lat: -5.1477, lon: 119.4327 },
+        { name: 'Medan', lat: 3.5952, lon: 98.6722 },
+        { name: 'Semarang', lat: -6.9667, lon: 110.4167 }
+    ];
+
+    // Fungsi matematika (Haversine) untuk menghitung jarak antar 2 titik di bumi
+    function getDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius bumi dalam kilometer
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                  Math.sin(dLon/2) * Math.sin(dLon/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c; // Hasil dalam kilometer
+    }
+
+    // Cek apakah user sudah punya Cookie kota
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    }
+
+    // JIKA belum ada Cookie KOTA & tidak sedang mengeklik filter kota secara manual
+    if (!getCookie("user_city") && !window.location.search.includes("city=")) {
+        
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const userLat = position.coords.latitude;
+                const userLon = position.coords.longitude;
+                
+                let nearestCity = 'Jakarta'; // Default awal
+                let minDistance = Infinity;
+
+                // Cari kota mana yang jaraknya paling kecil (terdekat)
+                cityCoords.forEach(city => {
+                    const dist = getDistance(userLat, userLon, city.lat, city.lon);
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        nearestCity = city.name;
+                    }
+                });
+
+                // Simpan kota terdekat ke dalam Cookie agar tidak melacak berulang kali
+                document.cookie = `user_city=${nearestCity}; path=/; max-age=2592000`; // 30 Hari
+                
+                // Segarkan halaman dan otomatis terapkan filter kota terdekat!
+                window.location.href = `discover.php?city=${nearestCity}`;
+                
+            }, (error) => {
+                // Jika user menolak akses lokasi, setel ke "All" agar tidak ditanya lagi
+                console.log("Izin lokasi ditolak.");
+                document.cookie = "user_city=All; path=/; max-age=2592000";
+            });
+        }
+    }
+
+
     // ==========================================
     // 1. LOGIKA SLIDER (UPCOMING EVENT)
     // ==========================================
@@ -8,24 +78,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const leftBtn = document.getElementById('slide-left');
     const rightBtn = document.getElementById('slide-right');
 
-    // Pengecekan: Hanya jalankan slider jika elemen-elemennya ada di halaman ini
     if (track && leftBtn && rightBtn) {
         const scrollAmount = 320; 
 
-        // Fungsi terpisah untuk mengecek kapan tombol muncul/hilang
         const updateButtonState = () => {
-            // Jika scroll lebih dari 0, munculkan tombol kiri
             leftBtn.style.display = track.scrollLeft > 0 ? 'flex' : 'none';
-            
-            // Cek batas mentok kanan (dengan toleransi 5px)
             const maxScroll = track.scrollWidth - track.clientWidth;
             rightBtn.style.display = track.scrollLeft >= maxScroll - 5 ? 'none' : 'flex';
         };
 
-        // Panggil fungsi sekali saat halaman baru dimuat
         updateButtonState();
 
-        // Event Klik Tombol Geser
         rightBtn.addEventListener('click', () => {
             track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         });
@@ -34,10 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         });
 
-        // Event Scroll untuk memantau pergeseran
         track.addEventListener('scroll', updateButtonState);
-        
-        // TAMBAHAN: Update tombol jika layar di-resize / HP diputar (Landscape)
         window.addEventListener('resize', updateButtonState);
     }
 
@@ -46,11 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     const navbar = document.querySelector('.navbar');
 
-    // Pengecekan: Hanya jalankan jika ada navbar di halaman ini
     if (navbar) {
         window.addEventListener('scroll', () => {
-            // classList.toggle akan menempelkan class 'scrolled' jika window.scrollY > 50 (true), 
-            // dan akan menghapusnya otomatis jika kurang dari 50 (false). Jauh lebih rapi!
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
     }

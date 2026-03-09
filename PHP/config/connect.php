@@ -18,4 +18,10 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8mb4");
 
 // Jika script sampai di baris ini, berarti koneksi sukses!
+
+// AUTO-UPDATE STATUS EVENT KE 'ENDED'
+date_default_timezone_set('Asia/Makassar');
+$now = date('Y-m-d H:i:s');
+// Ubah semua event yang waktu selesainya sudah lewat dari waktu saat ini
+$conn->query("UPDATE events SET status = 'ended' WHERE status = 'active' AND CONCAT(end_date, ' ', end_time) < '$now'");
 ?>
