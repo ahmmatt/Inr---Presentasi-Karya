@@ -295,7 +295,7 @@ $nav_pic = $nav_user_data['profile_picture'];
                                             <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: normal; overflow-wrap: anywhere; line-height: 1.4; color: #a0a0a0; font-size: 12px; margin: 0;">
                                                 <?php 
                                                     if($ev['location_type'] == 'online') {
-                                                        echo htmlspecialchars($ev['location_details']);
+                                                        echo "Online Event / Virtual Meeting";
                                                     } else {
                                                         $city_text = !empty($ev['city']) ? htmlspecialchars($ev['city']) . ', ' : '';
                                                         echo $city_text . htmlspecialchars($ev['location_details']);

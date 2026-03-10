@@ -3,6 +3,20 @@ session_start();
 require_once 'config/connect.php'; 
 require_once 'midtrans-php-master/Midtrans.php';
 
+// =======================================================
+// TANGKAP SINYAL AUTO CHECK-IN DARI TOMBOL "JOIN VIRTUAL"
+// =======================================================
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] == 'auto_checkin') {
+    header('Content-Type: application/json');
+    $att_id = (int)$_POST['attendee_id'];
+    
+    // Ubah status jadi checked_in di database
+    $conn->query("UPDATE attendees SET status = 'checked_in' WHERE id_attendee = $att_id AND id_user = " . $_SESSION['user_id']);
+    
+    echo json_encode(['status' => 'success']);
+    exit();
+}
+
 // 1. Cek Login
 if (!isset($_SESSION['user_id'])) {
     header("Location: signin.php");
@@ -192,7 +206,10 @@ $nav_pic = $nav_user_data['profile_picture'];
                         <h1 class="event-title"><?= htmlspecialchars($ticket['title']) ?></h1>
                         
                         <div class="event-datetime-location">
-                            <p><i class="fa-solid <?= $ticket['location_type'] == 'online' ? 'fa-link' : 'fa-location-dot' ?>"></i> <?= htmlspecialchars($ticket['location_details']) ?></p>
+                            <p>
+                                <i class="fa-solid <?= $ticket['location_type'] == 'online' ? 'fa-link' : 'fa-location-dot' ?>"></i> 
+                                <?= $ticket['location_type'] == 'online' ? 'Virtual Meeting (Tautan di bawah)' : htmlspecialchars($ticket['location_details']) ?>
+                            </p>
                             <p><i class="fa-regular fa-calendar"></i> <?= strtoupper(formatDate($ticket['start_date'])) ?>, <?= strtoupper(formatTime($ticket['start_time'])) ?> <?= !empty($ticket['timezone']) ? '('.htmlspecialchars($ticket['timezone']).')' : '' ?></p>
                         </div>
 
@@ -216,11 +233,42 @@ $nav_pic = $nav_user_data['profile_picture'];
                         </div>
                     </div>
 
-                    <div class="ticket-qr-section">
-                        <div class="qr-code-box" style="background: #fff; padding: 10px; border-radius: 12px; display: flex; justify-content: center; align-items: center; width: 170px; height: 170px;">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= urlencode($ticket['qr_token']) ?>" alt="QR Code" style="width: 100%; height: 100%;">
-                        </div>
-                        <p style="margin-top: 12px; color: #a0a0a0; font-size: 13px;">Scan this at the entrance</p>
+                    <?php
+                        // LOGIKA GEMBOK WAKTU H-1
+                        date_default_timezone_set('Asia/Makassar'); 
+                        $now = time();
+                        $event_start_time = strtotime($ticket['start_date'] . ' ' . $ticket['start_time']);
+                        
+                        // Hitung H-1 (Dikurangi 1 Hari / 24 Jam)
+                        $h_min_1 = strtotime('-1 day', $event_start_time);
+                        $is_revealed = ($now >= $h_min_1);
+                    ?>
+                    
+                    <div class="ticket-qr-section" style="margin-top: 20px;">
+                        <?php if($ticket['location_type'] == 'offline'): ?>
+                            <div class="qr-code-box" style="background: #fff; padding: 10px; border-radius: 12px; display: flex; justify-content: center; align-items: center; width: 170px; height: 170px; margin: 0 auto;">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= urlencode($ticket['qr_token']) ?>" alt="QR Code" style="width: 100%; height: 100%;">
+                            </div>
+                            <p style="margin-top: 12px; color: #a0a0a0; font-size: 13px; text-align: center;">Scan this at the entrance</p>
+                        
+                        <?php else: ?>
+                            <div style="background: #222; border: 1px solid #333; border-radius: 12px; padding: 24px; text-align: center;">
+                                <?php if($is_revealed): ?>
+                                    <i class="fa-solid fa-unlock-keyhole" style="font-size: 32px; color: #22c55e; margin-bottom: 12px;"></i>
+                                    <h3 style="color: #fff; margin-bottom: 8px;">Virtual Meeting is Ready</h3>
+                                    <p style="color: #a0a0a0; font-size: 13px; margin-bottom: 16px;">Klik tombol di bawah ini untuk bergabung ke dalam acara.</p>
+                                    <button onclick="joinAndCheckIn(<?= $ticket['id_attendee'] ?>, '<?= htmlspecialchars($ticket['location_details']) ?>')" style="display: inline-block; padding: 12px 24px; background: #22c55e; color: #000; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; font-size: 16px;">
+                                        <i class="fa-solid fa-video"></i> Join Virtual Event
+                                    </button>
+                                <?php else: ?>
+                                    <i class="fa-solid fa-lock" style="font-size: 32px; color: #f97316; margin-bottom: 12px;"></i>
+                                    <h3 style="color: #fff; margin-bottom: 8px;">Link is Locked</h3>
+                                    <p style="color: #a0a0a0; font-size: 13px; line-height: 1.5;">Tautan virtual akan otomatis terbuka pada:<br>
+                                        <strong style="color: #f97316;"><?= date('l, d M Y H:i', $h_min_1) ?> WITA</strong> (H-1)
+                                    </p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 <?php endif; ?>
 
@@ -231,13 +279,6 @@ $nav_pic = $nav_user_data['profile_picture'];
             </div>
         </div>
 
-        <?php if($status == 'approved'): ?>
-            <div class="ticket-actions-bottom">
-                <button class="btn-primary" style="background: #22c55e; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; color: #000;">
-                    <i class="fa-solid fa-download"></i> Download PDF
-                </button>
-            </div>
-        <?php endif; ?>
 
     </div>
 
@@ -296,6 +337,31 @@ $nav_pic = $nav_user_data['profile_picture'];
                 });
             }
         });
+    </script>
+    <script>
+        // FUNGSI AUTO CHECK-IN SAAT KLIK VIRTUAL LINK
+        function joinAndCheckIn(attendeeId, meetLink) {
+            // 1. Buka link Zoom/Meet di tab baru
+            window.open(meetLink, '_blank');
+
+            // 2. Kirim sinyal diam-diam ke server untuk mengubah status
+            let formData = new FormData();
+            formData.append('action', 'auto_checkin');
+            formData.append('attendee_id', attendeeId);
+
+            fetch('eticket.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    // 3. Refresh halaman agar label E-ticket berubah jadi "Checked-In"
+                    location.reload();
+                }
+            })
+            .catch(err => console.error('Gagal auto check-in:', err));
+        }
     </script>
 </body>
 

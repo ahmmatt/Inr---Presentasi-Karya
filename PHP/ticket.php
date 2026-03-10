@@ -240,31 +240,38 @@ $nav_pic = $nav_user_data['profile_picture'];
                 </div>
                 <hr>
 
-                <div class="maps-or-link-card">
+                <div class="maps-or-link-card" style="width: 100%; overflow: hidden; box-sizing: border-box;">
                     <h4>Location or Virtual Link</h4>
                     
-                    <?php if($event['location_type'] == 'online'): ?>
-                        <div class="link-wrapper" style="display: flex;">
-                            <i class="fa-solid fa-link" style="color: #a0a0a0; font-size: 16px;"></i>
-                            <div class="url-box">
-                                <span id="virtual-link-text"><?= htmlspecialchars($event['location_details']) ?></span>
-                                <i class="fa-regular fa-copy" id="copy-link-btn" title="Copy Link" onclick="navigator.clipboard.writeText('<?= htmlspecialchars($event['location_details']) ?>'); alert('Link copied!');" style="cursor: pointer; margin-left: 10px;"></i>
-                            </div>
-                        </div>
-                    <?php else: ?>
-                        <div class="maps-container-static" style="display: block;">
-                            <a href="<?= htmlspecialchars($event['maps_link']) ?>" target="_blank" class="map-click-overlay" title="Buka di Google Maps"></a>    
-                            <iframe src="<?= htmlspecialchars($event['maps_link']) ?>" width="100%" height="250" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>  
-                        </div>
+                    <div class="link-wrapper" style="display: flex; align-items: center; margin-top: 16px; width: 100%;">
+                        <?php 
+                            if ($event['location_type'] == 'online') {
+                                // 1. ONLINE: Samarkan Link
+                                $icon_class = 'fa-link';
+                                $display_text = "Virtual Meeting (Tautan ada di E-Ticket)";
+                                $show_copy = false;
+                            } else {
+                                // 2. OFFLINE: Tampilkan GMaps / Alamat
+                                $copy_target = (!empty($event['maps_link']) && $event['maps_link'] !== 'NULL') ? $event['maps_link'] : $event['location_details'];
+                                $icon_class = 'fa-map-location-dot';
+                                $display_text = htmlspecialchars($copy_target);
+                                $show_copy = true;
+                            }
+                        ?>
                         
-                        <div class="link-wrapper" style="display: flex; margin-top: 16px;">
-                            <i class="fa-solid fa-link" style="color: #a0a0a0; font-size: 16px;"></i>
-                            <div class="url-box">
-                                <span id="virtual-link-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;"><?= htmlspecialchars($event['location_details']) ?></span>
-                                <i class="fa-regular fa-copy" id="copy-link-btn" title="Copy Link" onclick="navigator.clipboard.writeText('<?= htmlspecialchars($event['location_details']) ?>'); alert('Link copied!');" style="cursor: pointer; margin-left: 10px;"></i>
-                            </div>
+                        <i class="fa-solid <?= $icon_class ?>" style="color: #a0a0a0; font-size: 16px; flex-shrink: 0;"></i>
+                        
+                        <div class="url-box" style="flex: 1; min-width: 0; display: flex; align-items: center; overflow: hidden; margin-left: 12px;">
+                            
+                            <span id="virtual-link-text" style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; <?= !$show_copy ? 'color: #22c55e; font-weight: 600;' : '' ?>" title="<?= $display_text ?>">
+                                <?= $display_text ?>
+                            </span>
+                            
+                            <?php if($show_copy): ?>
+                                <i class="fa-regular fa-copy" id="copy-link-btn" title="Copy Link" onclick="navigator.clipboard.writeText('<?= $copy_target ?>'); alert('Link copied!');" style="cursor: pointer; margin-left: 10px; flex-shrink: 0;"></i>
+                            <?php endif; ?>
                         </div>
-                    <?php endif; ?>
+                    </div>
                 </div>
                 <hr>
                 <div class="category-card">
@@ -306,9 +313,8 @@ $nav_pic = $nav_user_data['profile_picture'];
                                 <p>
                                     <?php 
                                         if($event['location_type'] == 'online') {
-                                            echo htmlspecialchars($event['location_details']); // Muncul link jika online
+                                            echo "Online Event (Zoom / Virtual Meet)"; // Link asli disamarkan
                                         } else {
-                                            // Muncul Kota + Alamat/Provinsi (Contoh: Makassar, Sulawesi Selatan)
                                             $city_text = !empty($event['city']) ? htmlspecialchars($event['city']) . ', ' : '';
                                             echo $city_text . htmlspecialchars($event['location_details']);
                                         }
