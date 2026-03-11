@@ -446,3 +446,113 @@ hr { border: 0; border-top: 1px solid var(--border-color); margin: 40px 0; width
 .page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
 .left-footer, .right-footer { display: flex; gap: 20px; }
 .right-footer a:hover { color: var(--text-primary); }
+
+/* =========================================
+   7. GLOBAL LIGHT MODE OVERRIDES (SCANNER)
+   ========================================= */
+html.light-mode body {
+    --bg-body: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #0f172a; 
+    --text-secondary: #475569;
+    --border-color: #cbd5e1;
+    
+    background-color: var(--bg-body);
+    
+    /* PREMIUM LIGHT GRADIENT */
+    background-image: 
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 0%, transparent 25%),
+        radial-gradient(ellipse at center, #ffffff 20%, #e2e8f0 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Navbar */
+html.light-mode .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+html.light-mode .left-nav h1, 
+html.light-mode .main-nav div, 
+html.light-mode .right-nav { color: var(--text-primary); }
+html.light-mode .main-nav div:hover { color: #3b82f6; }
+html.light-mode .nav-bell-icon { color: var(--text-secondary); }
+
+/* Dropdown Navbar */
+html.light-mode .profile-dropdown-menu { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+html.light-mode .dropdown-header { border-bottom-color: #e2e8f0; }
+html.light-mode .dropdown-user-name { color: var(--text-primary); }
+html.light-mode .dropdown-link { color: var(--text-secondary); }
+html.light-mode .dropdown-link:hover { background: #f8fafc; color: var(--text-primary); }
+
+/* Header Text */
+html.light-mode .page-frame-nav h1 { color: var(--text-primary); }
+html.light-mode .page-frame-nav p { color: var(--text-secondary); }
+
+/* =========================================
+   KAMERA SCANNER LIGHT MODE
+   ========================================= */
+html.light-mode .camera-container { 
+    background-color: #f1f5f9; /* Abu-abu sangat terang */
+    border-color: #cbd5e1; 
+}
+html.light-mode .camera-container.scanning { 
+    border-color: var(--accent-green); 
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.2); 
+}
+html.light-mode .viewfinder { border-color: rgba(15, 23, 42, 0.15); }
+html.light-mode .camera-icon, 
+html.light-mode .camera-overlay-text { color: var(--text-secondary); }
+html.light-mode #camera-text { color: var(--text-secondary); }
+
+/* =========================================
+   HASIL & KARTU TIKET LIGHT MODE
+   ========================================= */
+html.light-mode .result-section { 
+    background-color: #ffffff; 
+    border-color: #e2e8f0; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+}
+
+/* Empty State (Menunggu Scan) */
+html.light-mode .empty-state { 
+    background: #f8fafc; 
+    border-color: #cbd5e1; 
+}
+html.light-mode .empty-state i { color: #94a3b8; }
+html.light-mode .empty-state h3 { color: var(--text-primary); }
+html.light-mode .empty-state p { color: var(--text-secondary); }
+
+/* Kartu Hasil Scan (Ditemukan) */
+html.light-mode .scan-result-card { 
+    background: #ffffff; 
+    border-color: #e2e8f0; 
+}
+
+html.light-mode .attendee-pict { border-color: #cbd5e1; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+html.light-mode .attendee-details h2 { color: var(--text-primary); }
+html.light-mode .attendee-details p { color: var(--text-secondary); }
+
+html.light-mode .divider { border-top-color: #e2e8f0; }
+
+html.light-mode .detail-item h4 { color: var(--text-primary); }
+html.light-mode .detail-item span { color: var(--text-secondary); }
+
+/* Status Badges (Penyesuaian warna di light mode) */
+html.light-mode .status-badge.pending { background-color: rgba(249, 115, 22, 0.15); }
+html.light-mode .status-badge.present { background-color: rgba(34, 197, 94, 0.15); }
+
+/* =========================================
+   TOMBOL ACTION LIGHT MODE
+   ========================================= */
+html.light-mode .btn-scan { background-color: #0f172a; color: #ffffff; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.1); }
+html.light-mode .btn-scan:hover { background-color: #334155; }
+
+html.light-mode .btn-approve:disabled { background-color: #e2e8f0 !important; color: #94a3b8 !important; }
+
+/* Footer */
+html.light-mode hr { border-top-color: rgba(0, 0, 0, 0.1); }

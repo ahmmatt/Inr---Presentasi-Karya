@@ -40,7 +40,7 @@ a { text-decoration: none; color: inherit; }
 .main-nav { display: flex; gap: 30px; margin-left: 14px; }
 .main-nav div { display: flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 14px; font-weight: 500; cursor: pointer; }
 .main-nav div:hover { color: #ffffff; }
-.right-nav { justify-self: end; display: flex; align-items: center; gap: 20px; color:#fff; position: relative; }
+.right-nav { justify-self: end; display: flex; align-items: center; gap: 15px; color:#fff; position: relative; }
 
 /* NAVBAR PROFILE COMPONENTS */
 .nav-bell-icon { font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s; }
@@ -151,18 +151,98 @@ hr { border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 40px 0; wi
 .mb-20 { margin-bottom: 20px; }
 .hidden { display: none; }
 
-/* LIGHT MODE OVERRIDES */
+/* =========================================
+   8. LIGHT MODE THEME OVERRIDES (Diperbaiki)
+   ========================================= */
 body.light-mode {
-    --bg-body: #f1f5f9;
+    ---bg-body: #f8fafc;
     --text-primary: #0f172a; 
-    --text-secondary: #64748b; 
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, transparent 30%), radial-gradient(ellipse at center, #f8fafc 0%, #e2e8f0 90%);
+    --text-secondary: #475569;
+    --border-color: #cbd5e1;
+    
+    background-color: var(--bg-body);
+    
+    /* =========================================
+       PREMIUM LIGHT GRADIENT (Gaya yang sama dengan Dark Mode)
+       ========================================= */
+    background-image: 
+        /* 1. Tumpukan Atas: Bayangan gelap premium (Dark Slate) yang memudar ke transparan */
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 0%, transparent 25%),
+        
+        /* 2. Tumpukan Dasar: Putih bersih di tengah, memudar ke Premium Silver/Grey di ujung layar */
+        radial-gradient(ellipse at center, #ffffff 20%, #e2e8f0 100%);
+        
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
-body.light-mode .display-card { background: #fff; border-color: rgba(0,0,0,0.1); }
-body.light-mode .custom-input { background: #fff; color: #000; border-color: rgba(0,0,0,0.2); }
+
+/* Navbar */
+body.light-mode .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+body.light-mode .left-nav h1, 
+body.light-mode .main-nav div, 
+body.light-mode .right-nav { color: var(--text-primary); }
+body.light-mode .main-nav div:hover { color: #3b82f6; }
+body.light-mode .nav-bell-icon { color: var(--text-secondary); }
+
+/* Teks & Header General */
+body.light-mode .page-frame-nav h1,
+body.light-mode .section-block h2,
+body.light-mode .card-atas h3,
+body.light-mode .appearance-card h3,
+body.light-mode .pass-info h2 { color: var(--text-primary); }
+
+body.light-mode .section-desc,
+body.light-mode .display-card p,
+body.light-mode .pass-info p { color: var(--text-secondary); }
+
+body.light-mode hr { border-top: 1px solid rgba(0, 0, 0, 0.1); }
+
+/* Tab Menu */
+body.light-mode .tab-link { color: var(--text-secondary); }
+body.light-mode .tab-link:hover, body.light-mode .tab-link.active { color: var(--text-primary); border-bottom-color: var(--text-primary); }
+
+/* Form & Input */
+body.light-mode .img-container { background-color: #fff; border-color: #e2e8f0; }
+body.light-mode .input-group span { color: var(--text-secondary); }
+body.light-mode .custom-input { 
+    background-color: #ffffff; 
+    border-color: #cbd5e1; 
+    color: var(--text-primary); 
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); 
+}
+body.light-mode .custom-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+/* Card Display (Emails dll) */
+body.light-mode .display-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+body.light-mode .badge-primary { background: #e2e8f0; color: #334155; }
+body.light-mode .icon-circle { background: #f1f5f9; color: var(--text-secondary); }
+
+/* Buttons */
 body.light-mode .btn-primary { background: #0f172a; color: #fff; }
-body.light-mode .edit-modal { background-color: rgba(255, 255, 255, 0.9); border-color: rgba(0,0,0,0.1); }
-body.light-mode .modal-input { background: #fff; color: #000; border-color: rgba(0,0,0,0.1); }
+body.light-mode .btn-primary:hover { background: #334155; }
+body.light-mode .btn-secondary, body.light-mode .btn-add { background: #fff; color: var(--text-primary); border-color: #cbd5e1; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+body.light-mode .btn-secondary:hover, body.light-mode .btn-add:hover { background: #f8fafc; border-color: #94a3b8; }
+body.light-mode .btn-danger { background: #fff1f2; color: #ef4444; border-color: #fecdd3; }
+body.light-mode .btn-danger:hover { background: #ffe4e6; }
+
+/* Modal Khusus Light Mode */
+body.light-mode .edit-modal { background-color: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+body.light-mode .modal-header-intro h2 { color: var(--text-primary); }
+body.light-mode .modal-header-intro p { color: var(--text-secondary); }
+body.light-mode .modal-input { background: #f8fafc; border-color: #cbd5e1; color: var(--text-primary); }
+body.light-mode .btn-cancel { background: #f1f5f9; color: var(--text-primary); border-color: #e2e8f0; }
+body.light-mode .btn-cancel:hover { background: #e2e8f0; }
+
+/* Toggle Button */
+body.light-mode .switch-btn { background-color: #cbd5e1; }
+body.light-mode .switch-btn.active { background-color: var(--accent-green); }
 
 @media (max-width: 600px) {
     .profile-wrapper { flex-direction: column; align-items: center; }

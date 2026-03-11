@@ -114,6 +114,7 @@ $nav_pic = $user_data['profile_picture'];
     <link rel="stylesheet" href="../CSS/userevent.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+</head>
 <body>
     <nav class="navbar">
         <div class="left-nav">

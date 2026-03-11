@@ -153,3 +153,121 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 @media (max-width: 768px) {
     .withdrawal-layout { grid-template-columns: 1fr; }
 }
+
+/* =========================================
+   7. GLOBAL LIGHT MODE OVERRIDES (WITHDRAWAL)
+   ========================================= */
+html.light-mode body {
+    --bg-body: #f8fafc;
+    --text-primary: #0f172a; 
+    --text-secondary: #475569;
+    --border-color: #cbd5e1;
+    
+    background-color: var(--bg-body);
+    
+    /* PREMIUM LIGHT GRADIENT */
+    background-image: 
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 0%, transparent 25%),
+        radial-gradient(ellipse at center, #ffffff 20%, #e2e8f0 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Navbar */
+html.light-mode .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+html.light-mode .left-nav h1, 
+html.light-mode .main-nav-item, 
+html.light-mode .right-nav { color: var(--text-primary); }
+html.light-mode .main-nav-item:hover { color: #3b82f6; }
+html.light-mode .nav-bell-icon { color: var(--text-secondary); }
+
+/* Dropdown Navbar */
+html.light-mode .profile-dropdown-menu { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+html.light-mode .dropdown-header { border-bottom-color: #e2e8f0; }
+html.light-mode .dropdown-user-name { color: var(--text-primary); }
+html.light-mode .dropdown-link { color: var(--text-secondary); }
+html.light-mode .dropdown-link:hover { background: #f8fafc; color: var(--text-primary); }
+
+/* Header */
+html.light-mode .header-title { color: var(--text-primary); }
+html.light-mode .page-frame-nav p { color: var(--text-secondary); }
+
+/* KARTU SALDO (BALANCE) */
+html.light-mode .balance-card { 
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%); 
+    border-color: rgba(34, 197, 94, 0.3);
+    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.05);
+}
+html.light-mode .balance-card p { color: #16a34a; } /* Hijau yang lebih gelap agar terbaca */
+html.light-mode .balance-card h1 { color: var(--text-primary); }
+
+/* KARTU FORM & HISTORY */
+html.light-mode .form-card, 
+html.light-mode .history-card { 
+    background: #ffffff; 
+    border-color: #e2e8f0; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02); 
+}
+html.light-mode .form-card h3, 
+html.light-mode .history-card h3 { color: var(--text-primary); border-bottom-color: #e2e8f0; }
+
+/* Form Inputs */
+html.light-mode .form-group label { color: var(--text-secondary); }
+html.light-mode .custom-input, 
+html.light-mode .custom-select { 
+    background: #f8fafc; 
+    border-color: #cbd5e1; 
+    color: var(--text-primary); 
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+}
+html.light-mode .custom-input:focus, 
+html.light-mode .custom-select:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+html.light-mode .custom-select option { background: #ffffff; color: var(--text-primary); }
+
+/* Tombol Max */
+html.light-mode #btn-max { 
+    background-color: #f0fdf4; 
+    color: #16a34a; 
+    border-color: #86efac; 
+}
+html.light-mode #btn-max:hover { background-color: #dcfce7; border-color: #22c55e; }
+
+/* Ringkasan Biaya (Fee Summary) */
+html.light-mode .fee-summary { 
+    background: #f8fafc; 
+    border-color: #cbd5e1; 
+}
+html.light-mode .fee-row { color: var(--text-secondary); }
+html.light-mode .total-receive { color: var(--text-primary); }
+html.light-mode .text-danger span:last-child { color: #dc2626; }
+html.light-mode .text-green-bold { color: #16a34a; }
+html.light-mode .fee-divider { border-top-color: #e2e8f0; }
+
+/* Informasi & Alert Box */
+html.light-mode .info-alert { 
+    background: #eff6ff; 
+    border-color: #bfdbfe; 
+    color: #1e3a8a; 
+}
+
+/* Tombol Submit */
+html.light-mode .btn-submit { background: #0f172a; color: #ffffff; }
+html.light-mode .btn-submit:hover { background: #334155; }
+html.light-mode .btn-disabled { background: #e2e8f0 !important; color: #94a3b8 !important; border: 1px solid #cbd5e1; }
+
+/* TABEL HISTORY */
+html.light-mode .history-table th { color: var(--text-secondary); border-bottom-color: #cbd5e1; }
+html.light-mode .history-table td { color: var(--text-primary); border-bottom-color: #f1f5f9; }
+html.light-mode .acc-text { color: var(--text-secondary); }
+
+/* Status Badges di Tabel */
+html.light-mode .badge-pending { background: rgba(249, 115, 22, 0.15); border-color: rgba(249, 115, 22, 0.3); color: #ea580c; }
+html.light-mode .badge-done { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3); color: #16a34a; }
+html.light-mode .badge-rejected { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #dc2626; }

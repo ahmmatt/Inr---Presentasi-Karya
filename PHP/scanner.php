@@ -38,6 +38,11 @@ $nav_pic = $nav_user_data['profile_picture'];
     <link rel="stylesheet" href="../CSS/scanner.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script>
+        if (localStorage.getItem('securegate_theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
 </head>
 <body>
     <nav class="navbar">

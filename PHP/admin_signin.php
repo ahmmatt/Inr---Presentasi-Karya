@@ -53,33 +53,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>SecureGate - Partner Access</title>
     <link rel="stylesheet" href="../CSS/adminsign.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        if (localStorage.getItem('securegate_theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
 </head>
 <body>
     
     <nav class="navbar">
         <div class="left-nav">
-            <h1>SecureGate <span style="color:var(--accent-green); font-size:12px;">PARTNERS</span></h1>
+            <h1>SecureGate <span>PARTNERS</span></h1>
         </div>
     </nav>
 
     <div class="glass-card">
-        <h2 style="margin-bottom: 10px; text-align:center; color:#fff;">Portal Access</h2>
-        <p style="text-align:center; color:#888; font-size:13px; margin-bottom:25px;">Masuk menggunakan Username ID Admin Anda.</p>
+        <h2>Portal Access</h2>
+        <p class="glass-card-desc">Masuk menggunakan Username ID Admin Anda.</p>
         
-        <?php if(isset($error)) echo "<p style='color:#ef4444; background:rgba(239,68,68,0.1); padding:10px; border-radius:8px; text-align:center; font-size:13px; margin-bottom:20px;'>$error</p>"; ?>
+        <?php if(isset($error)) echo "<p class='error-msg'>$error</p>"; ?>
         
         <form method="POST">
-            <label style="font-size: 13px; color:#aaa; font-weight:600;">Username ID</label>
+            <label class="form-label">Username ID</label>
             <input type="text" name="username" class="custom-input" required placeholder="Ex: ADM-X7Z9">
             
-            <label style="font-size: 13px; color:#aaa; font-weight:600;">Password</label>
+            <label class="form-label">Password</label>
             <input type="password" name="password" class="custom-input" required>
             
             <button type="submit" class="btn-primary">Sign In to Dashboard</button>
         </form>
         
-        <p style="text-align:center; margin-top:20px; font-size:13px; color:#888;">
-            Ingin membuat Event? <a href="admin_signup.php" style="color:#3b82f6; text-decoration:none; font-weight:600;">Daftar Partnership</a>
+        <p class="glass-card-footer">
+            Ingin membuat Event? <a href="admin_signup.php" class="link-blue">Daftar Partnership</a>
         </p>
     </div>
 </body>

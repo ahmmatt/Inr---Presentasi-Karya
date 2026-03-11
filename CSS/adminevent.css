@@ -529,6 +529,132 @@ hr {
 .left-footer, .right-footer { display: flex; gap: 20px; }
 .right-footer a:hover { color: var(--text-primary); }
 
+
+/* =========================================
+   8. GLOBAL LIGHT MODE OVERRIDES 
+   ========================================= */
+html.light-mode body {
+    --bg-body: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #0f172a; 
+    --text-secondary: #475569;
+    --border-color: #cbd5e1;
+    
+    background-color: var(--bg-body);
+    
+    /* PREMIUM LIGHT GRADIENT */
+    background-image: 
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 0%, transparent 25%),
+        radial-gradient(ellipse at center, #ffffff 20%, #e2e8f0 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Navbar */
+html.light-mode .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+html.light-mode .left-nav h1, 
+html.light-mode .main-nav div, 
+html.light-mode .right-nav { color: var(--text-primary); }
+html.light-mode .main-nav div:hover { color: #3b82f6; }
+html.light-mode .nav-bell-icon { color: var(--text-secondary); }
+
+/* Page Header & General */
+html.light-mode .page-frame-nav h1 { color: var(--text-primary); }
+html.light-mode hr { border-top: 1px solid rgba(0, 0, 0, 0.1); }
+
+/* Admin Event Header Switcher & Dropdown */
+html.light-mode .event-switcher { background: #ffffff; border-color: #cbd5e1; }
+html.light-mode .event-switcher:hover { background: #f1f5f9; }
+html.light-mode .event-switcher h1 { color: var(--text-primary); }
+html.light-mode .event-switcher-wrapper p { color: var(--text-secondary); }
+
+html.light-mode .event-dropdown { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+html.light-mode .search-event { border-bottom-color: #e2e8f0; }
+html.light-mode .search-event input { color: var(--text-primary); }
+html.light-mode .event-list li { color: var(--text-secondary); border-bottom-color: #f1f5f9; }
+html.light-mode .event-list li:hover { background: #f8fafc; color: var(--text-primary); }
+
+html.light-mode .badge-ended { background: #f1f5f9; color: #64748b; border-color: #e2e8f0; }
+html.light-mode .badge-ended-title { background: #f1f5f9; color: #64748b; border-color: #e2e8f0; }
+
+/* Metric Cards */
+html.light-mode .metric-card { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+html.light-mode .metric-card:hover { background: #f8fafc; border-color: #cbd5e1; }
+html.light-mode .metric-icon { background: #f1f5f9; color: var(--text-secondary); border-color: #e2e8f0; }
+html.light-mode .metric-card:hover .metric-icon { color: var(--text-primary); border-color: #cbd5e1; }
+html.light-mode .metric-info h3 { color: var(--text-primary); }
+html.light-mode .metric-info p, html.light-mode .metric-total { color: var(--text-secondary); }
+
+/* Admin Workspace & Tabs */
+html.light-mode .admin-workspace { background: #ffffff; border-color: #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+html.light-mode .tabs-nav { border-bottom-color: #e2e8f0; }
+html.light-mode .tab-btn { color: var(--text-secondary); }
+html.light-mode .tab-btn:hover, html.light-mode .tab-btn.active { color: var(--text-primary); border-bottom-color: var(--accent-green); }
+
+/* Table Tools */
+html.light-mode .search-box { background: #f8fafc; border-color: #cbd5e1; }
+html.light-mode .search-box input { color: var(--text-primary); }
+html.light-mode .btn-filter { background: #ffffff; border-color: #cbd5e1; color: var(--text-primary); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+html.light-mode .btn-filter:hover { background: #f1f5f9; }
+
+/* Master Table */
+html.light-mode .master-table th { background: #f8fafc; color: var(--text-secondary); border-bottom-color: #e2e8f0; }
+html.light-mode .master-table td { border-bottom-color: #f1f5f9; }
+html.light-mode .master-table tr:hover { background: #f8fafc; }
+html.light-mode .attendee-cell h4, html.light-mode .t-category { color: var(--text-primary); }
+html.light-mode .attendee-cell p, html.light-mode .t-id, html.light-mode .t-seat { color: var(--text-secondary); }
+html.light-mode .avatar-placeholder { background: #e2e8f0; color: #475569; }
+
+/* Action Buttons in Table */
+html.light-mode .action-btn { color: var(--text-secondary); }
+html.light-mode .action-btn:hover { background: #e2e8f0; color: var(--text-primary); }
+html.light-mode .action-btn.approve-tkt:hover { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+html.light-mode .action-btn.pay-confirm:hover { background: rgba(234, 179, 8, 0.1); color: #d97706; }
+html.light-mode .action-btn.checkin:hover { background: rgba(34, 197, 94, 0.1); color: #16a34a; }
+html.light-mode .action-btn.revert:hover { background: rgba(249, 115, 22, 0.1); color: #ea580c; }
+html.light-mode .action-btn.delete:hover { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
+
+/* Empty States */
+html.light-mode .no-events-wrapper, html.light-mode .empty-table-cell { color: var(--text-secondary); }
+html.light-mode .no-events-icon { color: #cbd5e1; }
+
+/* Buttons General */
+html.light-mode .btn-primary { background: #0f172a; color: #fff; }
+html.light-mode .btn-primary:hover { background: #334155; }
+html.light-mode .btn-secondary, html.light-mode .btn-add { background: #fff; color: var(--text-primary); border-color: #cbd5e1; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+html.light-mode .btn-secondary:hover, html.light-mode .btn-add:hover { background: #f8fafc; border-color: #94a3b8; }
+html.light-mode .btn-danger { background: #fff1f2; color: #ef4444; border-color: #fecdd3; }
+html.light-mode .btn-danger:hover { background: #ffe4e6; }
+
+/* Modal Edit Attendee */
+html.light-mode .edit-modal { background-color: #ffffff; border-color: #e2e8f0; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+html.light-mode .modal-header-icon { border-color: #cbd5e1; color: var(--text-primary); background: #f8fafc; }
+html.light-mode .edit-modal h2, html.light-mode .edit-form-toggle h4 { color: var(--text-primary); }
+html.light-mode .edit-modal p, html.light-mode .edit-form-group label { color: var(--text-secondary); }
+
+html.light-mode .custom-input, html.light-mode .custom-select { 
+    background-color: #ffffff; border-color: #cbd5e1; color: var(--text-primary); box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); 
+}
+html.light-mode .custom-select { background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); }
+html.light-mode .custom-select option { background-color: #ffffff; color: #0f172a; }
+html.light-mode .custom-input:focus, html.light-mode .custom-select:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+html.light-mode .btn-cancel { background: #f1f5f9; color: var(--text-primary); border-color: #e2e8f0; }
+html.light-mode .btn-cancel:hover { background: #e2e8f0; }
+html.light-mode .btn-confirm { background: #0f172a; color: #fff; }
+html.light-mode .btn-confirm:hover { background: #334155; }
+
+/* Toggle Switch */
+html.light-mode .switch-btn { background-color: #cbd5e1; }
+html.light-mode .switch-btn.active { background-color: var(--accent-green); }
+
 /* Responsive Mobile */
 @media (max-width: 1024px) {
     .metrics-grid { grid-template-columns: repeat(2, 1fr); }

@@ -130,7 +130,7 @@ ul { list-style: none; }
 
 .card-hero-img { 
     width: 70%; 
-    aspect-ratio: 3 / 4; /* Mengunci rasio poster statis 3:4 */
+    aspect-ratio: 1 / 1; /* Mengunci rasio poster statis 3:4 */
     margin-left: auto; 
     margin-right: auto; 
     display: block; 
@@ -254,7 +254,7 @@ ul { list-style: none; }
 
 .right-past-card { position: relative; display: flex; height: auto; }
 .past-card-right-col { width: 180px; flex-shrink: 0; align-items: center; justify-content: center; }
-.past-card-img { width: 100% !important; height: auto !important; border-radius: 10px !important; object-fit: cover !important; display: block; align-self: center; }
+.past-card-img { width: 100% !important; height: auto !important; border-radius: 10px !important; object-fit: cover !important; display: block; align-self: center; aspect-ratio: 1/1; }
 
 /* =========================================
    HOVER EFFECTS (Hanya aktif di perangkat dengan mouse)
@@ -282,3 +282,110 @@ hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
 
 .hidden { display: none !important; }
 .visible-flex { display: flex !important; }
+
+/* =========================================
+   8. GLOBAL LIGHT MODE OVERRIDES (MAINPAGE)
+   ========================================= */
+html.light-mode body {
+    --bg-body: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #0f172a; 
+    --text-secondary: #475569;
+    --border-color: #cbd5e1;
+    
+    background-color: var(--bg-body);
+    
+    /* PREMIUM LIGHT GRADIENT */
+    background-image: 
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 0%, transparent 25%),
+        radial-gradient(ellipse at center, #ffffff 20%, #e2e8f0 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Navbar */
+html.light-mode .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+html.light-mode .left-nav h1, 
+html.light-mode .main-nav div, 
+html.light-mode .right-nav { color: var(--text-primary); }
+html.light-mode .main-nav div:hover { color: #3b82f6; }
+html.light-mode .nav-bell-icon { color: var(--text-secondary); }
+
+/* Dropdown Navbar */
+html.light-mode .profile-dropdown-menu { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+html.light-mode .dropdown-header { border-bottom-color: #e2e8f0; }
+html.light-mode .dropdown-user-name { color: var(--text-primary); }
+html.light-mode .dropdown-link { color: var(--text-secondary); }
+html.light-mode .dropdown-link:hover { background: #f8fafc; color: var(--text-primary); }
+
+/* Page Header & Tab Toggle */
+html.light-mode .page-frame-nav h1 { color: var(--text-primary); }
+html.light-mode .toggle-select-event { background-color: #e2e8f0; }
+html.light-mode .toggle-select-event a { color: var(--text-secondary); }
+html.light-mode .toggle-select-event a:hover { color: var(--text-primary); }
+html.light-mode .toggle-select-event a.active { background-color: #ffffff; color: var(--text-primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+/* UPCOMING EVENTS CARDS */
+html.light-mode .event-card-detail { 
+    background-color: #ffffff; 
+    border-color: #e2e8f0; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+html.light-mode .event-card-detail:hover { 
+    border-color: #cbd5e1; 
+    box-shadow: 0 14px 30px rgba(0,0,0,0.08); 
+    transform: translateY(-6px); 
+}
+html.light-mode .card-top-header h4 { color: var(--text-secondary); font-weight: 500; }
+html.light-mode .header-right h4 { color: var(--text-primary); font-weight: 600; }
+html.light-mode .card-divider { border-top-color: #e2e8f0; }
+html.light-mode .card-hero-img { background-color: #f1f5f9; }
+html.light-mode .card-title { color: var(--text-primary); }
+html.light-mode .card-author span { color: var(--text-secondary); }
+html.light-mode .card-author:hover span { color: var(--text-primary); }
+
+/* Info Blocks (Location & Date) */
+html.light-mode .event-card-detail .block-icon { background-color: #f8fafc; border-color: #e2e8f0; }
+html.light-mode .event-card-detail .block-icon i { color: var(--text-secondary); }
+html.light-mode .block-text h3, html.light-mode .location-title-small { color: var(--text-primary) !important; }
+html.light-mode .block-text p, html.light-mode .location-desc-small { color: var(--text-secondary) !important; }
+html.light-mode .block-text h3:hover { color: #3b82f6 !important; }
+
+/* Status Badges */
+html.light-mode .ticket-badge-pending { color: #ea580c; background: rgba(249,115,22,0.15); }
+html.light-mode .ticket-badge-pay { color: #dc2626; background: rgba(239,68,68,0.15); }
+html.light-mode .ticket-badge-scanned { color: #2563eb; background: rgba(59,130,246,0.15); }
+html.light-mode .ticket-badge-ready { color: #16a34a; background: rgba(34,197,94,0.15); }
+
+/* PAST EVENTS (TIMELINE) */
+html.light-mode .left-info::before { border-right-color: #cbd5e1; }
+html.light-mode .left-info::after { background-color: #cbd5e1; border-color: #f8fafc; }
+html.light-mode .left-info h3 { color: var(--text-primary); }
+html.light-mode .left-info h3:last-child { color: var(--text-secondary); }
+
+html.light-mode .right-info { background-color: #ffffff; border-color: #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+html.light-mode .right-info:hover { background-color: #ffffff; border-color: #cbd5e1; box-shadow: 0 10px 25px rgba(0,0,0,0.06); transform: translateX(4px); }
+
+html.light-mode .time-event .begin-time { color: var(--text-secondary); }
+html.light-mode .past-event-card h2 { color: var(--text-primary); }
+html.light-mode .past-author-by { color: var(--text-secondary); }
+html.light-mode .past-author-name { color: var(--text-primary); }
+html.light-mode .past-location { color: var(--text-secondary); }
+
+html.light-mode .past-status-ended { border-color: #cbd5e1 !important; color: var(--text-secondary) !important; background-color: #f8fafc !important; }
+
+/* Empty State */
+html.light-mode .empty-state i { background-color: #ffffff; color: var(--text-secondary); border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+html.light-mode .empty-state h3 { color: var(--text-primary); }
+html.light-mode .empty-state p { color: var(--text-secondary); }
+
+/* Footer */
+html.light-mode hr { border-top-color: rgba(0, 0, 0, 0.1); }

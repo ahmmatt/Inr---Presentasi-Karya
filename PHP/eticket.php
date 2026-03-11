@@ -115,6 +115,11 @@ $nav_pic = $nav_user_data['profile_picture'];
     <title>SecureGate - Your E-Ticket</title>
     <link rel="stylesheet" href="../CSS/eticket.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        if (localStorage.getItem('securegate_theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
 </head>
 <body>
     <nav class="navbar">

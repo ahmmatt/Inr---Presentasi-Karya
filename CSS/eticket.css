@@ -93,7 +93,115 @@ ul { list-style: none; }
 .logout-link { color: #ef4444; margin-top: 4px; }
 .logout-link:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
 
+/* =========================================
+   4. GLOBAL LIGHT MODE OVERRIDES (E-TICKET)
+   ========================================= */
+html.light-mode body {
+    --bg-body: #f8fafc;
+    --text-primary: #0f172a; 
+    --text-secondary: #475569;
+    --border-color: #cbd5e1;
+    
+    background-color: var(--bg-body);
+    
+    /* PREMIUM LIGHT GRADIENT */
+    background-image: 
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 0%, transparent 25%),
+        radial-gradient(ellipse at center, #ffffff 20%, #e2e8f0 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 
+/* Navbar */
+html.light-mode .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+html.light-mode .left-nav h1, 
+html.light-mode .main-nav div, 
+html.light-mode .right-nav { color: var(--text-primary); }
+html.light-mode .main-nav div:hover { color: #3b82f6; }
+html.light-mode .nav-bell-icon { color: var(--text-secondary); }
+
+/* Dropdown Navbar */
+html.light-mode .profile-dropdown-menu { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+html.light-mode .dropdown-header { border-bottom-color: #e2e8f0; }
+html.light-mode .dropdown-user-name { color: var(--text-primary); }
+html.light-mode .dropdown-link { color: var(--text-secondary); }
+html.light-mode .dropdown-link:hover { background: #f8fafc; color: var(--text-primary); }
+
+/* Tombol Back & Footer Web */
+html.light-mode .btn-back { color: var(--text-secondary); }
+html.light-mode .btn-back:hover { color: var(--text-primary); }
+html.light-mode hr { border-top-color: rgba(0, 0, 0, 0.1); }
+
+/* =========================================
+   TICKET CARD LIGHT MODE (GLASSMORPHISM)
+   ========================================= */
+html.light-mode .ticket-card {
+    background: rgba(255, 255, 255, 0.75); /* Putih susu tembus pandang */
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06); /* Bayangan sangat lembut */
+}
+
+/* Header Tiket */
+html.light-mode .ticket-header h2 { color: var(--text-primary); }
+html.light-mode .organizer-logo { color: var(--text-secondary); }
+html.light-mode .organizer-logo i { color: var(--text-primary); }
+
+/* Divider Putus-putus */
+html.light-mode .ticket-divider { border-top-color: rgba(0, 0, 0, 0.1); }
+html.light-mode .ticket-divider::before, 
+html.light-mode .ticket-divider::after {
+    background-color: var(--bg-body); /* Ikut warna dasar body light mode */
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Body & Teks Tiket */
+html.light-mode .ticket-body { background: rgba(0, 0, 0, 0.01); }
+html.light-mode .ticket-subtitle,
+html.light-mode .detail-label,
+html.light-mode .detail-sub-value { color: var(--text-secondary); }
+
+html.light-mode .event-title,
+html.light-mode .detail-value { color: var(--text-primary); }
+
+html.light-mode .event-datetime-location p { color: var(--text-secondary); }
+html.light-mode .event-datetime-location i { color: var(--text-secondary); }
+
+/* Status Pending / Payment (Error/Warning State) */
+html.light-mode .status-desc { color: var(--text-secondary); }
+html.light-mode .status-instruction { color: var(--text-primary); }
+html.light-mode .btn-pay-now { color: #ffffff; } /* Di Light Mode, teks tombol hijau lebih kontras jika putih */
+
+/* Bagian QR Code */
+html.light-mode .qr-code-box { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+html.light-mode .qr-desc,
+html.light-mode .ticket-qr-section p { color: var(--text-secondary); }
+
+/* Virtual Meeting Box */
+html.light-mode .virtual-box-wrapper { 
+    background: #f8fafc; 
+    border-color: #e2e8f0; 
+}
+html.light-mode .virtual-title { color: var(--text-primary); }
+html.light-mode .virtual-desc,
+html.light-mode .virtual-desc-locked { color: var(--text-secondary); }
+html.light-mode .btn-join-virtual { color: #ffffff; }
+
+/* Footer Tiket (Di bawah QR) */
+html.light-mode .ticket-footer { background: rgba(0, 0, 0, 0.03); border-top-color: rgba(0, 0, 0, 0.05); }
+html.light-mode .ticket-footer p { color: var(--text-secondary); }
+
+/* Action Buttons Bawah Tiket (Download & Return) */
+html.light-mode .btn-primary { background: #0f172a; color: #fff; }
+html.light-mode .btn-primary:hover { background: #334155; }
+html.light-mode .btn-secondary { background: #ffffff; color: var(--text-primary); border-color: #cbd5e1; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+html.light-mode .btn-secondary:hover { background: #f8fafc; border-color: #94a3b8; }
 
 
 /* =========================================

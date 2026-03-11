@@ -162,7 +162,7 @@ ul { list-style: none; }
 
 .btn-green { background: var(--accent-green); color: black; }
 .btn-blue { background: #3b82f6; color: white; }
-.btn-red { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
+.btn-red { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
 .btn-red:hover { background: #ef4444; color: white; }
 
 .filter-group { display: flex; background: #0a0a0a; padding: 4px; border-radius: 8px; border: 1px solid #333; }
@@ -236,3 +236,113 @@ hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
 /* Animations */
 @keyframes bounceIn { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* =========================================
+   8. THEME TOGGLE BUTTON STYLING
+   ========================================= */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05); /* Efek Kaca */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 30px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-right: 15px;
+}
+
+.switch-btn {
+    width: 44px; height: 24px; 
+    background-color: #444; 
+    border-radius: 12px; border: none; 
+    position: relative; cursor: pointer; 
+    transition: background-color 0.3s ease;
+}
+
+.switch-btn::after {
+    content: ''; position: absolute; 
+    top: 2px; left: 2px; width: 20px; height: 20px; 
+    background-color: #fff; border-radius: 50%; 
+    transition: transform 0.3s ease;
+}
+
+/* State Aktif (Light Mode terpilih) */
+.switch-btn.active { background-color: var(--accent-green); }
+.switch-btn.active::after { transform: translateX(20px); }
+
+/* =========================================
+   9. GLOBAL LIGHT MODE OVERRIDES (SUPER ADMIN)
+   ========================================= */
+html.light-mode body {
+    --bg-body: #f8fafc;
+    --text-primary: #0f172a; 
+    --text-secondary: #475569;
+    background-color: var(--bg-body);
+    background-image: 
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 0%, transparent 25%),
+        radial-gradient(ellipse at center, #ffffff 20%, #e2e8f0 100%);
+}
+
+/* Navbar & Header */
+html.light-mode .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.7); 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+html.light-mode .left-nav h1, html.light-mode .logout-text { color: var(--text-primary); }
+html.light-mode .logout-text:hover { color: #ef4444 }
+html.light-mode .theme-switch-wrapper { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: var(--text-primary); }
+html.light-mode .switch-btn { background-color: #cbd5e1; }
+html.light-mode .page-frame-nav h1 { color: var(--text-primary); }
+
+/* Admin Cards (Glassmorphism Light) */
+html.light-mode .admin-card { 
+    background: rgba(255, 255, 255, 0.7); 
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05); 
+}
+html.light-mode .admin-card h2 { color: var(--text-primary); border-bottom-color: rgba(0,0,0,0.1); }
+html.light-mode .data-row { border-bottom-color: rgba(0,0,0,0.08); }
+html.light-mode .manage-acc-header { border-bottom-color: rgba(0,0,0,0.1); }
+
+/* Text in Cards */
+html.light-mode .info h4, html.light-mode .net-revenue { color: var(--text-primary); }
+html.light-mode .info p, html.light-mode .mb-8-grey, html.light-mode .net-label { color: var(--text-secondary); }
+html.light-mode .empty-text, html.light-mode .centered-empty-text { color: var(--text-secondary); }
+
+/* Badges & Filters */
+html.light-mode .role-badge-user { background: #e2e8f0; color: #475569; }
+html.light-mode .filter-group { background: #f1f5f9; border-color: #cbd5e1; }
+html.light-mode .filter-btn { color: var(--text-secondary); }
+html.light-mode .filter-btn:hover { color: var(--text-primary); }
+html.light-mode .filter-btn.active { background: #ffffff; color: var(--text-primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+/* Modal Edit & Success */
+html.light-mode .modal-box { 
+    background: #ffffff; 
+    border-color: #e2e8f0; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15); 
+    color: var(--text-primary);
+}
+html.light-mode .modal-box h2 { color: var(--text-primary); }
+html.light-mode .modal-subtext, html.light-mode .footer-note, html.light-mode .edit-group label { color: var(--text-secondary); }
+html.light-mode .cred-box { background: #f8fafc; border-color: #cbd5e1; }
+html.light-mode .cred-item { color: var(--text-secondary); }
+html.light-mode .cred-val { color: var(--text-primary); }
+
+/* Inputs */
+html.light-mode .edit-input { 
+    background: #f8fafc; 
+    border-color: #cbd5e1; 
+    color: var(--text-primary); 
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+}
+html.light-mode .edit-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+/* Buttons */
+html.light-mode .btn-red { background: #fff1f2; color: #ef4444; border-color: #fecdd3; }
+html.light-mode .btn-red:hover { background: #ef4444; color: #ffe4e6; }
+
+html.light-mode hr { border-top-color: rgba(0, 0, 0, 0.1); }

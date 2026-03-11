@@ -165,12 +165,25 @@ $all_accounts = $conn->query($sql_acc);
     <link rel="stylesheet" href="../CSS/superadmin.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script>
+        if (localStorage.getItem('securegate_theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
 </head>
 <body>
     <nav class="navbar">
         <div class="left-nav"><h1>SecureGate <span class="superadmin-label">SUPER ADMIN</span></h1></div>
         <div class="main-nav"></div>
-        <div class="right-nav"><a href="logout.php" class="logout-text"><i class="fa-solid fa-power-off"></i> Logout</a></div>
+        <div class="right-nav">
+            <div class="theme-switch-wrapper">
+                <i class="fa-solid fa-sun"></i>
+                <button type="button" class="switch-btn" id="theme-toggle"></button>
+                <i class="fa-solid fa-moon"></i>
+            </div>
+            
+            <a href="logout.php" class="logout-text"><i class="fa-solid fa-power-off"></i> Logout</a>
+        </div>
     </nav>
 
     <div class="page-frame">

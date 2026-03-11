@@ -47,19 +47,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Sign Up - SecureGate</title>
     <link rel="stylesheet" href="../CSS/sign.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Tambahan style simpel untuk notifikasi error */
-        .alert-error {
-            background-color: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 13px;
-            margin-bottom: 16px;
-            text-align: center;
+    <script>
+        if (localStorage.getItem('securegate_theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
         }
-    </style>
+    </script>
+</head>
 </head>
 <body>
     <nav class="navbar">
@@ -70,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="signin.php">Sign In</a>
         </div>
     </nav>
-    <nav class="sign-card">
+    <nav class="sign-card" style="margin-top: -30px;">
         <img src="../Media/SVG.png" alt="entry door image">
         <h1>Welcome to SecureGate</h1>
         <p>Please enter your details to get started.</p>
@@ -101,5 +94,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="bottom-button-sign"><i class="fas fa-user"></i><a href="signin.php">Have Account?</a></div>
     </nav>
 </body>
-<script src="../JS/sign.js"></script>
 </html>

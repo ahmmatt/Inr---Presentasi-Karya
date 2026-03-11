@@ -43,3 +43,31 @@ function openEditModal(id, name, email) {
 function closeEditModal() {
     document.getElementById('editModal').classList.remove('active');
 }
+
+// ==========================================
+// 2. LOGIKA THEME TOGGLE (DARK / LIGHT MODE)
+// ==========================================
+const themeToggleBtn = document.getElementById('theme-toggle');
+
+if (themeToggleBtn) {
+    // Cek status saat halaman dimuat
+    if (localStorage.getItem('securegate_theme') === 'light') {
+        themeToggleBtn.classList.add('active'); // Posisi switch ke kanan (terang)
+    }
+
+    // Event saat tombol diklik
+    themeToggleBtn.addEventListener('click', () => {
+        // Toggle class di HTML
+        document.documentElement.classList.toggle('light-mode');
+        
+        // Animasi tombol
+        themeToggleBtn.classList.toggle('active');
+
+        // Simpan preferensi ke LocalStorage
+        if (document.documentElement.classList.contains('light-mode')) {
+            localStorage.setItem('securegate_theme', 'light');
+        } else {
+            localStorage.setItem('securegate_theme', 'dark');
+        }
+    });
+}

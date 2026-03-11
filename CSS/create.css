@@ -190,6 +190,30 @@ ul {
     border: 1px dashed rgba(255, 255, 255, 0.1);
     transition: background-color 0.2s;
 }
+
+/* GAYA UNTUK TEKS PLACEHOLDER 3:4 */
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-secondary); /* KUNCI OTOMATIS: Abu-abu terang (Dark Mode) & Abu-abu gelap (Light Mode) */
+    z-index: 1;
+    pointer-events: none; /* Mencegah teks menutupi input file saat diklik */
+}
+
+.upload-placeholder i {
+    font-size: 36px;
+}
+
+.upload-placeholder p {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+    padding: 0 20px;
+    line-height: 1.5;
+}
 .add-pict-card:hover { background-color: rgba(255, 255, 255, 0.08); }
 .add-pict-card form, .add-pict-card input {
     position: absolute;
@@ -1118,3 +1142,170 @@ hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
 .page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
 .left-footer, .right-footer { display: flex; gap: 20px; }
 .right-footer a:hover { color: var(--text-primary); }
+
+/* =========================================
+   10. GLOBAL LIGHT MODE OVERRIDES (CREATE EVENT)
+   ========================================= */
+html.light-mode body {
+    --bg-body: #f8fafc;
+    --text-primary: #0f172a; 
+    --text-secondary: #475569;
+    --border-color: #cbd5e1;
+    
+    background-color: var(--bg-body);
+    
+    /* PREMIUM LIGHT GRADIENT */
+    background-image: 
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 0%, transparent 25%),
+        radial-gradient(ellipse at center, #ffffff 20%, #e2e8f0 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Navbar */
+html.light-mode .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+html.light-mode .left-nav h1, 
+html.light-mode .main-nav div, 
+html.light-mode .right-nav a { color: var(--text-primary); }
+html.light-mode .main-nav div:hover { color: #3b82f6; }
+html.light-mode .nav-bell-icon { color: var(--text-secondary); }
+
+/* Dropdown Navbar */
+html.light-mode .profile-dropdown-menu { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+html.light-mode .dropdown-header { border-bottom-color: #e2e8f0; }
+html.light-mode .dropdown-user-name { color: var(--text-primary); }
+html.light-mode .dropdown-link { color: var(--text-secondary); }
+html.light-mode .dropdown-link:hover { background: #f8fafc; color: var(--text-primary); }
+
+/* Page Header & Divider */
+html.light-mode .page-frame-nav h1,
+html.light-mode .left-section-title,
+html.light-mode .right-layout > h4 { color: var(--text-primary); }
+html.light-mode hr { border-top-color: rgba(0, 0, 0, 0.1); }
+
+/* Kiri: Add Picture Card */
+html.light-mode .add-pict-card { background-color: #ffffff; border-color: #cbd5e1; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+html.light-mode .add-pict-card:hover { background-color: #f8fafc; }
+html.light-mode .pict-action-select { 
+    background-color: #0f172a; 
+    color: #ffffff; 
+}
+
+/* TAMBAHAN BARU: Efek Hover untuk tombol gambar di Light Mode */
+html.light-mode .add-pict-card:hover .pict-action-select {
+    background-color: #fff; /* Berubah menjadi warna biru aksen */
+    color: #242424;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); /* Efek bayangan biru menyala */
+}
+
+/* Kiri: Location & 3D Space Cards */
+html.light-mode .add-loc-card, 
+html.light-mode .space-3d-card { background-color: #ffffff; border-color: #cbd5e1; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+html.light-mode .add-loc-card:hover, html.light-mode .space-3d-card:hover { background-color: #f8fafc; }
+html.light-mode .right-loc-card h3, html.light-mode .space-3d-text h3 { color: var(--text-primary); }
+
+html.light-mode .loc-options { background-color: rgba(255, 255, 255, 0.75); /* Putih transparan */
+    backdrop-filter: blur(24px); /* Efek Kaca */
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.8); /* Border putih tipis bercahaya */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Bayangan lembut */ }
+html.light-mode .loc-section-title { color: var(--text-primary); }
+html.light-mode .loc-btn { background-color: #f1f5f9; color: var(--text-primary); border: 1px solid #cbd5e1; }
+html.light-mode .loc-btn:hover { background-color: #e2e8f0; }
+html.light-mode .virtual-link-input { background-color: #f8fafc; border-color: #cbd5e1; }
+html.light-mode .virtual-link-input input, html.light-mode .city-select { color: var(--text-primary); }
+html.light-mode .city-select option { background-color: #ffffff; color: var(--text-primary); }
+html.light-mode .loc-divider::before, html.light-mode .loc-divider::after { background-color: #cbd5e1; }
+
+/* Kanan: Visibility & Event Name */
+html.light-mode .event-type { background-color: #ffffff; border: 1px solid #cbd5e1; color: var(--text-primary); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+html.light-mode .event-type:hover { background-color: #f8fafc; }
+html.light-mode .visibility-dropdown { background-color: rgba(255, 255, 255, 0.75); /* Putih transparan */
+    backdrop-filter: blur(24px); /* Efek Kaca */
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.8); /* Border putih tipis bercahaya */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Bayangan lembut */ }
+html.light-mode .visibility-option { color: var(--text-primary); }
+html.light-mode .visibility-option:hover { background-color: #f1f5f9; }
+
+html.light-mode .event-name input { color: var(--text-primary) !important; }
+html.light-mode .event-name input::placeholder { color: #94a3b8 !important; }
+
+/* Kanan: Schedule & Desc Card */
+html.light-mode .card-box { background-color: #ffffff; border-color: #cbd5e1; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+html.light-mode .start-date-time-card-left, 
+html.light-mode .start-date-time-card-right,
+html.light-mode .end-date-time-card-left, 
+html.light-mode .end-date-time-card-right { background-color: #f8fafc; border: 1px solid #e2e8f0; }
+html.light-mode .time-area h4 { color: var(--text-primary); }
+html.light-mode .schedule-wrapper input, html.light-mode .desc-wrapper input { color: var(--text-primary); }
+/* Ubah ikon kalender browser jadi gelap di light mode */
+html.light-mode input::-webkit-calendar-picker-indicator { filter: invert(0); opacity: 0.6; }
+html.light-mode input::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+html.light-mode .line-of-circle { border-left-color: #cbd5e1; }
+
+/* Kanan: Event Options List (Tickets, Capacity, etc) */
+html.light-mode .event-options-wrapper hr { border-top-color: #e2e8f0; }
+html.light-mode .options-left-label h3 { color: var(--text-primary); }
+html.light-mode .right-display-input { color: var(--text-secondary); }
+
+/* Dropdown Modals (Ticket & Capacity) */
+html.light-mode .ticket-dropdown, 
+html.light-mode .capacity-dropdown { background-color: rgba(255, 255, 255, 0.85); /* Putih susu transparan */
+    backdrop-filter: blur(32px); /* Blur lebih kuat untuk modal besar */
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid rgba(255, 255, 255, 0.8); 
+    /* Box shadow pertama untuk background gelap di belakang modal, yang kedua untuk bayangan modalnya sendiri */
+    box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.4), 0 25px 60px rgba(0, 0, 0, 0.15); }
+html.light-mode .modal-header-intro h2 { color: var(--text-primary); }
+html.light-mode .modal-header-icon { border-color: #cbd5e1; color: var(--text-primary); background: #f8fafc; }
+html.light-mode .modal-header-intro { border-bottom-color: #e2e8f0; }
+
+/* Modals: Inputs & Selects */
+html.light-mode .input-group input, 
+html.light-mode .custom-select, 
+html.light-mode .ticket-tier-row .custom-input, 
+html.light-mode .capacity-number-input input, 
+html.light-mode .seat-tier-row .custom-input,
+html.light-mode .question-row .custom-input,
+html.light-mode input[list] { 
+    background-color: #f8fafc !important; 
+    border-color: #cbd5e1 !important; 
+    color: var(--text-primary) !important; 
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+}
+html.light-mode .input-group input:focus, 
+html.light-mode .custom-select:focus, 
+html.light-mode .ticket-tier-row .custom-input:focus,
+html.light-mode .capacity-number-input input:focus,
+html.light-mode .question-row .custom-input:focus,
+html.light-mode input[list]:focus { border-color: #3b82f6 !important; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+html.light-mode .custom-select option { background-color: #ffffff; color: var(--text-primary); }
+
+/* Modals: Radio & Toggles */
+html.light-mode .cap-radio { color: var(--text-primary); }
+html.light-mode .seat-type-options { background-color: #f8fafc; border-color: #e2e8f0; }
+html.light-mode .switch-btn { background-color: #cbd5e1; }
+html.light-mode .switch-btn.active { background-color: var(--accent-green); }
+
+/* Modals: Buttons */
+html.light-mode .add-tier-btn { background-color: #f0fdf4; color: #16a34a; border-color: #86efac; }
+html.light-mode .add-tier-btn:hover { background-color: #dcfce7; border-color: #22c55e; }
+html.light-mode .cancel-btn { border-color: #cbd5e1; color: var(--text-secondary); }
+html.light-mode .cancel-btn:hover { background-color: #f1f5f9; color: var(--text-primary); }
+html.light-mode .apply-btn { background-color: #0f172a; color: #ffffff; }
+html.light-mode .apply-btn:hover { background-color: #334155; }
+html.light-mode .close-modal:hover { color: var(--text-primary); }
+html.light-mode .approval-wrapper-right button { background-color: #cbd5e1; }
+html.light-mode .approval-wrapper-right button::after { background-color: #ffffff; }
+
+/* Publish Button Bawah */
+html.light-mode .submit-wrapper button { background-color: #0f172a; color: #ffffff; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.1); }
+html.light-mode .submit-wrapper button:hover { background-color: #334155; transform: translateY(-2px); }

@@ -106,6 +106,11 @@ $nav_pic = $nav_user_data['profile_picture'];
     <title>SecureGate - Discover</title>
     <link rel="stylesheet" href="../CSS/discover.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        if (localStorage.getItem('securegate_theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
 </head>
 <body>
     <nav class="navbar">
@@ -176,7 +181,6 @@ $nav_pic = $nav_user_data['profile_picture'];
             <div class="event-location-now" onclick="window.location.href='discover.php?city=All&category=<?= urlencode($selected_category) ?>'">
                 <i class="fa-solid fa-location-dot location-icon icon-green-accent"></i>
                 <h3><?= $selected_city === 'All' ? 'All Locations' : htmlspecialchars($selected_city) . ', ID' ?></h3>               
-                <i class="fa-solid fa-chevron-down location-arrow"></i>
             </div>
         </div>
         

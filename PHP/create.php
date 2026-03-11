@@ -150,6 +150,12 @@ $nav_pic = $nav_user_data['profile_picture'];
     <title>Create Event - SecureGate</title>
     <link rel="stylesheet" href="../CSS/create.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        if (localStorage.getItem('securegate_theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
+</head>
 </head>
 <body>
     <nav class="navbar">
@@ -206,7 +212,13 @@ $nav_pic = $nav_user_data['profile_picture'];
                 <div class="left-layout">
                     <div class="add-pict-card">
                         <input type="file" name="banner_image" id="banner_image" accept="image/*" required>
+                        
+                        <div class="upload-placeholder">
+                            <i class="fa-regular fa-image"></i>
+                            <p>Masukkan gambar ukuran 1:1</p> </div>
+
                         <div class="pict-action-select"><i class="fa-solid fa-image"></i></div>
+                        
                         <img id="image-preview" class="image-preview">
                     </div>
                     

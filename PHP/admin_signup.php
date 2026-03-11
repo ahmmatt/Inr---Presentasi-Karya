@@ -44,51 +44,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>SecureGate - Partner Registration</title>
     <link rel="stylesheet" href="../CSS/adminsign.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        if (localStorage.getItem('securegate_theme') === 'light') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
 </head>
 <body>
     
     <nav class="navbar">
         <div class="left-nav">
-            <h1>SecureGate <span style="color:var(--accent-green); font-size:12px;">PARTNERS</span></h1>
+            <h1>SecureGate <span>PARTNERS</span></h1>
         </div>
     </nav>
 
-    <div class="glass-card" style="margin-top: 20px;">
-        <h2 style="margin-bottom: 10px; text-align:center; color: #fff;">Become an Event Creator</h2>
-        <p style="color: var(--text-secondary); text-align:center; font-size:13px; margin-bottom: 30px; line-height: 1.5;">
+    <div class="glass-card signup-card">
+        <h2>Become an Event Creator</h2>
+        <p class="glass-card-desc mb-30">
             Daftarkan diri Anda untuk menjadi penyelenggara acara.<br>
             Akun akan ditinjau oleh Super Admin melalui Profil Sosial Media Anda.
         </p>
         
-        <?php if(isset($error)) echo "<p style='color:#ef4444; background:rgba(239,68,68,0.1); padding:10px; border-radius:8px; text-align:center; font-size:13px; margin-bottom:20px;'>$error</p>"; ?>
+        <?php if(isset($error)) echo "<p class='error-msg'>$error</p>"; ?>
         
         <form method="POST">
-            <label style="font-size: 13px; font-weight: 600; color: #ccc;">Organization / Full Name</label>
+            <label class="form-label">Organization / Full Name</label>
             <input type="text" name="name" class="custom-input" required placeholder="Ex: Telkom AI Connect">
             
-            <label style="font-size: 13px; font-weight: 600; color: #ccc;">Business Email</label>
+            <label class="form-label">Business Email</label>
             <input type="email" name="email" class="custom-input" required placeholder="contact@organization.com">
             
-            <div style="display: flex; gap: 15px; margin-top: 5px;">
-                <div style="flex: 1;">
-                    <label style="font-size: 13px; font-weight: 600; color: #ccc;">
-                        <i class="fa-brands fa-instagram" style="color: #E1306C; margin-right: 4px;"></i> Instagram
+            <div class="form-row">
+                <div class="form-col">
+                    <label class="form-label">
+                        <i class="fa-brands fa-instagram icon-ig"></i> Instagram
                     </label>
                     <input type="text" name="instagram" class="custom-input" required placeholder="@username">
                 </div>
-                <div style="flex: 1;">
-                    <label style="font-size: 13px; font-weight: 600; color: #ccc;">
-                        <i class="fa-brands fa-tiktok" style="color: #00f2ea; margin-right: 4px;"></i> TikTok
+                <div class="form-col">
+                    <label class="form-label">
+                        <i class="fa-brands fa-tiktok icon-tt"></i> TikTok
                     </label>
                     <input type="text" name="tiktok" class="custom-input" required placeholder="@username">
                 </div>
             </div>
             
-            <button type="submit" class="btn-primary" style="margin-top: 10px;">Submit Request</button>
+            <button type="submit" class="btn-primary btn-submit-signup">Submit Request</button>
         </form>
         
-        <p style="text-align:center; margin-top:20px; font-size:13px; color:#888;">
-            Sudah punya akun? <a href="admin_signin.php" style="color:var(--accent-green); text-decoration: none; font-weight: 600;">Sign In</a>
+        <p class="glass-card-footer">
+            Sudah punya akun? <a href="admin_signin.php" class="link-green">Sign In</a>
         </p>
     </div>
 

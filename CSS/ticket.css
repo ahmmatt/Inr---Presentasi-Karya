@@ -617,25 +617,28 @@ ul {
 }
 
 /* =========================================
-   EFEK PILIHAN PADA CARD TIKET
+   EFEK PILIHAN PADA CARD TIKET (DIPERBAIKI)
    ========================================= */
 .ticket-option-card {
     cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.08); /* Border awal lebih tebal sedikit */
+    border: 2px solid rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.2s ease;
 }
 
-/* Saat Card Regular Dipilih */
-.ticket-option-card.selected-regular {
+/* Saat Card Regular Dipilih (Sesuai dengan nama class di JS) */
+.ticket-option-card.active-card {
     border-color: #22c55e !important;
     background-color: rgba(34, 197, 94, 0.1) !important;
     transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
 }
 
 /* Saat Card VIP Dipilih */
-.ticket-option-card.selected-vip {
+.ticket-option-card.vip-card.active-card {
     border-color: #eab308 !important;
     background-color: rgba(234, 179, 8, 0.1) !important;
     transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(234, 179, 8, 0.2);
 }
 
 /* Perbaiki Select Dropdown di dalam modal ticket.html agar rapi */
@@ -973,3 +976,156 @@ hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
 .page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
 .left-footer, .right-footer { display: flex; gap: 20px; }
 .right-footer a:hover { color: var(--text-primary); }
+
+/* =========================================
+   8. GLOBAL LIGHT MODE OVERRIDES (TICKET DETAIL)
+   ========================================= */
+html.light-mode body {
+    --bg-body: #f8fafc;
+    --text-primary: #0f172a; 
+    --text-secondary: #475569;
+    --border-color: #cbd5e1;
+    
+    background-color: var(--bg-body);
+    
+    /* PREMIUM LIGHT GRADIENT */
+    background-image: 
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 0%, transparent 25%),
+        radial-gradient(ellipse at center, #ffffff 20%, #e2e8f0 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Navbar */
+html.light-mode .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+html.light-mode .left-nav h1, 
+html.light-mode .main-nav div, 
+html.light-mode .right-nav { color: var(--text-primary); }
+html.light-mode .main-nav div:hover { color: #3b82f6; }
+html.light-mode .nav-bell-icon { color: var(--text-secondary); }
+
+/* Dropdown Navbar */
+html.light-mode .profile-dropdown-menu { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+html.light-mode .dropdown-header { border-bottom-color: #e2e8f0; }
+html.light-mode .dropdown-user-name { color: var(--text-primary); }
+html.light-mode .dropdown-link { color: var(--text-secondary); }
+html.light-mode .dropdown-link:hover { background: #f8fafc; color: var(--text-primary); }
+
+/* Left Layout: Header & Description */
+html.light-mode .page-frame-nav h1,
+html.light-mode .left-layout h4,
+html.light-mode .event-description h4,
+html.light-mode .presented-detail h3 { color: var(--text-primary); }
+html.light-mode .page-frame-nav p,
+html.light-mode .event-description p,
+html.light-mode .presented-detail p { color: var(--text-secondary); }
+
+html.light-mode .presented-right button { background-color: #f1f5f9; color: var(--text-primary); border: 1px solid #cbd5e1; }
+html.light-mode .presented-right button:hover { background-color: #e2e8f0; }
+
+html.light-mode .add-pict-card { background-color: transparent; border: none; } /* Poster Event */
+
+/* Left Layout: Location & Maps */
+html.light-mode .maps-or-link-card h4 { color: var(--text-primary); }
+html.light-mode .maps-container-static { border-color: #cbd5e1; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+html.light-mode .map-click-overlay:hover { background-color: rgba(0, 0, 0, 0.05); }
+
+html.light-mode .link-wrapper { background-color: #ffffff; border-color: #cbd5e1; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+html.light-mode .link-wrapper:hover { background-color: #f8fafc; }
+html.light-mode .link-wrapper p, html.light-mode .link-wrapper:hover i { color: var(--text-primary); }
+html.light-mode .link-icon-main { color: var(--text-secondary); }
+
+html.light-mode .url-box { background-color: #f1f5f9; border-color: #cbd5e1; }
+html.light-mode .url-box span { color: var(--text-secondary); }
+html.light-mode .url-box i { color: var(--text-secondary); }
+html.light-mode .url-box i:hover { color: var(--text-primary); }
+
+/* Host & Participants */
+html.light-mode .host-wrapper h3 { color: var(--text-primary); }
+html.light-mode .participant-logos img { border-color: var(--bg-body); }
+html.light-mode .participant-names h4 { color: var(--text-secondary); }
+html.light-mode .category-card { background-color: #ffffff; color: var(--text-primary); border: 1px solid #cbd5e1; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+
+/* Right Layout: Date & Title */
+html.light-mode .event-name.view-mode-title h1 { color: var(--text-primary); }
+html.light-mode .time-date-card { border-color: #cbd5e1; background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+html.light-mode .time-date-card span { background-color: #f1f5f9; color: var(--text-secondary); border-bottom: 1px solid #e2e8f0; }
+html.light-mode .time-date-card h4 { background-color: #ffffff; color: var(--text-primary); }
+html.light-mode .time-date-detail h3 { color: var(--text-primary); }
+html.light-mode .time-date-detail p { color: var(--text-secondary); }
+
+html.light-mode .event-loc-icon { background-color: #ffffff; border-color: #cbd5e1; color: var(--text-secondary); box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+
+/* Right Layout: Price Cards */
+html.light-mode .price-right-card { background-color: #ffffff; border-color: #cbd5e1; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+html.light-mode .price-right-card:hover { background-color: #f8fafc; border-color: rgba(34, 197, 94, 0.4); box-shadow: 0 8px 20px rgba(34, 197, 94, 0.1); }
+html.light-mode .price-right-card p { color: var(--text-secondary); }
+html.light-mode .price-right-card.vip-card:hover { border-color: rgba(234, 179, 8, 0.5); box-shadow: 0 8px 20px rgba(234, 179, 8, 0.15); }
+
+/* Ticket Selection Effects (Light Mode) */
+html.light-mode .ticket-option-card { 
+    border-color: #e2e8f0 !important; 
+    border-width: 2px !important;
+}
+
+/* Efek Terpilih untuk Tiket Regular */
+html.light-mode .ticket-option-card.active-card { 
+    background-color: rgba(34, 197, 94, 0.08) !important; 
+    border-color: #22c55e !important; 
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.25) !important;
+}
+
+/* Efek Terpilih untuk Tiket VIP */
+html.light-mode .ticket-option-card.vip-card.active-card { 
+    background-color: rgba(234, 179, 8, 0.08) !important; 
+    border-color: #eab308 !important; 
+    box-shadow: 0 4px 15px rgba(234, 179, 8, 0.25) !important;
+}
+
+/* Right Layout: Registration Box */
+html.light-mode .register-card { background-color: #ffffff; border-color: #cbd5e1; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+html.light-mode .register-header { border-bottom-color: #e2e8f0; }
+html.light-mode .register-header h4, html.light-mode .register-card > h3 { color: var(--text-primary); }
+html.light-mode .profile-detail h3 { color: var(--text-primary); }
+html.light-mode .profile-detail img.profile-img-reg { border-color: #cbd5e1; }
+html.light-mode .profile-detail .email-text { color: var(--text-secondary); }
+
+html.light-mode .btn-register { background-color: #0f172a; color: #ffffff; }
+html.light-mode .btn-register:hover { background-color: #334155; }
+html.light-mode .btn-register.btn-disabled { background-color: #e2e8f0 !important; color: #94a3b8 !important; border: 1px solid #cbd5e1; }
+html.light-mode .btn-register.btn-setup-photo { background-color: var(--accent-orange); color: #ffffff; }
+
+/* Modal Pendaftaran / Payment (Premium Blur) */
+html.light-mode #modal-overlay { background: rgba(255, 255, 255, 0.6); }
+html.light-mode .register-modal { background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px); border-color: #ffffff; box-shadow: 0 25px 60px rgba(0,0,0,0.15); }
+html.light-mode .close-modal { color: var(--text-secondary); }
+html.light-mode .close-modal:hover { color: var(--text-primary); }
+
+html.light-mode .modal-step-title-text, html.light-mode .modal-step-title { color: var(--text-primary); border-bottom-color: #e2e8f0; }
+html.light-mode .modal-label, html.light-mode .your-info-details p { color: var(--text-secondary); }
+html.light-mode .your-info-details h4 { color: var(--text-primary); }
+
+html.light-mode .modal-input, html.light-mode #registration-form select { background-color: #f8fafc; border-color: #cbd5e1; color: var(--text-primary); box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+html.light-mode .modal-input:focus, html.light-mode #registration-form select:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+html.light-mode #registration-form select option { background-color: #ffffff; color: var(--text-primary); }
+
+/* Modal Payment Step */
+html.light-mode .payment-title, html.light-mode .time-text { color: var(--text-primary); }
+html.light-mode .payment-subtitle { color: var(--text-secondary); }
+html.light-mode .qr-wrapper, html.light-mode .qr-img-main { background-color: #ffffff; border: 1px solid #cbd5e1; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+html.light-mode .instruction-box { background-color: #f1f5f9; color: var(--text-secondary); border: 1px solid #cbd5e1; }
+html.light-mode .success-title { color: var(--text-primary); }
+html.light-mode .success-desc { color: var(--text-secondary); }
+
+html.light-mode .btn-close-done { background-color: #f1f5f9; color: var(--text-primary); border: 1px solid #cbd5e1; }
+html.light-mode .btn-close-done:hover { background-color: #e2e8f0; }
+
+/* Footer */
+html.light-mode hr { border-top-color: rgba(0, 0, 0, 0.1); }
