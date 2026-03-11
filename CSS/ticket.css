@@ -38,6 +38,7 @@ body {
     min-height: 100vh;
     padding-top: 80px; 
 }
+body::-webkit-scrollbar { display: none; }
 a {
     text-decoration: none;
     color: inherit;
@@ -50,75 +51,59 @@ ul {
 /* =========================================
    2. NAVBAR STYLING (DINAMIS)
    ========================================= */
+/* =========================================
+   2. NAVBAR STYLING
+   ========================================= */
 .navbar {
-    /* 1. Membuat Navbar Menempel di Atas */
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px; /* Tinggi fix diperlukan agar layout stabil */
-    z-index: 1000;
-    /* Background transparan murni dan tanpa garis bawah */
-    background-color: transparent; 
-    border-bottom: 1px solid transparent; 
-    /* PENTING: Efek transisi agar perubahan blur-nya halus (smooth) */
+    position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 1000;
+    background-color: transparent; border-bottom: 1px solid transparent; 
     transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
-    /* Layout */
-    display: grid;
-    grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
-    align-items: center;
-    padding: 0 var(--edge-spacing); 
-    box-sizing: border-box;
+    display: grid; grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
+    align-items: center; padding: 0 var(--edge-spacing); 
 }
 
-/* B. KONDISI SCROLLED (Saat di-scroll) */
 .navbar.scrolled {
-    /* UBAH: Menggunakan warna RGB dari #131722 dengan transparansi 60% */
     background-color: rgba(19, 23, 34, 0.6); 
-    
-    /* Efek Kaca (Blur) */
-    backdrop-filter: blur(16px); /* Tingkatkan blur sedikit agar lebih halus */
-    -webkit-backdrop-filter: blur(16px);  
-    
-    /* Garis bawah yang sangat tipis dan elegan */
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);  
     border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
-    
-    /* Tambahan efek bayangan (shadow) halus untuk memisahkan navbar dan konten */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Navbar Items */
 .left-nav { grid-column: 1; justify-self: start; }
 .left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
 
-.main-nav {
-    grid-column: 2; 
-    justify-self: start; 
-    margin-left: 14px;
-    display: flex;
-    gap: 30px;
-}
-.main-nav div {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-.main-nav div:hover { color: var(--text-primary); }
+.main-nav { grid-column: 2; justify-self: start; margin-left: 14px; display: flex; gap: 30px; }
+.main-nav div { display: flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
+.main-nav div:hover { color: #ffffff; }
 
-.right-nav {
-    grid-column: 3; 
-    justify-self: end; 
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; }
-.right-nav img { width: 32px; height: 32px; border-radius: 50%; background-color: #333; display: block; }
+.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 15px; position: relative; }
+
+/* =========================================
+   3. NAVBAR PROFILE & NOTIFICATIONS
+   ========================================= */
+.nav-bell-icon { font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s; }
+.nav-bell-icon:hover { color: #fff; }
+
+.profile-dropdown-trigger { cursor: pointer; position: relative; }
+.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block; }
+.profile-initial-small { width: 36px; height: 36px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a; }
+
+.profile-dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; }
+
+.dropdown-header { padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px; }
+.profile-pic-large { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.profile-initial-large { width: 40px; height: 40px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; }
+
+.dropdown-user-info { overflow: hidden; }
+.dropdown-user-name { color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dropdown-user-role { color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px; }
+
+.dropdown-menu-links { padding: 8px; }
+.dropdown-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; }
+.dropdown-link:hover { background-color: #222; color: #fff; }
+.dropdown-link-icon { width: 16px; text-align: center; }
+.logout-link { color: #ef4444; margin-top: 4px; }
+.logout-link:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
 
 /* =========================================
    3. PAGE FRAME & HEADER
@@ -212,8 +197,16 @@ ul {
     width: 100%; border-radius: 12px; background: #111; aspect-ratio: 16/9; margin-top: 10px; border: 1px solid rgba(255,255,255,0.05);
 }
 
-.maps-or-link-card { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
-
+.maps-or-link-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    /* Tambahan dari Inline */
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
 /* =========================================
    STYLE UNTUK MAPS EMBED
    ========================================= */
@@ -272,8 +265,11 @@ ul {
     border-radius: 12px; 
     display: flex; 
     align-items: center; 
-    gap: 16px; /* Jarak antara ikon rantai kiri dengan kotak URL */
+    gap: 16px; 
     border: 1px solid rgba(255,255,255,0.05);
+    /* Tambahan dari Inline */
+    margin-top: 16px;
+    width: 100%;
 }
 .link-wrapper:hover {
     background-color: rgba(255, 255, 255, 0.08);
@@ -281,32 +277,47 @@ ul {
 .link-wrapper p { color: #fff; display: flex; align-items: center; gap: 8px; margin: 0;}
 .link-wrapper:hover i { color: #fff; }
 
-/* =========================================
-   STYLE UNTUK VIRTUAL LINK & COPY ICON
-   ========================================= */
-.link-left-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+/* Class Baru untuk Ikon di sebelah kiri */
+.link-icon-main {
+    color: #a0a0a0;
+    font-size: 16px;
+    flex-shrink: 0;
 }
+
+
 
 /* Kotak background khusus untuk teks link */
 .url-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%; /* Mengisi sisa ruang kosong */
     background-color: rgba(0, 0, 0, 0.4); 
     padding: 8px 12px;
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Tambahan dari Inline */
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    margin-left: 12px;
 }
 
-/* Teks link di dalam kotak */
 .url-box span {
     color: #e0e0e0;
     font-size: 13px;
     letter-spacing: 0.5px;
+    /* Tambahan dari Inline */
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+/* Class Baru untuk Logika Virtual Link (Hijau) */
+.url-box span.is-virtual {
+    color: var(--accent-green); /* Menggunakan variabel yang sudah ada */
+    font-weight: 600;
 }
 
 /* Ikon Salin di dalam kotak */
@@ -315,8 +326,10 @@ ul {
     font-size: 14px;
     cursor: pointer;
     transition: color 0.2s, transform 0.2s;
+    /* Tambahan dari Inline */
+    margin-left: 10px;
+    flex-shrink: 0;
 }
-
 .url-box i:hover {
     color: #ffffff;
     transform: scale(1.1); /* Sedikit membesar saat disorot */
@@ -327,6 +340,9 @@ ul {
     color: #22c55e !important;
 }
 
+.arrow-up {
+    font-size: 12px; margin-left: 4px; color: #666;
+}
 
 .host-wrapper { display: flex; align-items: center; gap: 12px; margin-top: 10px;}
 .host-wrapper img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover;}
@@ -532,16 +548,73 @@ ul {
 .register-header h4 { font-size: 14px; font-weight: 600; color: #fff; margin: 0; }
 .register-card > h3 { font-size: 15px; font-weight: 500; margin: 0; color: #fff;}
 
-.profile-detail { display: flex; align-items: center; gap: 12px; }
-.profile-detail img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover;}
-.profile-detail h3 { font-size: 14px; font-weight: 500; margin: 0; color: #fff;}
-.profile-detail .email-text { color: var(--text-secondary); font-weight: 400; }
-
-.btn-register { 
-    display: block; text-align: center; background-color: #fff; color: #000; padding: 14px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: 0.2s; font-size: 15px; margin-top: 5px;
+/* Update: Container Profile Detail */
+.profile-detail { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
 }
+
+/* Update: Gambar Profil (Menyesuaikan inline style terbaru) */
+.profile-detail img.profile-img-reg { 
+    width: 32px; 
+    height: 32px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-right: 12px; 
+    border: 1px solid #333;
+}
+.profile-detail h3 { font-size: 14px; font-weight: 500; margin: 0; color: #fff;}
+/* Info Wrapper */
+.user-info-reg {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Update: Email Text */
+.profile-detail .email-text { 
+    color: #888; 
+    font-weight: normal; 
+    font-size: 13px;
+    margin: 0;
+}
+
+.btn-register {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+    /* TAMBAHKAN INI */
+    background-color: #ffffff; /* Warna putih seperti di screenshot */
+    color: #000000;            /* Teks hitam agar kontras */
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
 .btn-register:hover { background-color: #e0e0e0; }
 
+/* 2. Tombol Disabled (Event Ended) */
+.btn-register.btn-disabled {
+    background: #444 !important;
+    color: #888 !important;
+    cursor: not-allowed;
+    border: none;
+}
+
+/* 3. Tombol Warning (Setup Photo) */
+.btn-register.btn-setup-photo {
+    background-color: var(--accent-orange); /* Menggunakan #f97316 */
+    color: #fff;
+    border: none;
+}
+.btn-register.btn-setup-photo:hover {
+    background-color: #ea580c; /* Orange sedikit lebih gelap saat hover */
+}
 
 /* =========================================
    EFEK PILIHAN PADA CARD TIKET
@@ -583,33 +656,79 @@ ul {
    ========================================= */
 .register-modal {
     display: none; 
-    flex-direction: column;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 420px;
-    max-width: 90vw;
-    background-color: #1a1a1a;
-    border: 1px solid #333;
+    width: 90%;
+    max-width: 450px; /* Update dari inline */
+    background: #1a1a1a;
+    padding: 30px;    /* Update dari inline */
     border-radius: 16px;
-    padding: 24px;
     z-index: 9999;
-    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.75), 0 12px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid #333;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
 .register-modal.show { display: flex; }
 
 .close-modal {
     position: absolute;
-    top: 20px;
     right: 20px;
-    color: #888;
+    top: 20px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 20px; /* Update dari inline */
+    color: #888;
     transition: 0.2s;
 }
 .close-modal:hover { color: #fff; }
+
+/* =========================================
+   STEP 1: FORM INPUT STYLES (PERTANYAAN)
+   ========================================= */
+
+.modal-step-title-text {
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+}
+
+/* Membungkus label dan input agar rapi atas-bawah */
+.modal-input-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column; /* Ini yang membuat input ada di bawah teks */
+    gap: 8px;
+}
+
+/* Gaya untuk teks pertanyaannya */
+.modal-label {
+    font-size: 13px;
+    color: #aaa;
+}
+
+/* Gaya untuk kolom inputnya (Warna gelap) */
+.modal-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    background: #121212; /* Mengembalikan warna gelap */
+    border: 1px solid #333;
+    color: #fff;
+    outline: none;
+    font-size: 13px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+/* Efek menyala hijau saat diklik/mengetik */
+.modal-input:focus {
+    border-color: var(--accent-green); 
+}
 
 .modal-step {
     width: 100%;
@@ -638,21 +757,69 @@ ul {
 }
 .first-quest form input:focus { border-color: #555; }
 
-/* Tombol Aksi Utama (Proceed / Done) */
-.btn-proceed {
-    background-color: #ffffff;
-    color: #000;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    margin-top: 16px;
-    cursor: pointer;
-    transition: 0.2s;
-    width: 100%;
+/* =========================================
+   STEP 2: PAYMENT STYLING
+   ========================================= */
+
+.qr-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
-.btn-proceed:hover { background-color: #e0e0e0; }
+
+.qr-img-main {
+    width: 200px;
+    height: 200px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.instruction-box {
+    background: #222;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #bbb;
+    line-height: 1.6;
+}
+
+#dynamic-payment-price {
+    color: var(--accent-green);
+    font-size: 16px;
+}
+
+/* =========================================
+   BUTTON VARIANTS
+   ========================================= */
+
+.btn-proceed {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-green {
+    background: var(--accent-green); /* #22c55e */
+    color: #000;
+}
+
+.btn-white {
+    background: #fff;
+    color: #000;
+}
+
+.btn-proceed:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
 
 
 /* --- STEP 2: PAYMENT STYLES --- */
@@ -708,7 +875,40 @@ ul {
 }
 .btn-close-done:hover { background: #444; }
 
-.event-description p { font-size: 15px; color: #a0a0a0; line-height: 1.6; margin: 0;}
+/* =========================================
+   MODAL OVERLAY & DESCRIPTION - UPDATED
+   ========================================= */
+
+#modal-overlay {
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0, 0, 0, 0.8); /* Dari inline */
+    z-index: 9998;                 /* Dari inline: tepat di bawah modal */
+    backdrop-filter: blur(5px);    /* Dari inline: efek kaca buram */
+    -webkit-backdrop-filter: blur(5px); /* Dukungan Safari */
+}
+
+.event-description {
+    margin-top: 20px;
+}
+
+.event-description h4 {
+    color: #fff;          /* Dari inline */
+    margin-bottom: 12px;  /* Dari inline */
+    font-size: 16px;      /* Dari inline: sedikit lebih besar dari h4 default */
+    font-weight: 600;
+}
+
+.event-description p {
+    font-size: 15px; 
+    color: var(--text-secondary); /* Menggunakan #a0a0a0 */
+    line-height: 1.6; 
+    margin: 0;
+}
 
 /* =========================================
    PERBAIKAN UKURAN GAMBAR PROFIL DI MODAL

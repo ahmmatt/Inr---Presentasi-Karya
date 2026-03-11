@@ -150,11 +150,6 @@ $nav_pic = $nav_user_data['profile_picture'];
     <title>Create Event - SecureGate</title>
     <link rel="stylesheet" href="../CSS/create.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Tambahan style simpel agar select city rata dengan yang lain */
-        .city-select { background: transparent; border: none; outline: none; color: #fff; width: 100%; font-family: inherit; font-size: 14px; }
-        .city-select option { color: #000; }
-    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -163,39 +158,39 @@ $nav_pic = $nav_user_data['profile_picture'];
             <div class="main-nav-discover"><i class="fa-solid fa-house"></i><a href="adminevent.php">Home</a></div>
             <div class="main-nav-event"><i class="fa-regular fa-calendar-plus"></i><a href="create.php">Create Event</a></div>
         </div>
-        <div class="right-nav" style="display: flex; align-items: center; gap: 15px; position: relative;">
-            <i class="fa-regular fa-bell" style="font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0a0a0'"></i>
+        <div class="right-nav">
+            <i class="fa-regular fa-bell nav-bell-icon" title="Notifications"></i>
             
-            <div id="profile-dropdown-trigger" style="cursor: pointer; position: relative;" title="<?= htmlspecialchars($nav_name) ?>">
+            <div id="profile-dropdown-trigger" class="profile-dropdown-trigger" title="<?= htmlspecialchars($nav_name) ?>">
                 <?php if(!empty($nav_pic)): ?>
-                    <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block;">
+                    <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" alt="Profile" class="profile-pic-small">
                 <?php else: ?>
-                    <div style="width: 36px; height: 36px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a;">
+                    <div class="profile-initial-small">
                         <?= $nav_initial ?>
                     </div>
                 <?php endif; ?>
             </div>
 
-            <div id="profile-dropdown-menu" style="display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden;">
+            <div id="profile-dropdown-menu" class="profile-dropdown-menu">
                 
-                <div style="padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px;">
+                <div class="dropdown-header">
                     <?php if(!empty($nav_pic)): ?>
-                        <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                        <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" class="profile-pic-large">
                     <?php else: ?>
-                        <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0;"><?= $nav_initial ?></div>
+                        <div class="profile-initial-large"><?= $nav_initial ?></div>
                     <?php endif; ?>
-                    <div style="overflow: hidden;">
-                        <h4 style="color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= htmlspecialchars($nav_name) ?></h4>
-                        <p style="color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px;"><?= $_SESSION['role'] ?></p>
+                    <div class="dropdown-user-info">
+                        <h4 class="dropdown-user-name"><?= htmlspecialchars($nav_name) ?></h4>
+                        <p class="dropdown-user-role"><?= $_SESSION['role'] ?></p>
                     </div>
                 </div>
 
-                <div style="padding: 8px;">
-                    <a href="settings.php" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s;" onmouseover="this.style.background='#222'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ccc';">
-                        <i class="fa-solid fa-gear" style="width: 16px; text-align: center;"></i> Settings
+                <div class="dropdown-menu-links">
+                    <a href="settings.php" class="dropdown-link">
+                        <i class="fa-solid fa-gear dropdown-link-icon"></i> Settings
                     </a>
-                    <a href="logout.php" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ef4444; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; margin-top: 4px;" onmouseover="this.style.background='rgba(239, 68, 68, 0.1)';" onmouseout="this.style.background='transparent';">
-                        <i class="fa-solid fa-arrow-right-from-bracket" style="width: 16px; text-align: center;"></i> Logout
+                    <a href="logout.php" class="dropdown-link logout-link">
+                        <i class="fa-solid fa-arrow-right-from-bracket dropdown-link-icon"></i> Logout
                     </a>
                 </div>
 
@@ -210,9 +205,9 @@ $nav_pic = $nav_user_data['profile_picture'];
                 
                 <div class="left-layout">
                     <div class="add-pict-card">
-                        <input type="file" name="banner_image" id="banner_image" accept="image/*" required style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;">
+                        <input type="file" name="banner_image" id="banner_image" accept="image/*" required>
                         <div class="pict-action-select"><i class="fa-solid fa-image"></i></div>
-                        <img id="image-preview" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:16px; position:absolute; top:0; left:0; z-index:1;">
+                        <img id="image-preview" class="image-preview">
                     </div>
                     
                     <div class="add-loc-wrapper">
@@ -225,16 +220,16 @@ $nav_pic = $nav_user_data['profile_picture'];
                             <i class="fa-solid fa-chevron-down loc-arrow"></i>
                         </div>
                         
-                        <div class="loc-options" id="loc-expand-area" style="padding-top: 16px;">
+                        <div class="loc-options" id="loc-expand-area">
                             
-                            <h4 style="color: #fff; font-size: 14px; margin-bottom: 8px;">Offline Event</h4>
+                            <h4 class="loc-section-title">Offline Event</h4>
                             
-                            <div class="virtual-link-input" style="margin-bottom: 8px;">
+                            <div class="virtual-link-input mb-8">
                                 <i class="fa-solid fa-building"></i>
                                 <input type="text" name="venue_name" placeholder="Venue Name (e.g., IndigoHub Makassar)...">
                             </div>
                             
-                            <div class="virtual-link-input" style="margin-bottom: 8px;">
+                            <div class="virtual-link-input mb-8">
                                 <i class="fa-solid fa-city"></i>
                                 <select name="city" class="city-select">
                                     <option value="">Select City...</option>
@@ -249,7 +244,7 @@ $nav_pic = $nav_user_data['profile_picture'];
                                 </select>
                             </div>
 
-                            <div class="virtual-link-input" style="margin-bottom: 8px;">
+                            <div class="virtual-link-input mb-8">
                                 <i class="fa-solid fa-map"></i>
                                 <input type="text" name="offline_location" placeholder="Full Address Details...">
                             </div>
@@ -259,9 +254,9 @@ $nav_pic = $nav_user_data['profile_picture'];
                                 <input type="url" name="maps_link" placeholder="Paste Google Maps Embed Link (src url)...">
                             </div>
                             
-                            <div class="loc-divider" style="margin: 16px 0;"><span>OR VIRTUAL</span></div>
+                            <div class="loc-divider"><span>OR VIRTUAL</span></div>
                             
-                            <h4 style="color: #fff; font-size: 14px; margin-bottom: 8px;">Online Event</h4>
+                            <h4 class="loc-section-title">Online Event</h4>
                             <div class="virtual-link-input">
                                 <i class="fa-solid fa-link"></i>
                                 <input type="url" name="online_link" placeholder="Paste virtual link (Zoom, Meet, dll)...">
@@ -271,7 +266,7 @@ $nav_pic = $nav_user_data['profile_picture'];
                     
                     <h4 class="left-section-title">Optional</h4>
                     <div class="space-3d-card">
-                        <input type="file" name="space_3d" accept="video/*, .glb, .gltf" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;">
+                        <input type="file" name="space_3d" accept="video/*, .glb, .gltf">
                         <div class="space-3d-info">
                             <i class="fa-solid fa-vr-cardboard"></i> 
                             <div class="space-3d-text">
@@ -285,15 +280,15 @@ $nav_pic = $nav_user_data['profile_picture'];
 
                 <div class="right-layout">
                     <div class="event-name">
-                        <input type="text" name="event_name" placeholder="Your Event Name" required style="width: 100%; background: transparent; border: none; outline: none; font-size: 44px; font-weight: 700; color: #fff;">
+                        <input type="text" name="event_name" placeholder="Your Event Name" required>
                     </div>
                     
                     <div class="time-loc-wrapper">
                         <div class="schedule-wrapper card-box">
                             <div class="start-end-wrapper">
-                                <div class="start-text"><i class="fa-solid fa-circle" style="font-size: 8px;"></i><h4>Start</h4></div>
+                                <div class="start-text"><i class="fa-solid fa-circle dot-icon"></i><h4>Start</h4></div>
                                 <div class="line-of-circle"></div>
-                                <div class="end-text"><i class="fa-regular fa-circle" style="font-size: 8px;"></i><h4>End</h4></div>
+                                <div class="end-text"><i class="fa-regular fa-circle dot-icon"></i><h4>End</h4></div>
                             </div>
                             <div class="start-date-time-card-left"><input type="date" name="start_date" required></div>
                             <div class="start-date-time-card-right"><input type="time" name="start_time" required></div>
@@ -311,20 +306,20 @@ $nav_pic = $nav_user_data['profile_picture'];
                     
                     <div class="desc-wrapper card-box">
                         <i class="fa-solid fa-align-left"></i> 
-                        <input type="text" name="description" placeholder="Add Description" style="width: 100%; background: transparent; border: none; outline: none; color: #fff; font-size: 14px;">
+                        <input type="text" name="description" placeholder="Add Description">
                     </div>
                     
                     <h4>Event Options</h4>
                     <div class="event-options-wrapper card-box">
                         
-                        <div class="category-wrapper" style="position: relative;">
-                            <div class="category-wrapper-left" style="display: flex; align-items: center; gap: 12px; color: #a0a0a0;">
+                        <div class="category-wrapper wrapper-relative">
+                            <div class="category-wrapper-left options-left-label">
                                 <i class="fa-solid fa-layer-group"></i> 
-                                <h3 style="margin: 0; font-size: 14px; font-weight: 500; color: #e0e0e0;">Event Category</h3>
+                                <h3>Event Category</h3>
                             </div>
-                            <div class="category-wrapper-right" id="category-trigger" style="cursor: pointer; display: flex; gap: 8px; align-items: center;">
-                                <input type="text" id="category-display" value="Select Category" readonly style="cursor: pointer; background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px; width: 140px; pointer-events: none;">
-                                <i class="fa-solid fa-pen" style="font-size: 12px; color: #a0a0a0;"></i>
+                            <div class="category-wrapper-right options-right-trigger" id="category-trigger">
+                                <input type="text" id="category-display" class="right-display-input input-140" value="Select Category" readonly>
+                                <i class="fa-solid fa-pen edit-pen-icon"></i>
                             </div>
 
                             <div class="ticket-dropdown" id="category-dropdown">
@@ -343,25 +338,25 @@ $nav_pic = $nav_user_data['profile_picture'];
                                         <option value="Workshop & Training">Workshop & Training</option>
                                         <option value="Other">Other (Type your own)</option>
                                     </select>
-                                    <input type="text" id="category_other_input" class="custom-input" placeholder="Type your category name..." style="display: none; margin-top: 8px;">
+                                    <input type="text" id="category_other_input" class="custom-input category-other-input" placeholder="Type your category name...">
                                 </div>
                                 <input type="hidden" name="event_category" id="real_category_input">
                                 
-                                <div class="ticket-actions" style="margin-top: 24px;">
-                                    <button type="button" class="apply-btn" id="apply-category" style="width: 100%;">Apply</button>
+                                <div class="ticket-actions mt-24">
+                                    <button type="button" class="apply-btn full-width" id="apply-category">Apply</button>
                                 </div>
                             </div>
                         </div>
                         <hr>
 
-                        <div class="ticket-wrapper" style="position: relative;">
-                            <div class="ticket-wrapper-left">
+                        <div class="ticket-wrapper wrapper-relative">
+                            <div class="ticket-wrapper-left options-left-label">
                                 <i class="fa-solid fa-ticket"></i> 
                                 <h3>Ticket Price</h3>
                             </div>
-                            <div class="ticket-wrapper-right" id="ticket-trigger" style="cursor: pointer; display: flex; gap: 8px; align-items: center;">
-                                <input type="text" id="ticket-display" value="Free" readonly style="cursor: pointer; background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px; width: 140px; pointer-events: none;">
-                                <i class="fa-solid fa-pen" style="font-size: 12px; color: #a0a0a0;"></i>
+                            <div class="ticket-wrapper-right options-right-trigger" id="ticket-trigger">
+                                <input type="text" id="ticket-display" class="right-display-input input-140" value="Free" readonly>
+                                <i class="fa-solid fa-pen edit-pen-icon"></i>
                             </div>
 
                             <div class="ticket-dropdown" id="ticket-dropdown">
@@ -382,12 +377,12 @@ $nav_pic = $nav_user_data['profile_picture'];
                                     </label>
                                 </div>
                                 
-                                <div class="payment-details" id="payment-details-container" style="display: none;">
+                                <div class="payment-details hidden-by-default" id="payment-details-container">
                                     <div class="ticket-tiers-wrapper">
-                                        <label style="font-size: 12px; color: #a0a0a0; margin-bottom: 6px; display: block;">Ticket Categories & Prices:</label>
+                                        <label class="section-sub-label">Ticket Categories & Prices:</label>
                                         <div id="ticket-tiers-container">
                                             <div class="ticket-tier-row">
-                                                <input type="text" name="tier_name[]" class="tier-name custom-input" value="Regular" readonly style="color: #a0a0a0;">
+                                                <input type="text" name="tier_name[]" class="tier-name custom-input readonly-input" value="Regular" readonly>
                                                 <input type="number" name="tier_price[]" class="tier-price custom-input" placeholder="Price (Rp)">
                                             </div>
                                         </div>
@@ -396,14 +391,14 @@ $nav_pic = $nav_user_data['profile_picture'];
                                 </div>
 
                                 <div class="ticket-actions">
-                                    <button type="button" class="apply-btn" id="apply-ticket" style="width: 100%;">Apply</button>
+                                    <button type="button" class="apply-btn full-width" id="apply-ticket">Apply</button>
                                 </div>
                             </div>
                         </div>
                         <hr>
                         
-                        <div class="approval-wrapper">
-                            <div class="approval-wrapper-left">
+                        <div class="approval-wrapper wrapper-relative">
+                            <div class="approval-wrapper-left options-left-label">
                                 <i class="fa-solid fa-user-check"></i>
                                 <h3>Require Approval</h3>
                             </div>
@@ -414,14 +409,14 @@ $nav_pic = $nav_user_data['profile_picture'];
                         </div>
                         <hr>
                         
-                        <div class="capacity-wrapper" style="position: relative;">
-                            <div class="capacity-wrapper-left">
+                        <div class="capacity-wrapper wrapper-relative">
+                            <div class="capacity-wrapper-left options-left-label">
                                 <i class="fa-solid fa-users"></i> 
                                 <h3>Capacity</h3>
                             </div>
-                            <div class="capacity-wrapper-right" id="capacity-trigger" style="cursor: pointer; display: flex; gap: 8px; align-items: center;">
-                                <input type="text" id="capacity-display" value="Unlimited" readonly style="cursor: pointer; background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px; width: 160px; pointer-events: none;">
-                                <i class="fa-solid fa-pen" style="font-size: 12px; color: #a0a0a0;"></i>
+                            <div class="capacity-wrapper-right options-right-trigger" id="capacity-trigger">
+                                <input type="text" id="capacity-display" class="right-display-input input-160" value="Unlimited" readonly>
+                                <i class="fa-solid fa-pen edit-pen-icon"></i>
                             </div>
 
                             <div class="capacity-dropdown" id="capacity-dropdown">
@@ -436,29 +431,29 @@ $nav_pic = $nav_user_data['profile_picture'];
                                     <label class="cap-radio"><input type="radio" name="cap_type" value="Limited"><span>Limited / Assigned Seating</span></label>
                                 </div>
                                 
-                                <div class="capacity-number-input" id="capacity-number-container" style="display: none;">
+                                <div class="capacity-number-input hidden-by-default" id="capacity-number-container">
                                     <label>Capacity Limit:</label>
                                     <input type="number" name="cap_amount" id="cap_amount" min="1" placeholder="e.g., 100" class="custom-input">
                                     
-                                    <label style="margin-top: 8px;">Seat Assignment:</label>
+                                    <label class="mt-8-label">Seat Assignment:</label>
                                     <div class="seat-type-options">
-                                        <label class="cap-radio"><input type="radio" name="seat_type" value="Bebas" checked><span style="font-size: 12px; color: #ccc;">General Admission</span></label>
-                                        <label class="cap-radio"><input type="radio" name="seat_type" value="Pilih"><span style="font-size: 12px; color: #ccc;">Select Seat Number</span></label>
+                                        <label class="cap-radio"><input type="radio" name="seat_type" value="Bebas" checked><span class="radio-subtext">General Admission</span></label>
+                                        <label class="cap-radio"><input type="radio" name="seat_type" value="Pilih"><span class="radio-subtext">Select Seat Number</span></label>
                                     </div>
                                 </div>
-                                <button type="button" class="apply-btn" id="apply-capacity" style="margin-top: 16px; width: 100%;">Apply</button>
+                                <button type="button" class="apply-btn full-width mt-16" id="apply-capacity">Apply</button>
                             </div>
                         </div>
                         <hr>
                         
-                        <div class="question-wrapper" style="position: relative; display: flex; justify-content: space-between; align-items: center;">
-                            <div class="question-wrapper-left" style="display: flex; align-items: center; gap: 12px; color: #a0a0a0;">
+                        <div class="question-wrapper wrapper-relative">
+                            <div class="question-wrapper-left options-left-label">
                                 <i class="fa-solid fa-clipboard-list"></i> 
                                 <h3 style="margin: 0; font-size: 14px; font-weight: 500; color: #e0e0e0;">Registration Form</h3>
                             </div>
-                            <div class="question-wrapper-right" id="question-trigger" style="cursor: pointer; display: flex; gap: 8px; align-items: center; color: #a0a0a0;">
-                                <input type="text" id="question-display" value="Profile Info Only" readonly style="cursor: pointer; background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px; width: 170px; pointer-events: none;">
-                                <i class="fa-solid fa-pen" style="font-size: 12px; color: #a0a0a0;"></i>
+                            <div class="question-wrapper-right options-right-trigger" id="question-trigger">
+                                <input type="text" id="question-display" class="right-display-input input-170" value="Profile Info Only" readonly>
+                                <i class="fa-solid fa-pen edit-pen-icon"></i>
                             </div>
 
                             <div class="ticket-dropdown" id="question-dropdown"> 
@@ -469,12 +464,12 @@ $nav_pic = $nav_user_data['profile_picture'];
                                     <p>Ask custom questions to your attendees.</p>
                                 </div>
 
-                                <div id="questions-container" style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-                                    <label style="font-size: 14px; color: #b0b0b0; margin-bottom: 4px; display: block;">Custom Questions:</label>
+                                <div id="questions-container" class="questions-container-box">
+                                    <label class="questions-label">Custom Questions:</label>
                                 </div>
                                 
-                                <button type="button" id="add-question-btn" class="add-tier-btn" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Question</button>
-                                <button type="button" class="apply-btn" id="apply-question" style="width: 100%;">Apply</button>
+                                <button type="button" id="add-question-btn" class="add-tier-btn mt-10"><i class="fa-solid fa-plus"></i> Add Question</button>
+                                <button type="button" class="apply-btn full-width mt-16" id="apply-question">Apply</button>
                             </div>
                         </div>
                     </div>
@@ -494,27 +489,5 @@ $nav_pic = $nav_user_data['profile_picture'];
     </div>
     
     <script src="../JS/create.js"></script>
-    <script>
-        // SCRIPT UNTUK DROPDOWN NAVBAR
-        document.addEventListener('DOMContentLoaded', function() {
-            const profileTrigger = document.getElementById('profile-dropdown-trigger');
-            const profileMenu = document.getElementById('profile-dropdown-menu');
-
-            if (profileTrigger && profileMenu) {
-                // Munculkan menu saat foto profil diklik
-                profileTrigger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
-                });
-
-                // Tutup menu otomatis jika user klik area kosong di layar
-                window.addEventListener('click', function(e) {
-                    if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
-                        profileMenu.style.display = 'none';
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>

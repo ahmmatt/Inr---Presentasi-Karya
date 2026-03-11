@@ -16,121 +16,104 @@ document.addEventListener("DOMContentLoaded", function() {
     tabLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-
-            // Hapus class active dari semua tab dan section
             tabLinks.forEach(t => t.classList.remove('active'));
-            sections.forEach(s => s.style.display = 'none');
+            sections.forEach(s => {
+                s.classList.remove('active');
+                s.classList.add('hidden');
+            });
 
-            // Tambahkan class active ke tab yang diklik
             this.classList.add('active');
-
-            // Tampilkan section yang sesuai dengan data-target
             const targetId = this.getAttribute('data-target');
-            document.getElementById(targetId).style.display = 'block';
+            const targetSection = document.getElementById(targetId);
+            targetSection.classList.add('active');
+            targetSection.classList.remove('hidden');
         });
     });
 
-    // ==========================================
-    // 3. THEME TOGGLE SWITCH LOGIC (Real Functionality)
-    // ==========================================
+    // 3. THEME TOGGLE SWITCH LOGIC
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
 
-    // A. Saat halaman dimuat, cek apakah user sebelumnya memilih Light Mode
     if (localStorage.getItem('securegate_theme') === 'light') {
         body.classList.add('light-mode');
-        if (themeToggle) {
-            themeToggle.classList.add('active');
-        }
+        if (themeToggle) themeToggle.classList.add('active');
     }
 
-    // B. Logika ketika tombol switch ditekan
     if (themeToggle) {
         themeToggle.addEventListener('click', function() {
-            // Ubah animasi tombol switch (nyala/mati)
             this.classList.toggle('active');
-            
             if (this.classList.contains('active')) {
-                // Jika aktif, ubah ke Light Mode dan simpan memori
                 body.classList.add('light-mode');
                 localStorage.setItem('securegate_theme', 'light');
             } else {
-                // Jika tidak aktif, kembalikan ke Dark Mode dan simpan memori
                 body.classList.remove('light-mode');
                 localStorage.setItem('securegate_theme', 'dark');
             }
         });
     }
 
-    // ==========================================
-    // 4. LOGIKA MODAL POP-UPS (EMAIL, PHONE, PASSWORD)
-    // ==========================================
+    // 4. LOGIKA MODAL POP-UPS
     const modalOverlay = document.getElementById("settings-modal-overlay");
-    const modalEmail = document.getElementById("modal-add-email");
-    const modalPhone = document.getElementById("modal-add-phone");
-    const modalPassword = document.getElementById("modal-set-password");
-
-    // Fungsi untuk membuka modal spesifik
-    function openModal(modalElement) {
-        modalOverlay.classList.add("show");
-        modalElement.classList.add("show");
-        document.body.style.overflow = "hidden"; // Mengunci scroll layar belakang
-    }
-
-    // Fungsi untuk menutup semua modal
-    function closeModals() {
-        modalOverlay.classList.remove("show");
-        modalEmail.classList.remove("show");
-        modalPhone.classList.remove("show");
-        modalPassword.classList.remove("show");
-        document.body.style.overflow = "auto";
-        
-        // Bersihkan isi input saat ditutup
-        document.querySelectorAll(".edit-modal input").forEach(input => input.value = "");
-    }
-
-    // Event Listener untuk Tombol Buka Modal
-    document.getElementById("btn-add-email")?.addEventListener("click", () => openModal(modalEmail));
-    document.getElementById("btn-add-phone")?.addEventListener("click", () => openModal(modalPhone));
-    document.getElementById("btn-set-password")?.addEventListener("click", () => openModal(modalPassword));
-
-    // Event Listener untuk Tombol Tutup/Cancel
-    // modalOverlay.addEventListener("click", closeModals); 
     
+    // Trigger buka modal
+    document.querySelectorAll(".open-modal-trigger").forEach(trigger => {
+        trigger.addEventListener("click", function() {
+            const modalId = this.getAttribute("data-modal");
+            openModal(modalId);
+        });
+    });
+
+    function openModal(modalId) {
+        modalOverlay.classList.add("show");
+        document.getElementById(modalId).classList.add("show");
+        document.body.style.overflow = "hidden";
+    }
+
+    // Trigger tutup modal
     document.querySelectorAll(".close-modal-btn").forEach(btn => {
-        btn.addEventListener("click", closeModals);
+        btn.addEventListener("click", function() {
+            const modal = this.closest(".edit-modal");
+            closeModal(modal);
+        });
     });
 
-    // Event Listener untuk Tombol Save (Konfirmasi)
-    // 1. Simpan Email Baru
-    document.getElementById("save-email-btn")?.addEventListener("click", function() {
-        const newEmail = document.getElementById("input-new-email").value;
-        if (newEmail.trim() !== "") {
-            document.getElementById("display-email-text").innerText = newEmail;
-            closeModals();
-        }
-    });
+    function closeModal(modalElement) {
+        modalOverlay.classList.remove("show");
+        modalElement.classList.remove("show");
+        document.body.style.overflow = "auto";
+    }
 
-    // 2. Simpan Phone Baru
-    document.getElementById("save-phone-btn")?.addEventListener("click", function() {
-        const newPhone = document.getElementById("input-new-phone").value;
-        if (newPhone.trim() !== "") {
-            document.getElementById("display-phone-text").innerText = newPhone;
-            closeModals();
-        }
-    });
+    // 5. PREVIEW GAMBAR
+    const fileInput = document.getElementById('profile-upload');
+    if (fileInput) {
+        fileInput.addEventListener('change', function(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('preview-img');
+                const placeholder = document.getElementById('preview-placeholder');
+                output.src = reader.result;
+                output.classList.remove('hidden');
+                output.style.display = 'block';
+                if (placeholder) placeholder.classList.add('hidden');
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+    }
 
-    // 3. Simpan Password Baru
-    document.getElementById("save-password-btn")?.addEventListener("click", function() {
-        const pass1 = document.getElementById("input-new-pass").value;
-        const pass2 = document.getElementById("input-confirm-pass").value;
-        
-        if (pass1 !== "" && pass1 === pass2) {
-            alert("Password successfully updated!");
-            closeModals();
-        } else {
-            alert("Passwords do not match. Please try again.");
-        }
-    });
+    // 6. DROPDOWN NAVBAR PROFILE
+    const profileTrigger = document.getElementById('profile-dropdown-trigger');
+    const profileMenu = document.getElementById('profile-dropdown-menu');
 
+    if (profileTrigger && profileMenu) {
+        profileTrigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        window.addEventListener('click', function(e) {
+            if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
+                profileMenu.style.display = 'none';
+            }
+        });
+    }
 });

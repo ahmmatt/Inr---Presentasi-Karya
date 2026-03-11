@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['withdraw_amount'])) {
     } elseif ($amount > $available_balance) {
         $error = "Saldo tidak mencukupi!";
     } else {
-        // Hitung Potongan 5% & Bersih
-        $platform_fee = $amount * 0.05;
+        // Hitung Potongan 5% (Dibulatkan ke Bawah) & Bersih
+        $platform_fee = floor($amount * 0.08);
         $net_receive = $amount - $platform_fee;
 
         // Simpan Permintaan ke Database
@@ -71,7 +71,23 @@ if ($hist_query) {
 }
 
 // Fungsi Format Rupiah
-function formatRupiah($num) { return "Rp " . number_format($num, 0, ',', '.'); }
+// Fungsi Format Rupiah (Standar EYD)
+function formatRupiah($num) { 
+    // Format: Rp(angka_dengan_titik),00
+    return "Rp" . number_format($num, 2, ',', '.'); 
+}
+
+// ==========================================
+// MENGAMBIL DATA PROFIL UNTUK NAVBAR
+// ==========================================
+$nav_user_id = $_SESSION['user_id'];
+$nav_query = $conn->query("SELECT full_name, profile_picture FROM users WHERE id_user = $nav_user_id");
+$nav_user_data = $nav_query->fetch_assoc();
+
+$nav_name = $nav_user_data['full_name'];
+$nav_initial = strtoupper(substr($nav_name, 0, 1));
+$nav_pic = $nav_user_data['profile_picture'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,33 +97,69 @@ function formatRupiah($num) { return "Rp " . number_format($num, 0, ',', '.'); }
     <title>SecureGate - Withdrawal</title>
     <link rel="stylesheet" href="../CSS/withdrawal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        const maxBalancePHP = <?= floor($available_balance) ?>;
+    </script>
 </head>
 <body>
     <nav class="navbar">
         <div class="left-nav">
             <h1>SecureGate</h1>
         </div>
+        
         <div class="main-nav">
-            <div class="main-nav-discover"><i class="fa-solid fa-house"></i><a href="adminevent.php">Home</a></div>
-            <div class="main-nav-event"><i class="fa-regular fa-calendar-plus"></i><a href="create.php">Create Event</a></div>
+            <div class="main-nav-item"><i class="fa-solid fa-house"></i><a href="adminevent.php">Home</a></div>
+            <div class="main-nav-item"><i class="fa-regular fa-calendar-plus"></i><a href="create.php">Create Event</a></div>
         </div>
-        <div class="right-nav" style="display: flex; align-items: center; gap: 15px;">
-            <i class="fa-regular fa-bell" style="font-size: 18px; color: #a0a0a0;"></i>
-            <div style="width: 36px; height: 36px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a;" title="<?= htmlspecialchars($admin_name) ?>">
-                <?= $nav_initial ?>
+
+        <div class="right-nav">
+            <i class="fa-regular fa-bell nav-bell-icon" title="Notifications"></i>
+            
+            <div id="profile-dropdown-trigger" class="profile-dropdown-trigger" title="<?= htmlspecialchars($nav_name) ?>">
+                <?php if(!empty($nav_pic)): ?>
+                    <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" alt="Profile" class="profile-pic-small">
+                <?php else: ?>
+                    <div class="profile-initial-small">
+                        <?= $nav_initial ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div id="profile-dropdown-menu" class="profile-dropdown-menu">
+                <div class="dropdown-header">
+                    <?php if(!empty($nav_pic)): ?>
+                        <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" class="profile-pic-large">
+                    <?php else: ?>
+                        <div class="profile-initial-large"><?= $nav_initial ?></div>
+                    <?php endif; ?>
+                    <div class="dropdown-user-info">
+                        <h4 class="dropdown-user-name"><?= htmlspecialchars($nav_name) ?></h4>
+                        <p class="dropdown-user-role"><?= $_SESSION['role'] ?></p>
+                    </div>
+                </div>
+
+                <div class="dropdown-menu-links">
+                    <a href="settings.php" class="dropdown-link">
+                        <i class="fa-solid fa-gear dropdown-link-icon"></i> Settings
+                    </a>
+                    <a href="logout.php" class="dropdown-link logout-link">
+                        <i class="fa-solid fa-arrow-right-from-bracket dropdown-link-icon"></i> Logout
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
     <div class="page-frame">
         <div class="page-frame-nav">
-            <a href="adminevent.php?event_id=<?= $event_id ?>" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
-            <h1 style="margin-top: 16px;">Revenue & Withdrawal</h1>
+            <a href="adminevent.php" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+            <h1 class="header-title">Revenue & Withdrawal</h1>
             <p>Manage your event earnings and request payouts to your bank or e-wallet.</p>
         </div>
 
-        <?php if(isset($error)) echo "<div style='color:#ef4444; background:rgba(239,68,68,0.1); padding:15px; border-radius:8px; margin-bottom:20px; font-weight:bold;'>$error</div>"; ?>
-        <?php if(isset($success)) echo "<div style='color:#22c55e; background:rgba(34,197,94,0.1); padding:15px; border-radius:8px; margin-bottom:20px; font-weight:bold;'>$success</div>"; ?>
+        <?php if(isset($error)) echo "<div class='alert alert-error'>$error</div>"; ?>
+        <?php if(isset($success)) echo "<div class='alert alert-success'>$success</div>"; ?>
 
         <div class="withdrawal-layout">
             
@@ -120,7 +172,7 @@ function formatRupiah($num) { return "Rp " . number_format($num, 0, ',', '.'); }
                 <div class="form-card">
                     <h3>Request Payout</h3>
                     
-                    <form method="POST">
+                    <form method="POST" id="withdrawal-form">
                         <div class="form-group">
                             <label>Payout Method</label>
                             <select name="payout_method" id="payout-method" class="custom-select" required>
@@ -143,7 +195,7 @@ function formatRupiah($num) { return "Rp " . number_format($num, 0, ',', '.'); }
                             <label>Amount to Withdraw (Rp)</label>
                             <div class="input-wrapper-max">
                                 <input type="number" name="withdraw_amount" id="withdraw-amount" class="custom-input" placeholder="Min. Rp 50.000" min="50000" max="<?= $available_balance ?>" required>
-                                <button type="button" id="btn-max" onclick="document.getElementById('withdraw-amount').value = <?= $available_balance ?>; calculateFee();">MAX</button>
+                                <button type="button" id="btn-max">MAX</button>
                             </div>
                         </div>
 
@@ -153,25 +205,25 @@ function formatRupiah($num) { return "Rp " . number_format($num, 0, ',', '.'); }
                                 <span id="summary-amount">Rp 0</span>
                             </div>
                             <div class="fee-row text-danger">
-                                <span>Platform Fee (5%)</span>
-                                <span id="summary-fee" style="color: #ef4444;">- Rp 0</span>
+                                <span>Platform Fee (8%)</span>
+                                <span id="summary-fee">- Rp 0</span>
                             </div>
                             <hr class="fee-divider">
                             <div class="fee-row total-receive">
                                 <span>You will receive</span>
-                                <span id="summary-receive" class="text-green" style="color: #22c55e; font-weight:bold; font-size:18px;">Rp 0</span>
+                                <span id="summary-receive" class="text-green-bold">Rp 0</span>
                             </div>
                         </div>
 
                         <div class="info-alert">
                             <i class="fa-solid fa-circle-info"></i>
-                            <p>Funds will be transferred to your account within <strong>1-2 business days</strong> after the request is approved. A 5% platform fee applies to all withdrawals.</p>
+                            <p>Funds will be transferred to your account within <strong>1-2 business days</strong> after the request is approved. An 8% platform fee applies to all withdrawals.</p>
                         </div>
 
                         <?php if($available_balance < 50000): ?>
-                            <button type="button" class="btn-submit" style="background:#444; color:#888; cursor:not-allowed;">Minimum Withdrawal Rp 50.000</button>
+                            <button type="button" class="btn-submit btn-disabled" disabled>Minimum Withdrawal Rp 50.000</button>
                         <?php else: ?>
-                            <button type="submit" class="btn-submit">Submit Withdrawal</button>
+                            <button type="submit" class="btn-submit" id="btn-withdraw">Submit Withdrawal</button>
                         <?php endif; ?>
                     </form>
                 </div>
@@ -192,20 +244,20 @@ function formatRupiah($num) { return "Rp " . number_format($num, 0, ',', '.'); }
                             </thead>
                             <tbody>
                                 <?php if(count($history) == 0): ?>
-                                    <tr><td colspan="4" style="text-align:center; padding: 20px; color:#888;">No history found.</td></tr>
+                                    <tr><td colspan="4" class="table-empty">No history found.</td></tr>
                                 <?php else: ?>
                                     <?php foreach($history as $h): ?>
                                         <tr>
                                             <td><?= date('M d, Y', strtotime($h['created_at'])) ?></td>
-                                            <td><?= formatRupiah($h['amount']) ?></td>
-                                            <td><?= htmlspecialchars($h['payout_method']) ?> <br><span class="acc-text" style="color:#888; font-size:12px;">****<?= substr($h['payout_account'], -4) ?></span></td>
+                                            <td><?= formatRupiah($h['net_receive']) ?></td>
+                                            <td><?= htmlspecialchars($h['payout_method']) ?> <br><span class="acc-text">****<?= substr($h['payout_account'], -4) ?></span></td>
                                             <td>
                                                 <?php if($h['status'] == 'done'): ?>
-                                                    <span style="background:rgba(34,197,94,0.1); color:#22c55e; padding:4px 8px; border-radius:6px; font-size:12px; font-weight:bold;">Done</span>
+                                                    <span class="badge-done">Done</span>
                                                 <?php elseif($h['status'] == 'rejected'): ?>
-                                                    <span style="background:rgba(239,68,68,0.1); color:#ef4444; padding:4px 8px; border-radius:6px; font-size:12px; font-weight:bold;">Rejected</span>
+                                                    <span class="badge-rejected">Rejected</span>
                                                 <?php else: ?>
-                                                    <span style="background:rgba(249,115,22,0.1); color:#f97316; padding:4px 8px; border-radius:6px; font-size:12px; font-weight:bold;">Pending</span>
+                                                    <span class="badge-pending">Pending</span>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -219,33 +271,7 @@ function formatRupiah($num) { return "Rp " . number_format($num, 0, ',', '.'); }
 
         </div>
     </div>
-
-    <script>
-        const inputAmount = document.getElementById('withdraw-amount');
-        const maxBalance = <?= $available_balance ?>;
-
-        function formatRp(angka) {
-            return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-
-        function calculateFee() {
-            let val = parseFloat(inputAmount.value) || 0;
-            
-            // Cegah input melebihi saldo
-            if (val > maxBalance) {
-                val = maxBalance;
-                inputAmount.value = maxBalance;
-            }
-
-            let fee = val * 0.05; // 5% fee
-            let net = val - fee;
-
-            document.getElementById('summary-amount').innerText = formatRp(val);
-            document.getElementById('summary-fee').innerText = "- " + formatRp(fee);
-            document.getElementById('summary-receive').innerText = formatRp(net);
-        }
-
-        inputAmount.addEventListener('input', calculateFee);
-    </script>
+    
+    <script src="../JS/withdrawal.js"></script>                                         
 </body>
 </html>

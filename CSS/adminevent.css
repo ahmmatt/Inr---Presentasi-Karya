@@ -96,7 +96,8 @@ ul { list-style: none; }
     justify-self: end; 
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
+    position: relative;
 }
 
 .main-nav div {
@@ -111,14 +112,40 @@ ul { list-style: none; }
 }
 
 .main-nav div:hover { color: #ffffff; }
-.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; text-decoration: none; }
-.right-nav img { width: 32px; height: 32px; border-radius: 50%; background-color: #333; display: block; }
+
+/* =========================================
+   3. NAVBAR PROFILE & NOTIFICATIONS (Dari Create.css)
+   ========================================= */
+.nav-bell-icon { font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s; }
+.nav-bell-icon:hover { color: #fff; }
+
+.profile-dropdown-trigger { cursor: pointer; position: relative; }
+.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block; }
+.profile-initial-small { width: 36px; height: 36px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a; }
+
+.profile-dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; }
+
+.dropdown-header { padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px; }
+.profile-pic-large { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.profile-initial-large { width: 40px; height: 40px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; }
+
+.dropdown-user-info { overflow: hidden; }
+.dropdown-user-name { color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dropdown-user-role { color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px; }
+
+.dropdown-menu-links { padding: 8px; }
+.dropdown-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; }
+.dropdown-link:hover { background-color: #222; color: #fff; }
+.dropdown-link-icon { width: 16px; text-align: center; }
+.logout-link { color: #ef4444; margin-top: 4px; }
+.logout-link:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
 
 /* Perbaikan untuk tombol Create Event di navbar agar tidak bentrok */
 .nav-btn-create { margin-right: 16px; }
 
 /* =========================================
-   3. PAGE FRAME & TAB HEADER
+   4. PAGE FRAME & TAB HEADER
    ========================================= */
 .page-frame {
     max-width: var(--content-width);
@@ -137,9 +164,6 @@ ul { list-style: none; }
     font-size: 32px;
     font-weight: 700;
 }
-
-
-
 
 /* ========================================================================= */
 /* BAGIAN KHUSUS ADMIN EVENT (Ditambahkan setelah base) */
@@ -254,14 +278,9 @@ ul { list-style: none; }
     justify-content: center; 
     align-items: center; 
     font-size: 22px; /* Ukuran ikon di dalam diperbesar */
-    
-    /* Apple Style: Background Transparan & Warna Netral */
     background: transparent; 
-    color: #a0a0a0; /* Warna abu-abu terang yang elegan */
-    
-    /* Border super tipis dan halus seperti referensi gambar */
+    color: #a0a0a0; 
     border: 1px solid rgba(255, 255, 255, 0.1);
-    
     transition: all 0.3s ease;
 }
 
@@ -273,15 +292,13 @@ ul { list-style: none; }
 
 .metric-info p { 
     font-size: 13px; 
-    color: #888; /* Warna label sedikit lebih gelap agar fokus ke angka */
+    color: #888; 
     margin-bottom: 6px; 
     font-weight: 500;
 }
 
 .metric-info h3 { font-size: 26px; font-weight: 700; color: #fff; margin: 0; }
 .metric-total { font-size: 14px; color: #666; font-weight: 500; }
-
-
 
 /* ADMIN WORKSPACE & TABS */
 .admin-workspace { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; margin-bottom: 20px;}
@@ -326,7 +343,6 @@ ul { list-style: none; }
     letter-spacing: 0.5px;
 }
 
-
 /* =========================================
    STATUS BADGES (4 TAHAP)
    ========================================= */
@@ -369,9 +385,9 @@ ul { list-style: none; }
     display: none; flex-direction: column; gap: 16px;
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 420px; max-width: 90vw; padding: 24px;
-    background-color: #1a1a1a; /* Background gelap solid */
+    background-color: #1a1a1a; 
     border: 1px solid rgba(255,255,255,0.05); 
-    border-radius: 20px; /* Lengkungan persis seperti gambar referensi */
+    border-radius: 20px; 
     z-index: 9999; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
 }
 .edit-modal.show { display: flex; }
@@ -436,6 +452,62 @@ ul { list-style: none; }
 }
 .btn-confirm:hover { background: #e0e0e0; }
 
+
+/* =========================================
+   NEW UTILITY CLASSES (DARI PEMBERSIHAN INLINE STYLE)
+   ========================================= */
+
+/* Class Form Inline agar sejajar dengan tombol lain */
+.inline-form {
+    display: inline;
+}
+
+/* Cursor pointer untuk metric card */
+.clickable-card {
+    cursor: pointer;
+}
+
+/* Icon panah diagonal kecil di metric card */
+.icon-small-right {
+    font-size: 10px;
+    margin-left: 4px;
+}
+
+/* Style saat tabel kosong */
+.empty-table-cell {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+}
+
+/* Agar form di dalam <td> tidak merusak struktur tabel */
+.display-contents {
+    display: contents;
+}
+
+/* Class saat Admin belum memiliki event satupun */
+.no-events-wrapper {
+    text-align: center;
+    padding: 100px 0;
+    color: #888;
+}
+
+.no-events-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.btn-inline-auto {
+    display: inline-flex;
+    margin-top: 20px;
+    width: auto;
+}
+
+.mt-8 {
+    margin-top: 8px;
+}
+
 /* =========================================
    6. FOOTER
    ========================================= */
@@ -467,4 +539,3 @@ hr {
     .metrics-grid { grid-template-columns: 1fr; }
     .tabs-nav { overflow-x: auto; white-space: nowrap; }
 }
-

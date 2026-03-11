@@ -1,4 +1,3 @@
-// Jadikan SATU wadah utama agar semua kode menunggu HTML selesai dimuat
 document.addEventListener("DOMContentLoaded", () => {
     
     // ==========================================
@@ -6,27 +5,41 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     const navbar = document.querySelector('.navbar');
 
-    // Pengecekan: Hanya jalankan jika ada navbar di halaman ini
     if (navbar) {
         window.addEventListener('scroll', () => {
-            // Jauh lebih ringkas: tambah 'scrolled' jika scroll > 50, hapus jika tidak
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
     }
 
 });
 
+/**
+ * Menutup Modal Sukses (Notifikasi Email)
+ */
 function closeSuccessModal() {
-            document.getElementById('successModal').style.display = 'none';
-        }
+    const successModal = document.getElementById('successModal');
+    if (successModal) {
+        successModal.style.display = 'none';
+        successModal.classList.remove('active');
+    }
+}
 
-        function openEditModal(id, name, email) {
-            document.getElementById('edit_id').value = id;
-            document.getElementById('edit_name').value = name;
-            document.getElementById('edit_email').value = email;
-            document.getElementById('editModal').classList.add('active');
-        }
+/**
+ * Membuka Modal Edit User
+ * @param {string} id 
+ * @param {string} name 
+ * @param {string} email 
+ */
+function openEditModal(id, name, email) {
+    document.getElementById('edit_id').value = id;
+    document.getElementById('edit_name').value = name;
+    document.getElementById('edit_email').value = email;
+    document.getElementById('editModal').classList.add('active');
+}
 
-        function closeEditModal() {
-            document.getElementById('editModal').classList.remove('active');
-        }
+/**
+ * Menutup Modal Edit User
+ */
+function closeEditModal() {
+    document.getElementById('editModal').classList.remove('active');
+}

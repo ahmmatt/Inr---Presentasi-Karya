@@ -116,39 +116,39 @@ $nav_pic = $nav_user_data['profile_picture'];
             <div class="main-nav-discover"><i class="fa-regular fa-compass"></i><a href="discover.php">Discover</a></div>
             <div class="main-nav-event"><i class="fa-solid fa-ticket"></i><a href="mainpage.php">Event</a></div>
         </div>
-        <div class="right-nav" style="display: flex; align-items: center; gap: 15px; position: relative;">
-            <i class="fa-regular fa-bell" style="font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0a0a0'"></i>
+        <div class="right-nav">
+            <i class="fa-regular fa-bell nav-bell-icon" title="Notifications"></i>
             
-            <div id="profile-dropdown-trigger" style="cursor: pointer; position: relative;" title="<?= htmlspecialchars($nav_name) ?>">
+            <div id="profile-dropdown-trigger" class="profile-dropdown-trigger" title="<?= htmlspecialchars($nav_name) ?>">
                 <?php if(!empty($nav_pic)): ?>
-                    <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block;">
+                    <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" alt="Profile" class="profile-pic-small">
                 <?php else: ?>
-                    <div style="width: 36px; height: 36px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a;">
+                    <div class="profile-initial-small">
                         <?= $nav_initial ?>
                     </div>
                 <?php endif; ?>
             </div>
 
-            <div id="profile-dropdown-menu" style="display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden;">
+            <div id="profile-dropdown-menu" class="profile-dropdown-menu">
                 
-                <div style="padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px;">
+                <div class="dropdown-header">
                     <?php if(!empty($nav_pic)): ?>
-                        <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                        <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" class="profile-pic-large">
                     <?php else: ?>
-                        <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0;"><?= $nav_initial ?></div>
+                        <div class="profile-initial-large"><?= $nav_initial ?></div>
                     <?php endif; ?>
-                    <div style="overflow: hidden;">
-                        <h4 style="color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= htmlspecialchars($nav_name) ?></h4>
-                        <p style="color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px;"><?= $_SESSION['role'] ?></p>
+                    <div class="dropdown-user-info">
+                        <h4 class="dropdown-user-name"><?= htmlspecialchars($nav_name) ?></h4>
+                        <p class="dropdown-user-role"><?= $_SESSION['role'] ?></p>
                     </div>
                 </div>
 
-                <div style="padding: 8px;">
-                    <a href="settings.php" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s;" onmouseover="this.style.background='#222'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ccc';">
-                        <i class="fa-solid fa-gear" style="width: 16px; text-align: center;"></i> Settings
+                <div class="dropdown-menu-links">
+                    <a href="settings.php" class="dropdown-link">
+                        <i class="fa-solid fa-gear dropdown-link-icon"></i> Settings
                     </a>
-                    <a href="logout.php" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ef4444; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; margin-top: 4px;" onmouseover="this.style.background='rgba(239, 68, 68, 0.1)';" onmouseout="this.style.background='transparent';">
-                        <i class="fa-solid fa-arrow-right-from-bracket" style="width: 16px; text-align: center;"></i> Logout
+                    <a href="logout.php" class="dropdown-link logout-link">
+                        <i class="fa-solid fa-arrow-right-from-bracket dropdown-link-icon"></i> Logout
                     </a>
                 </div>
 
@@ -174,7 +174,7 @@ $nav_pic = $nav_user_data['profile_picture'];
         
         <div class="event-location-wrapper">
             <div class="event-location-now" onclick="window.location.href='discover.php?city=All&category=<?= urlencode($selected_category) ?>'">
-                <i class="fa-solid fa-location-dot location-icon" style="color: #22c55e;"></i>
+                <i class="fa-solid fa-location-dot location-icon icon-green-accent"></i>
                 <h3><?= $selected_city === 'All' ? 'All Locations' : htmlspecialchars($selected_city) . ', ID' ?></h3>               
                 <i class="fa-solid fa-chevron-down location-arrow"></i>
             </div>
@@ -261,8 +261,8 @@ $nav_pic = $nav_user_data['profile_picture'];
                                     <img src="<?= $img_path ?>" alt="">
                                 </div>
                                 
-                                <div class="card-author-wrapper" style="margin-bottom: 12px;">
-                                    <div class="card-author-left" style="display: flex; align-items: center; gap: 8px;">
+                                <div class="card-author-wrapper author-mb-12">
+                                    <div class="card-author-left">
                                         <?php 
                                             // 1. Ambil Nama (Jika kosong di DB, tampilkan "Unknown Admin")
                                             $author_name = !empty($ev['author_name']) ? htmlspecialchars($ev['author_name']) : "Unknown Admin";
@@ -273,26 +273,26 @@ $nav_pic = $nav_user_data['profile_picture'];
                                             // 3. Tampilkan Foto atau Avatar Inisial Huruf
                                             if(!empty($ev['author_image'])): 
                                         ?>
-                                            <img src="../Media/uploads/<?= htmlspecialchars($ev['author_image']) ?>" alt="Author Logo" style="border-radius: 50%; object-fit: cover; width: 24px; height: 24px; background: #fff;">
+                                            <img src="../Media/uploads/<?= htmlspecialchars($ev['author_image']) ?>" alt="Author Logo" class="author-img-small">
                                         <?php else: ?>
-                                            <div style="width: 24px; height: 24px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; flex-shrink: 0;">
+                                            <div class="author-initial-small">
                                                 <?= $initial ?>
                                             </div>
                                         <?php endif; ?>
                                         
-                                        <span style="font-size: 13px; color: #a0a0a0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= $author_name ?></span>
+                                        <span class="author-name-text"><?= $author_name ?></span>
                                     </div>
                                 </div>                 
 
-                                <div class="card-info-blocks" style="align-items: flex-start; margin-top: 0;">
-                                    <div class="info-block" style="align-items: flex-start; flex: 1; padding-right: 12px;">
-                                        <div class="block-icon" style="margin-top: 2px;"><i class="fas fa-map-marker-alt"></i></div>
-                                        <div class="block-text" style="flex: 1; width: 100%;">
-                                            <h3 style="font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; line-height: 1.2;">
+                                <div class="card-info-blocks info-blocks-compact">
+                                    <div class="info-block info-block-expanded">
+                                        <div class="block-icon icon-mt-2"><i class="fas fa-map-marker-alt"></i></div>
+                                        <div class="block-text text-flex-1">
+                                            <h3 class="location-title-small">
                                                 <?= $ev['location_type'] == 'online' ? 'Online' : (!empty($ev['venue_name']) ? htmlspecialchars($ev['venue_name']) : 'Offline') ?>
                                             </h3>
                                             
-                                            <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: normal; overflow-wrap: anywhere; line-height: 1.4; color: #a0a0a0; font-size: 12px; margin: 0;">
+                                            <p class="location-desc-small">
                                                 <?php 
                                                     if($ev['location_type'] == 'online') {
                                                         echo "Online Event / Virtual Meeting";
@@ -305,9 +305,9 @@ $nav_pic = $nav_user_data['profile_picture'];
                                         </div>
                                     </div>
                                     
-                                    <div class="price-mini-block" style="margin-top: 2px;">
+                                    <div class="price-mini-block price-mt-2">
                                         <i class="fas fa-tag"></i>
-                                        <span style="color: #22c55e; font-weight: 600;"><?= getPriceLabel($ev) ?></span>
+                                        <span class="price-text-green"><?= getPriceLabel($ev) ?></span>
                                     </div>
                                 </div>
                             </a>
@@ -356,27 +356,5 @@ $nav_pic = $nav_user_data['profile_picture'];
     </div>
     
     <script src="../JS/discover.js"></script>
-    <script>
-        // SCRIPT UNTUK DROPDOWN NAVBAR
-        document.addEventListener('DOMContentLoaded', function() {
-            const profileTrigger = document.getElementById('profile-dropdown-trigger');
-            const profileMenu = document.getElementById('profile-dropdown-menu');
-
-            if (profileTrigger && profileMenu) {
-                // Munculkan menu saat foto profil diklik
-                profileTrigger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
-                });
-
-                // Tutup menu otomatis jika user klik area kosong di layar
-                window.addEventListener('click', function(e) {
-                    if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
-                        profileMenu.style.display = 'none';
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>

@@ -64,12 +64,45 @@ ul { list-style: none; }
 .main-nav div { display: flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
 .main-nav div:hover { color: #ffffff; }
 
-.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 20px; }
-.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; }
-.right-nav img { width: 32px; height: 32px; border-radius: 50%; background-color: #333; display: block; }
+.right-nav {
+    grid-column: 3; 
+    justify-self: end; 
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+}
 
 /* =========================================
-   3. PAGE FRAME & HEADER
+   3. NAVBAR PROFILE & NOTIFICATIONS
+   ========================================= */
+.nav-bell-icon { font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s; }
+.nav-bell-icon:hover { color: #fff; }
+
+.profile-dropdown-trigger { cursor: pointer; position: relative; }
+.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block; }
+.profile-initial-small { width: 36px; height: 36px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a; }
+
+.profile-dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; }
+
+.dropdown-header { padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px; }
+.profile-pic-large { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.profile-initial-large { width: 40px; height: 40px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; }
+
+.dropdown-user-info { overflow: hidden; }
+.dropdown-user-name { color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dropdown-user-role { color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px; }
+
+.dropdown-menu-links { padding: 8px; }
+.dropdown-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; }
+.dropdown-link:hover { background-color: #222; color: #fff; }
+.dropdown-link-icon { width: 16px; text-align: center; }
+.logout-link { color: #ef4444; margin-top: 4px; }
+.logout-link:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+
+/* =========================================
+   4. PAGE FRAME & HEADER
    ========================================= */
 .page-frame { max-width: var(--content-width); margin: 40px auto; padding: 0 var(--content-padding); }
 .page-frame-nav { display: flex; flex-direction: column; justify-content: space-between; align-items:flex-start; margin-bottom: 40px; gap: 20px; }
@@ -91,6 +124,7 @@ ul { list-style: none; }
 .event-location-now h3 { font-size: 14px; font-weight: 500; color: #ffffff; margin: 0; white-space: nowrap; }
 .location-icon { font-size: 14px; color: #16f91a; }
 .location-arrow { font-size: 10px; color: #888; margin-left: 4px; }
+.icon-green-accent { color: #22c55e; }
 
 /* =========================================
    CATEGORY SECTION
@@ -167,30 +201,47 @@ ul { list-style: none; }
 
 .card-title { font-size: clamp(12px, 4vw, 16px); font-weight: 700; color: #ffffff; text-align: left; margin-bottom: 12px; line-height: 1.4; width: 100%; }
 
-.event-card-img { width: 70%; margin-left: auto; margin-right: auto; display: block; overflow: hidden; border-radius: 8px; margin-bottom: 16px; margin-top: 10px; }
-.event-card-img img { width: 100%; height: 100%; object-fit: cover; }
+.event-card-img { 
+    width: 70%; /* Saya ubah dari 70% ke 100% agar poster terlihat lebih penuh & proporsional */
+    aspect-ratio: 3 / 4; /* KUNCI UTAMA: Mengunci ukuran bingkai statis 3:4 */
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block; 
+    overflow: hidden; 
+    border-radius: 8px; 
+    margin-bottom: 16px; 
+    margin-top: 10px; 
+    background-color: #1a1a1a; /* Background sementara sebelum gambar selesai di-load */
+}
 
+.event-card-img img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; /* Memaksa gambar menyesuaikan bingkai tanpa merusak proporsi (tidak gepeng) */
+    object-position: center; /* Fokus potongan gambar selalu diambil dari tengah */
+}
 .card-author-wrapper { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.author-mb-12 { margin-bottom: 12px; }
+
 .card-author-left { display: flex; align-items: center; gap: 8px; margin-bottom: 0; text-align: left; max-width: 75%; }
-.card-author-left img { width: 18px; height: 18px; border-radius: 4px; background-color: #fff; object-fit: contain; flex-shrink: 0; }
-.card-author-left span { font-size: 11px; font-weight: 500; color: #e0e0e0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.author-img-small { border-radius: 50%; object-fit: cover; width: 24px; height: 24px; background: #fff; flex-shrink: 0; }
+.author-initial-small { width: 24px; height: 24px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; flex-shrink: 0; }
+.author-name-text { font-size: 13px; color: #a0a0a0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 
 /* PERBAIKAN JARAK KONTEN BAWAH (Lokasi & Harga) */
 .card-info-blocks {
     display: flex;
     flex-direction: column;
     gap: 12px; 
-    /* Menggunakan jarak tetap, BUKAN auto */
     margin-top: 16px; 
 }
-
-.price-mini-block { display: flex; align-items: center; gap: 8px; padding-left: 2px; margin: 0; }
-.price-mini-block i { font-size: 13px; color: #22c55e; }
-.price-mini-block span { font-size: 12px; font-weight: 600; color: #22c55e; line-height: 1; }
+.info-blocks-compact { align-items: flex-start; margin-top: 0; }
 
 .info-block { display: flex; gap: 12px; align-items: center; margin-bottom: -4px; }
+.info-block-expanded { align-items: flex-start; flex: 1; padding-right: 12px; }
 
-/* PERBAIKAN KOTAK IKON LOKASI (Akan dibungkus div di HTML) */
+/* PERBAIKAN KOTAK IKON LOKASI */
 .block-icon { 
     width: 32px; 
     height: 32px; 
@@ -203,13 +254,35 @@ ul { list-style: none; }
     flex-shrink: 0; 
     margin: 0; 
 }
-.block-icon i {
-    font-size: 14px; 
-    color: #838383;
-}
+.icon-mt-2 { margin-top: 2px; }
+.block-icon i { font-size: 14px; color: #838383; }
+
+.block-text { display: flex; flex-direction: column; gap: 2px; }
+.text-flex-1 { flex: 1; width: 100%; }
 
 .block-text h3 { margin: 0 0 2px 0; font-size: clamp(10px, 3.5vw, 13px); font-weight: 600; color: #fff; display: flex; align-items: center; gap: 6px; }
+.location-title-small { font-size: 14px !important; font-weight: 600 !important; color: #fff !important; margin-bottom: 4px !important; line-height: 1.2 !important; }
+
 .block-text p { margin: 0; font-size: clamp(9px, 2vw, 11px); color: #888; line-height: 1.2; }
+.location-desc-small {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.4 !important;
+    color: #a0a0a0 !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+}
+
+.price-mini-block { display: flex; align-items: center; gap: 8px; padding-left: 2px; margin: 0; }
+.price-mt-2 { margin-top: 2px; }
+.price-mini-block i { font-size: 13px; color: #22c55e; }
+.price-mini-block span { font-size: 12px; font-weight: 600; color: #22c55e; line-height: 1; }
+.price-text-green { color: #22c55e; font-weight: 600; }
 
 /* =========================================
    CITY LIST STYLE

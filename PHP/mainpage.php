@@ -80,39 +80,39 @@ $nav_pic = $nav_user_data['profile_picture'];
             <div class="main-nav-discover"><i class="fa-regular fa-compass"></i><a href="discover.php">Discover</a></div>
             <div class="main-nav-event"><i class="fa-solid fa-ticket"></i><a href="mainpage.php">Event</a></div>
         </div>
-        <div class="right-nav" style="display: flex; align-items: center; gap: 15px; position: relative;">
-            <i class="fa-regular fa-bell" style="font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0a0a0'"></i>
+        <div class="right-nav">
+            <i class="fa-regular fa-bell nav-bell-icon" title="Notifications"></i>
             
-            <div id="profile-dropdown-trigger" style="cursor: pointer; position: relative;" title="<?= htmlspecialchars($nav_name) ?>">
+            <div id="profile-dropdown-trigger" class="profile-dropdown-trigger" title="<?= htmlspecialchars($nav_name) ?>">
                 <?php if(!empty($nav_pic)): ?>
-                    <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block;">
+                    <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" alt="Profile" class="profile-pic-small">
                 <?php else: ?>
-                    <div style="width: 36px; height: 36px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a;">
+                    <div class="profile-initial-small">
                         <?= $nav_initial ?>
                     </div>
                 <?php endif; ?>
             </div>
 
-            <div id="profile-dropdown-menu" style="display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden;">
+            <div id="profile-dropdown-menu" class="profile-dropdown-menu">
                 
-                <div style="padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px;">
+                <div class="dropdown-header">
                     <?php if(!empty($nav_pic)): ?>
-                        <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                        <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" class="profile-pic-large">
                     <?php else: ?>
-                        <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0;"><?= $nav_initial ?></div>
+                        <div class="profile-initial-large"><?= $nav_initial ?></div>
                     <?php endif; ?>
-                    <div style="overflow: hidden;">
-                        <h4 style="color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= htmlspecialchars($nav_name) ?></h4>
-                        <p style="color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px;"><?= $_SESSION['role'] ?></p>
+                    <div class="dropdown-user-info">
+                        <h4 class="dropdown-user-name"><?= htmlspecialchars($nav_name) ?></h4>
+                        <p class="dropdown-user-role"><?= $_SESSION['role'] ?></p>
                     </div>
                 </div>
 
-                <div style="padding: 8px;">
-                    <a href="settings.php" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s;" onmouseover="this.style.background='#222'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ccc';">
-                        <i class="fa-solid fa-gear" style="width: 16px; text-align: center;"></i> Settings
+                <div class="dropdown-menu-links">
+                    <a href="settings.php" class="dropdown-link">
+                        <i class="fa-solid fa-gear dropdown-link-icon"></i> Settings
                     </a>
-                    <a href="logout.php" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ef4444; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; margin-top: 4px;" onmouseover="this.style.background='rgba(239, 68, 68, 0.1)';" onmouseout="this.style.background='transparent';">
-                        <i class="fa-solid fa-arrow-right-from-bracket" style="width: 16px; text-align: center;"></i> Logout
+                    <a href="logout.php" class="dropdown-link logout-link">
+                        <i class="fa-solid fa-arrow-right-from-bracket dropdown-link-icon"></i> Logout
                     </a>
                 </div>
 
@@ -146,7 +146,7 @@ $nav_pic = $nav_user_data['profile_picture'];
                             </div>
                             <h3 class="card-title"><?= htmlspecialchars($ev['title']) ?></h3>
                             
-                            <div class="card-author" style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            <div class="card-author author-info-wrapper">
                                 <?php 
                                     // 1. Ambil Nama (Jika kosong di DB, tampilkan "Unknown Admin")
                                     $author_name = !empty($ev['author_name']) ? htmlspecialchars($ev['author_name']) : "Unknown Admin";
@@ -157,24 +157,26 @@ $nav_pic = $nav_user_data['profile_picture'];
                                     // 3. Tampilkan Foto atau Avatar Inisial Huruf
                                     if(!empty($ev['author_image'])): 
                                 ?>
-                                    <img src="../Media/uploads/<?= htmlspecialchars($ev['author_image']) ?>" alt="Author Profile" style="border-radius: 50%; object-fit: cover; width: 24px; height: 24px; background: #fff;">
+                                    <img src="../Media/uploads/<?= htmlspecialchars($ev['author_image']) ?>" alt="Author Profile" class="author-img-small">
                                 <?php else: ?>
-                                    <div style="width: 24px; height: 24px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;">
+                                    <div class="author-initial-small">
                                         <?= $initial ?>
                                     </div>
                                 <?php endif; ?>
                                 
-                                <span style="font-size: 13px; color: #a0a0a0;"><?= $author_name ?></span>
+                                <span class="author-name-text"><?= $author_name ?></span>
                             </div>
 
-                            <div class="card-info-blocks" style="align-items: flex-start; margin-top: 0;">
-                                <div class="info-block" style="align-items: flex-start; flex: 1; padding-right: 12px;">
-                                    <i class="block-icon fas fa-map-marker-alt" style="margin-top: 2px;"></i>
-                                    <div class="block-text" style="flex: 1; width: 100%;">
-                                        <h3 style="font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; line-height: 1.2;">
+                            <div class="card-info-blocks info-blocks-compact">
+                                <div class="info-block info-block-expanded">
+                                    <div class="block-icon icon-mt-2">
+                                        <i class="fas fa-location-dot"></i>
+                                    </div>
+                                    <div class="block-text text-flex-1">
+                                        <h3 class="location-title-small">
                                             <?= $ev['location_type'] == 'online' ? 'Online' : (!empty($ev['venue_name']) ? htmlspecialchars($ev['venue_name']) : 'Offline') ?>
                                         </h3>
-                                        <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: normal; overflow-wrap: anywhere; line-height: 1.4; color: #a0a0a0; font-size: 12px; margin: 0;">
+                                        <p class="location-desc-small">
                                             <?php 
                                                 if($ev['location_type'] == 'online') {
                                                     echo "Online Event / Virtual Meeting";
@@ -187,25 +189,25 @@ $nav_pic = $nav_user_data['profile_picture'];
                                     </div>
                                 </div>
                                 
-                                <div class="price-mini-block" style="background: none; border: none; padding: 0; margin-top: 2px;">
+                                <div class="price-mini-block-alt">
                                     <?php if($ev['ticket_status'] == 'need_approval'): ?>
-                                        <span style="color:#f97316; background:rgba(249,115,22,0.1); padding:6px 12px; border-radius:8px; font-weight:bold; font-size: 13px;">
-                                            <i class="fa-solid fa-clock-rotate-left" style="margin-right:4px;"></i> Pending
+                                        <span class="ticket-badge-pending">
+                                            <i class="fa-solid fa-clock-rotate-left badge-icon-mr"></i> Pending
                                         </span>
                                         
                                     <?php elseif($ev['ticket_status'] == 'awaiting_payment'): ?>
-                                        <span style="color:#ef4444; background:rgba(239,68,68,0.1); padding:6px 12px; border-radius:8px; font-weight:bold; font-size: 13px;">
-                                            <i class="fa-solid fa-wallet" style="margin-right:4px;"></i> Pay Now
+                                        <span class="ticket-badge-pay">
+                                            <i class="fa-solid fa-wallet badge-icon-mr"></i> Pay Now
                                         </span>
                                         
                                     <?php elseif($ev['ticket_status'] == 'checked_in'): ?>
-                                        <span style="color:#3b82f6; background:rgba(59,130,246,0.1); padding:6px 12px; border-radius:8px; font-weight:bold; font-size: 13px;">
-                                            <i class="fa-solid fa-expand" style="margin-right:4px;"></i> Scanned
+                                        <span class="ticket-badge-scanned">
+                                            <i class="fa-solid fa-expand badge-icon-mr"></i> Scanned
                                         </span>
                                         
                                     <?php else: ?>
-                                        <span style="color:#22c55e; background:rgba(34,197,94,0.1); padding:6px 12px; border-radius:8px; font-weight:bold; font-size: 13px;">
-                                            <i class="fa-solid fa-ticket-simple" style="margin-right:4px;"></i> E-Ticket Ready
+                                        <span class="ticket-badge-ready">
+                                            <i class="fa-solid fa-ticket-simple badge-icon-mr"></i> E-Ticket Ready
                                         </span>
                                     <?php endif; ?>
                                 </div>
@@ -223,7 +225,7 @@ $nav_pic = $nav_user_data['profile_picture'];
             <?php endif; ?>
         </div>
 
-        <div class="past-event" id="view-past" style="display: none;">
+        <div class="past-event hidden-display" id="view-past">
             <?php if(count($past_events) > 0): ?>
                 <?php foreach($past_events as $ev): ?>
                     <div class="timeline-row">
@@ -232,9 +234,9 @@ $nav_pic = $nav_user_data['profile_picture'];
                             <h3><?= getDayName($ev['start_date']) ?></h3>
                         </div>
                         <div class="right-info">
-                            <div class="past-event-card" style="flex-direction: row; justify-content: space-between; align-items: center; width: 100%;">
+                            <div class="past-event-card past-card-inner">
                                 
-                                <div class="left-past-card" style="flex: 1; padding-right: 20px;">
+                                <div class="left-past-card past-card-left-col">
                                     <div class="time-event">
                                         <span class="begin-time"><?= getTimeFormat($ev['start_time']) ?></span>
                                         <span>·</span>
@@ -248,22 +250,22 @@ $nav_pic = $nav_user_data['profile_picture'];
                                     
                                     <h2><?= htmlspecialchars($ev['title']) ?></h2>
                                     
-                                    <div class="author-past" style="display: flex; align-items: center; gap: 6px; margin-bottom: 10px;">
+                                    <div class="author-past past-author-wrapper">
                                         <?php 
                                             $author_name = !empty($ev['author_name']) ? htmlspecialchars($ev['author_name']) : "Unknown Admin";
                                             $initial = strtoupper(substr($author_name, 0, 1));
                                             
                                             if(!empty($ev['author_image'])): 
                                         ?>
-                                            <img src="../Media/uploads/<?= htmlspecialchars($ev['author_image']) ?>" alt="author-photo" style="border-radius: 50%; object-fit: cover; width: 20px; height: 20px; background: #fff;">
+                                            <img src="../Media/uploads/<?= htmlspecialchars($ev['author_image']) ?>" alt="author-photo" class="past-author-img">
                                         <?php else: ?>
-                                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">
+                                            <div class="past-author-initial">
                                                 <?= $initial ?>
                                             </div>
                                         <?php endif; ?>
                                         
-                                        <p style="font-size: 12px; color: #888;">By</p>
-                                        <p style="font-size: 12px; color: #ccc; font-weight: 600;"><?= $author_name ?></p>
+                                        <p class="past-author-by">By</p>
+                                        <p class="past-author-name"><?= $author_name ?></p>
                                     </div>
                                     
                                     <div class="past-location">
@@ -279,12 +281,12 @@ $nav_pic = $nav_user_data['profile_picture'];
                                         </p>
                                     </div>
                                     
-                                    <p class="status-past going" style="background: transparent; color: #a0a0a0; border: 1px solid #444; border-radius: 8px; width: fit-content; padding: 4px 12px; font-weight: bold; margin-top: 12px;">Ended</p>
+                                    <p class="status-past past-status-ended">Ended</p>
                                 </div>
 
-                                <div class="right-past-card" style="width: 180px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                                <div class="right-past-card past-card-right-col">
                                     <?php $img_path = !empty($ev['banner_image']) ? "../Media/uploads/" . htmlspecialchars($ev['banner_image']) : "../Media/09071799-7231-4faa-883e-a1eb2d01ef9b.avif"; ?>
-                                    <img src="<?= $img_path ?>" alt="pamflet event" style="width: 100%; height: auto; border-radius: 10px; object-fit: cover;">
+                                    <img src="<?= $img_path ?>" alt="pamflet event" class="past-card-img">
                                 </div>
                                 
                             </div>
@@ -315,27 +317,5 @@ $nav_pic = $nav_user_data['profile_picture'];
     </div>
     
     <script src="../JS/mainpage.js"></script>
-    <script>
-        // SCRIPT UNTUK DROPDOWN NAVBAR
-        document.addEventListener('DOMContentLoaded', function() {
-            const profileTrigger = document.getElementById('profile-dropdown-trigger');
-            const profileMenu = document.getElementById('profile-dropdown-menu');
-
-            if (profileTrigger && profileMenu) {
-                // Munculkan menu saat foto profil diklik
-                profileTrigger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
-                });
-
-                // Tutup menu otomatis jika user klik area kosong di layar
-                window.addEventListener('click', function(e) {
-                    if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
-                        profileMenu.style.display = 'none';
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>

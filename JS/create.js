@@ -111,11 +111,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 
                 if (selectedCategory !== "") {
                     categoryDisplay.value = selectedCategory;
-                    categoryDisplay.style.color = "#ffffff"; 
+                    categoryDisplay.classList.add("selected-text"); 
                     if(realCategoryInput) realCategoryInput.value = selectedCategory; 
                 } else {
                     categoryDisplay.value = "Select Category";
-                    categoryDisplay.style.color = "#a0a0a0"; 
+                    categoryDisplay.classList.remove("selected-text"); 
                     if(realCategoryInput) realCategoryInput.value = "";
                 }
                 categoryDropdown.classList.remove("show"); 
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     const newRow = document.createElement("div");
                     newRow.className = "ticket-tier-row";
                     newRow.innerHTML = `
-                        <input type="text" name="tier_name[]" class="tier-name custom-input" value="VIP" readonly required style="color: #eab308; font-weight: bold; cursor: not-allowed; border-color: rgba(234, 179, 8, 0.3);">
+                        <input type="text" name="tier_name[]" class="tier-name custom-input readonly-vip" value="VIP" readonly required>
                         <input type="number" name="tier_price[]" class="tier-price custom-input" placeholder="Price (Rp)" required>
                         <i class="fa-solid fa-trash-can remove-tier-btn" title="Remove"></i>
                     `;
@@ -202,7 +202,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (!selectedTypeRadio) return;
                 
                 if (selectedTypeRadio.value === "Free") {
-                    if(ticketDisplay) { ticketDisplay.value = "Free"; ticketDisplay.style.color = "#22c55e"; }
+                    if(ticketDisplay) { 
+                        ticketDisplay.value = "Free"; 
+                        ticketDisplay.classList.remove("selected-text"); 
+                        ticketDisplay.style.color = "#22c55e"; 
+                    }
                 } else {
                     const priceInputs = ticketTiersContainer ? ticketTiersContainer.querySelectorAll(".tier-price") : [];
                     let prices = [];
@@ -216,10 +220,12 @@ document.addEventListener("DOMContentLoaded", function() {
                             const minPrice = Math.min(...prices);
                             const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(minPrice);
                             ticketDisplay.value = (prices.length > 1) ? `${formattedPrice} (Start From)` : formattedPrice;
-                            ticketDisplay.style.color = "#ffffff";
+                            ticketDisplay.style.color = ""; // hapus warna inline jika ada
+                            ticketDisplay.classList.add("selected-text");
                         } else {
                             ticketDisplay.value = "Paid (Set Price)";
-                            ticketDisplay.style.color = "#a0a0a0";
+                            ticketDisplay.style.color = "";
+                            ticketDisplay.classList.remove("selected-text");
                         }
                     }
                 }
@@ -274,7 +280,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (!selectedTypeRadio) return; 
                 
                 if (selectedTypeRadio.value === "Unlimited") {
-                    if(capacityDisplay) { capacityDisplay.value = "Unlimited"; capacityDisplay.style.color = "#a0a0a0"; }
+                    if(capacityDisplay) { 
+                        capacityDisplay.value = "Unlimited"; 
+                        capacityDisplay.classList.remove("selected-text"); 
+                    }
                 } else {
                     const amount = capAmountInput ? capAmountInput.value : "";
                     const seatTypeRadio = document.querySelector('input[name="seat_type"]:checked');
@@ -283,10 +292,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (capacityDisplay) {
                         if (amount && amount > 0) {
                             capacityDisplay.value = `${amount} Seats (${seatText})`;
-                            capacityDisplay.style.color = "#ffffff";
+                            capacityDisplay.classList.add("selected-text");
                         } else {
                             capacityDisplay.value = `Limited (${seatText})`; 
-                            capacityDisplay.style.color = "#a0a0a0";
+                            capacityDisplay.classList.remove("selected-text");
                         }
                     }
                 }
@@ -351,16 +360,37 @@ document.addEventListener("DOMContentLoaded", function() {
                 
                 if (questionCount > 0) {
                     questionDisplay.value = `${questionCount} Custom Questions`;
-                    questionDisplay.style.color = "#ffffff";
+                    questionDisplay.classList.add("selected-text");
                 } else {
                     questionDisplay.value = "Profile Info Only";
-                    questionDisplay.style.color = "#a0a0a0"; 
+                    questionDisplay.classList.remove("selected-text"); 
                 }
                 
                 questionDropdown.classList.remove("show"); 
                 document.body.classList.remove("no-scroll"); 
             });
         }
+    }
+
+    // ==========================================
+    // 9. DROPDOWN NAVBAR PROFILE
+    // ==========================================
+    const profileTrigger = document.getElementById('profile-dropdown-trigger');
+    const profileMenu = document.getElementById('profile-dropdown-menu');
+
+    if (profileTrigger && profileMenu) {
+        // Munculkan menu saat foto profil diklik
+        profileTrigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Tutup menu otomatis jika user klik area kosong di layar
+        window.addEventListener('click', function(e) {
+            if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
+                profileMenu.style.display = 'none';
+            }
+        });
     }
 
 }); // AKHIR DARI DOMContentLoaded

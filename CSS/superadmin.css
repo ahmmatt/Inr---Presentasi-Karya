@@ -22,15 +22,9 @@
 
 body {
     background-color: #050505; 
-    
-    /* MENGGABUNGKAN 2 GRADIEN (Tumpukan) */
     background-image: 
-        /* Tumpukan 1 (Paling Atas): Cahaya dari atap memudar ke transparan di ketinggian 25% layar */
         linear-gradient(to bottom, rgba(30, 40, 55, 0.6) 0%, transparent 25%),
-        
-        /* Tumpukan 2 (Dasar): Gradien radial asli Anda (Tengah ke ujung) */
         radial-gradient(ellipse at center, #050505 30%, #131722 100%);
-    
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
@@ -40,33 +34,22 @@ body {
 }
 
 body::-webkit-scrollbar { display: none; }
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-ul {
-    list-style: none;
-}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
 
 /* =========================================
    2. NAVBAR STYLING (DINAMIS)
    ========================================= */
 .navbar {
-    /* 1. Membuat Navbar Menempel di Atas */
     position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px; /* Tinggi fix diperlukan agar layout stabil */
+    height: 60px;
     z-index: 1000;
-    /* Background transparan murni dan tanpa garis bawah */
     background-color: transparent; 
     border-bottom: 1px solid transparent; 
-    /* PENTING: Efek transisi agar perubahan blur-nya halus (smooth) */
     transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
-    /* Layout */
     display: grid;
     grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
     align-items: center;
@@ -74,44 +57,17 @@ ul {
     box-sizing: border-box;
 }
 
-/* B. KONDISI SCROLLED (Saat di-scroll) */
 .navbar.scrolled {
-    /* UBAH: Menggunakan warna RGB dari #131722 dengan transparansi 60% */
     background-color: rgba(19, 23, 34, 0.6); 
-    
-    /* Efek Kaca (Blur) */
-    backdrop-filter: blur(16px); /* Tingkatkan blur sedikit agar lebih halus */
+    backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);  
-    
-    /* Garis bawah yang sangat tipis dan elegan */
     border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
-    
-    /* Tambahan efek bayangan (shadow) halus untuk memisahkan navbar dan konten */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Navbar Items */
 .left-nav { grid-column: 1; justify-self: start; }
 .left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
-
-.main-nav {
-    grid-column: 2; 
-    justify-self: start; 
-    margin-left: 14px;
-    display: flex;
-    gap: 30px;
-}
-.main-nav div {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-.main-nav div:hover { color: var(--text-primary); }
+.superadmin-label { color: var(--accent-orange); font-size: 12px; }
 
 .right-nav {
     grid-column: 3; 
@@ -120,8 +76,8 @@ ul {
     align-items: center;
     gap: 20px;
 }
-.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; }
-.right-nav img { width: 32px; height: 32px; border-radius: 50%; background-color: #333; display: block; }
+.logout-text { color: #fff; font-size: 14px; font-weight: 500; }
+.logout-text:hover { color: #ef4444 }
 
 /* =========================================
    3. PAGE FRAME & HEADER
@@ -143,17 +99,131 @@ ul {
 .page-frame-nav h1 { font-size: 32px; font-weight: 700; margin: 0;}
 .page-frame-nav p { color: var(--text-secondary); font-size: 14px; margin: 0;}
 
-.admin-card { background: rgba(16, 23, 33, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 30px; margin-bottom: 30px; backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+/* =========================================
+   4. CARDS & ROWS
+   ========================================= */
+.admin-card { 
+    background: rgba(16, 23, 33, 0.4); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 16px; 
+    padding: 30px; 
+    margin-bottom: 30px; 
+    backdrop-filter: blur(10px); 
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); 
+}
+
 .admin-card h2 { color: #fff; margin-bottom: 20px; font-size: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
-.data-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+
+.data-row { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 16px 0; 
+    border-bottom: 1px dashed rgba(255,255,255,0.05); 
+}
+
 .info h4 { color: #fff; font-size: 16px; margin-bottom: 4px; }
 .info p { color: var(--text-secondary); font-size: 13px; }
-.btn-action { padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; font-size: 13px;}
+
+/* Specific Utility Helpers */
+.mb-8-grey { margin-bottom: 8px; color: #888; font-size: 12px; }
+.flex-gap-8 { display: flex; gap: 8px; }
+.title-icon-blue { color: #3b82f6; margin-right: 8px; }
+.title-icon-green { color: var(--accent-green); margin-right: 8px; }
+.title-icon-orange { color: #f97316; margin-right: 8px; }
+.empty-text { color: #888; font-style: italic; }
+.centered-empty-text { color: #888; font-style: italic; text-align: center; padding: 20px; }
+.net-revenue { color: var(--accent-green); font-weight: bold; font-size: 16px; }
+.net-label { color:#666; font-weight:normal; font-size:12px; }
+.manage-acc-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 20px; }
+.no-border-m0 { border: none !important; margin: 0 !important; padding: 0 !important; }
+.user-id-text { font-size:11px; color:#f97316; margin-top:2px; }
+
+/* Badges */
+.role-badge-admin { background:#f97316; padding:2px 8px; border-radius:4px; font-size:10px; color:#fff; margin-left:6px; }
+.role-badge-user { background:#333; padding:2px 8px; border-radius:4px; font-size:10px; color:#aaa; margin-left:6px; }
+
+/* =========================================
+   5. BUTTONS & ACTIONS
+   ========================================= */
+.btn-action { 
+    padding: 8px 16px; 
+    border-radius: 8px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    border: none; 
+    font-size: 13px; 
+    color: white; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 6px;
+    transition: 0.2s;
+}
+
 .btn-green { background: var(--accent-green); color: black; }
 .btn-blue { background: #3b82f6; color: white; }
-.btn-red { background: transparent; color: #ef4444; border: 1px solid #ef4444; }
+.btn-red { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
 .btn-red:hover { background: #ef4444; color: white; }
 
+.filter-group { display: flex; background: #0a0a0a; padding: 4px; border-radius: 8px; border: 1px solid #333; }
+.filter-btn { text-decoration: none; color: #888; font-size: 12px; font-weight: 600; padding: 6px 16px; border-radius: 6px; transition: all 0.3s ease; }
+.filter-btn:hover { color: #fff; }
+.filter-btn.active { background: #333; color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+
+/* =========================================
+   6. MODALS (APPLE / GLASS STYLE)
+   ========================================= */
+.modal-overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); 
+    z-index: 2000; display: none; justify-content: center; align-items: center; 
+}
+.modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+
+.modal-box { 
+    background: #121212; 
+    border: 1px solid #333; 
+    border-radius: 20px; 
+    padding: 40px 30px; 
+    width: 90%; 
+    max-width: 480px; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8); 
+    text-align: center; 
+    color: #fff; 
+    position: relative; 
+}
+
+.modal-close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #666; cursor: pointer; transition: color 0.2s, transform 0.2s; }
+.modal-close-btn:hover { color: #fff; transform: rotate(90deg); }
+
+.icon-success { font-size: 60px; color: #22c55e; margin-bottom: 20px; animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; }
+.modal-subtext { color:#ccc; font-size:14px; margin-bottom: 5px; }
+
+.status-msg-success { color:#22c55e; font-size:13px; font-weight:bold; margin-bottom: 20px; }
+.status-msg-error { color:#ef4444; font-size:13px; font-weight:bold; margin-bottom: 20px; }
+
+.cred-box { background: #1a1a1a; border: 1px dashed #444; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: left; }
+.cred-item { margin-bottom: 8px; font-size: 13px; color: #aaa; }
+.cred-val { color: #fff; font-weight: bold; font-family: monospace; font-size: 15px; margin-left: 5px; letter-spacing: 0.5px;}
+.val-username { color: #f97316; font-size: 16px; } 
+
+.footer-note { font-size:11px; color:#666; }
+
+/* Edit Modal Specifics */
+.text-left { text-align: left !important; }
+.mb-20 { margin-bottom: 20px; }
+.edit-group { text-align: left; margin-bottom: 15px; }
+.edit-group label { display: block; font-size: 12px; color: #aaa; margin-bottom: 5px; }
+.edit-input { width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #333; color: #fff; border-radius: 6px; outline: none; }
+.edit-input:focus { border-color: #22c55e; }
+.form-note { color: #666; font-size: 11px; }
+.full-width-p12-mt10 { width: 100%; padding: 12px; margin-top: 10px; }
+
+/* Social Icons */
+.social-link { font-size: 18px; margin-right: 12px; transition: transform 0.2s; text-decoration: none; display: inline-block; }
+.social-link:hover { transform: scale(1.2); }
+.icon-ig { color: #E1306C; }
+.icon-tiktok { color: #00f2ea; text-shadow: 2px 2px 0px #ff0050; }
 
 /* =========================================
    7. FOOTER
@@ -162,3 +232,7 @@ hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
 .page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
 .left-footer, .right-footer { display: flex; gap: 20px; }
 .right-footer a:hover { color: var(--text-primary); }
+
+/* Animations */
+@keyframes bounceIn { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

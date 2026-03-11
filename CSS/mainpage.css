@@ -71,12 +71,37 @@ ul { list-style: none; }
 .main-nav div { display: flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
 .main-nav div:hover { color: #ffffff; }
 
-.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 20px; }
-.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; }
-.right-nav img { width: 32px; height: 32px; border-radius: 50%; background-color: #333; display: block; }
+.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 15px; position: relative; }
 
 /* =========================================
-   3. PAGE FRAME & TAB HEADER
+   3. NAVBAR PROFILE & NOTIFICATIONS
+   ========================================= */
+.nav-bell-icon { font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s; }
+.nav-bell-icon:hover { color: #fff; }
+
+.profile-dropdown-trigger { cursor: pointer; position: relative; }
+.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block; }
+.profile-initial-small { width: 36px; height: 36px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a; }
+
+.profile-dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; }
+
+.dropdown-header { padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px; }
+.profile-pic-large { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.profile-initial-large { width: 40px; height: 40px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; }
+
+.dropdown-user-info { overflow: hidden; }
+.dropdown-user-name { color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dropdown-user-role { color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px; }
+
+.dropdown-menu-links { padding: 8px; }
+.dropdown-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; }
+.dropdown-link:hover { background-color: #222; color: #fff; }
+.dropdown-link-icon { width: 16px; text-align: center; }
+.logout-link { color: #ef4444; margin-top: 4px; }
+.logout-link:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+/* =========================================
+   4. PAGE FRAME & TAB HEADER
    ========================================= */
 .page-frame { max-width: var(--content-width); margin: 40px auto; padding: 0 var(--content-padding); }
 .page-frame-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
@@ -88,7 +113,7 @@ ul { list-style: none; }
 .toggle-select-event a:hover { color: var(--text-primary); }
 
 /* =========================================
-   4. UPCOMING EVENT (EMPTY STATE)
+   5. UPCOMING EVENT & CARD STYLE
    ========================================= */
 .upcoming-event { display: flex; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; gap: 20px; padding: 20px 0; }
 
@@ -103,8 +128,25 @@ ul { list-style: none; }
 
 .card-divider { border: 0; border-top: 1px solid #2a2a2a; margin: 0 0 16px 0; width: 100%; }
 
-.card-hero-img { width: 70%; margin-left: auto; margin-right: auto; display: block; overflow: hidden; border-radius: 8px; margin-bottom: 16px; margin-top: 10px; }
-.card-hero-img img { width: 100%; height: 100%; object-fit: cover; }
+.card-hero-img { 
+    width: 70%; 
+    aspect-ratio: 3 / 4; /* Mengunci rasio poster statis 3:4 */
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block; 
+    overflow: hidden; 
+    border-radius: 8px; 
+    margin-bottom: 16px; 
+    margin-top: 10px; 
+    background-color: #1a1a1a; /* Background dasar saat proses loading */
+}
+
+.card-hero-img img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; /* Mencegah gambar menjadi gepeng */
+    object-position: center; /* Fokus potongan selalu di tengah */
+}
 
 .card-title { font-size: clamp(16px, 5vw, 18px); font-weight: 700; color: #ffffff; text-align: left; margin-bottom: 10px; line-height: 1.3;width: 100%; }
 
@@ -113,79 +155,68 @@ ul { list-style: none; }
 .card-author span { font-size: clamp(11px, 3vw, 13px); font-weight: 500; color: #e0e0e0; white-space: nowrap; }
 .card-author i { font-size: 10px; color: #666; }
 
+/* Sub-classes for Author */
+.author-info-wrapper { margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.author-img-small { 
+    border-radius: 50% !important; 
+    object-fit: cover !important; 
+    width: 28px !important; 
+    height: 28px !important; 
+    background: #fff; 
+    flex-shrink: 0;
+}
+.author-initial-small { width: 28px; height: 28px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold; flex-shrink: 0; }
+.author-name-text { font-size: 14px; font-weight: 500; color: #a0a0a0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 /* Container untuk Info (Lokasi & Harga) */
 .card-info-blocks { 
     display: flex; 
     flex-direction: column; 
-    gap: 14px; /* UBAH: Memberikan jarak nyata antar elemen agar tidak bertumpuk */
-    margin-top: 12px; /* Jarak yang pas dari profil author */
+    gap: 14px; 
+    margin-top: 12px; 
 }
+.info-blocks-compact { align-items: flex-start; margin-top: 0; }
 
-/* Wadah Harga Tiket (Sekarang punya ruang sendiri) */
-.event-card-detail .price-mini-block { 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    /* UBAH: Menghapus margin negatif yang menyebabkan overlap! */
-    margin: 0; 
-    padding-left: 2px;
-}
-
-.event-card-detail .price-mini-block i { 
-    font-size: 14px; 
-    color: #22c55e; 
-}
-
-.event-card-detail .price-mini-block span { 
-    font-size: 13px; 
-    font-weight: 600; 
-    color: #22c55e; 
-    line-height: 1; 
-}/* Container untuk Info (Lokasi & Harga) */
-.card-info-blocks { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 14px; /* UBAH: Memberikan jarak nyata antar elemen agar tidak bertumpuk */
-    margin-top: 12px; /* Jarak yang pas dari profil author */
-}
-
-/* Wadah Harga Tiket (Sekarang punya ruang sendiri) */
-.event-card-detail .price-mini-block { 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    /* UBAH: Menghapus margin negatif yang menyebabkan overlap! */
-    margin: 0; 
-    padding-left: 2px;
-}
-
-.event-card-detail .price-mini-block i { 
-    font-size: 14px; 
-    color: #22c55e; 
-}
-
-.event-card-detail .price-mini-block span { 
-    font-size: 13px; 
-    font-weight: 600; 
-    color: #22c55e; 
-    line-height: 1; 
-}
-
+/* Info Block Location */
 .info-block { display: flex; gap: 12px; align-items: center; }
+.info-block-expanded { align-items: flex-start; flex: 1; padding-right: 12px; }
 
-/* PERBAIKAN: Menghapus !important */
+/* PERBAIKAN: Styling Kotak Ikon Lokasi yang Rapi */
 .event-card-detail .block-icon {
     width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;
-    background-color: #1a1a1a; border: 1px solid #333; border-radius: 8px; font-size: 22px; color: #838383; flex-shrink: 0; margin: 0;
+    background-color: #1a1a1a; border: 1px solid #333; border-radius: 8px; flex-shrink: 0; margin: 0;
 }
+.event-card-detail .block-icon i {
+    font-size: 16px; color: #838383;
+}
+.icon-mt-2 { margin-top: 2px; }
+
+.block-text { display: flex; flex-direction: column; }
+.text-flex-1 { flex: 1; width: 100%; }
 
 .block-text h3 { margin: 0 0 2px 0; font-size: clamp(13px, 4vw, 15px); font-weight: 600; color: #fff; display: flex; align-items: center; gap: 6px; }
+.location-title-small { font-size: 14px !important; font-weight: 600 !important; color: #fff !important; margin-bottom: 4px !important; line-height: 1.2 !important; }
+
 .block-text p { margin: 0; font-size: clamp(11px, 3.5vw, 13px); color: #888; line-height: 1.2; }
+.location-desc-small { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: normal; overflow-wrap: anywhere; line-height: 1.4 !important; color: #a0a0a0 !important; font-size: 12px !important; margin: 0 !important; }
+
+/* Ticket/Price Status Block */
+.price-mini-block-alt { background: none; border: none; padding: 0; margin-top: 2px; }
+
+/* Status Badges */
+.ticket-badge-pending { color:#f97316; background:rgba(249,115,22,0.1); padding:6px 12px; border-radius:8px; font-weight:bold; font-size: 13px; display: inline-block; }
+.ticket-badge-pay { color:#ef4444; background:rgba(239,68,68,0.1); padding:6px 12px; border-radius:8px; font-weight:bold; font-size: 13px; display: inline-block; }
+.ticket-badge-scanned { color:#3b82f6; background:rgba(59,130,246,0.1); padding:6px 12px; border-radius:8px; font-weight:bold; font-size: 13px; display: inline-block; }
+.ticket-badge-ready { color:#22c55e; background:rgba(34,197,94,0.1); padding:6px 12px; border-radius:8px; font-weight:bold; font-size: 13px; display: inline-block; }
+.badge-icon-mr { margin-right: 4px; }
+
 
 /* =========================================
-   5. PAST EVENT (LIST VIEW)
+   6. PAST EVENT (LIST VIEW)
    ========================================= */
-.past-event { display: none; flex-direction: column; gap: 30px; margin-bottom: 30px; }
+.past-event { display: flex; flex-direction: column; gap: 30px; margin-bottom: 30px; }
+.hidden-display { display: none !important; }
+
 .timeline-row { display: flex; flex-direction: row; gap: 20px; width: 100%; }
 
 .past-event .timeline-row:last-child .left-info::before { height: 24px !important; }
@@ -198,24 +229,32 @@ ul { list-style: none; }
 
 .right-info { flex-grow: 1; background-color: #121212; border: 1px solid #2a2a2a; border-radius: 12px; overflow: hidden; display: flex; justify-content: space-between; transition: background-color 0.2s; }
 .past-event-card { padding: 24px; display: flex; flex-direction: column; justify-content: center; flex: 1; }
+.past-card-inner { flex-direction: row !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; }
+
 .left-past-card { display: flex; flex-direction: column; gap: 12px; }
+.past-card-left-col { flex: 1; padding-right: 20px; }
 
 .time-event { display: flex; gap: 5px; font-size: 13px; color: #f97316; font-weight: 500; }
 .time-event .begin-time{ color: #bbbbbb; }
 .past-event-card h2 { font-size: 18px; line-height: 1.4; font-weight: 600; margin: 8px 0; }
 
 .author-past { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
-.author-past img { width: 20px; height: 20px; border-radius: 50%; }
+.past-author-wrapper { gap: 6px !important; margin-bottom: 10px !important; }
+.past-author-img { border-radius: 50%; object-fit: cover; width: 20px; height: 20px; background: #fff; }
+.past-author-initial { width: 20px; height: 20px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; }
+.past-author-by { font-size: 12px; color: #888; }
+.past-author-name { font-size: 12px; color: #ccc; font-weight: 600; }
 
 .past-location { font-size: 13px; color: #666; display: flex; align-items: center; gap: 6px; }
 
-/* PERBAIKAN: Sistem pewarnaan status yang benar (Dapat diubah via class HTML) */
 .status-past { display: inline-block; margin-top: 12px; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; width: fit-content; color: #fff; }
+.past-status-ended { background: transparent !important; color: #a0a0a0 !important; border: 1px solid #444 !important; border-radius: 8px !important; }
 .status-past.pending { background-color: var(--accent-orange); }
 .status-past.going { background-color: var(--accent-green); }
 
-.right-past-card { width: 180px; position: relative; display: flex; height: auto; }
-.right-past-card img { align-self: center; width: 85%; height: 80%; object-fit: cover; display: block; border-radius: 10px;  }
+.right-past-card { position: relative; display: flex; height: auto; }
+.past-card-right-col { width: 180px; flex-shrink: 0; align-items: center; justify-content: center; }
+.past-card-img { width: 100% !important; height: auto !important; border-radius: 10px !important; object-fit: cover !important; display: block; align-self: center; }
 
 /* =========================================
    HOVER EFFECTS (Hanya aktif di perangkat dengan mouse)
@@ -227,7 +266,6 @@ ul { list-style: none; }
     .block-text h3:hover { text-decoration: underline; cursor: pointer; }
 }
 
-
 /* Desain Empty State persis seperti gambar Anda */
 .empty-state { text-align: center; color: #a0a0a0; padding: 60px 20px; width: 100%; display: flex; flex-direction: column; align-items: center; }
 .empty-state i { font-size: 32px; margin-bottom: 12px; color: #444; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; }
@@ -235,7 +273,7 @@ ul { list-style: none; }
 .empty-state p { font-size: 13px; color: #888; }
 
 /* =========================================
-   6. FOOTER
+   7. FOOTER
    ========================================= */
 hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
 .page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }

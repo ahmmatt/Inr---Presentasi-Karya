@@ -112,4 +112,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ==========================================
+    // 3. DROPDOWN NAVBAR PROFILE
+    // ==========================================
+    const profileTrigger = document.getElementById('profile-dropdown-trigger');
+    const profileMenu = document.getElementById('profile-dropdown-menu');
+
+    if (profileTrigger && profileMenu) {
+        // Munculkan menu saat foto profil diklik
+        profileTrigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Tutup menu otomatis jika user klik area kosong di layar
+        window.addEventListener('click', function(e) {
+            if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
+                profileMenu.style.display = 'none';
+            }
+        });
+    }
+
 });

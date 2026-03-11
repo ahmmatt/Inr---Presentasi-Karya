@@ -8,23 +8,20 @@
     --text-secondary: #a0a0a0;
     --accent-orange: #f97316; 
     --accent-green: #22c55e;  
+    --accent-blue: #3b82f6;
     --border-color: #2a2a2a;
-    --content-width: 800px; /* Dipersempit khusus settings agar rapi di tengah */
+    --content-width: 800px;
     --edge-spacing: 40px;
     --content-padding: 20px;
 }
+
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
 body {
     background-color: #050505; 
-    
-    /* MENGGABUNGKAN 2 GRADIEN (Tumpukan) */
     background-image: 
-        /* Tumpukan 1 (Paling Atas): Cahaya dari atap memudar ke transparan di ketinggian 25% layar */
         linear-gradient(to bottom, rgba(30, 40, 55, 0.6) 0%, transparent 25%),
-        
-        /* Tumpukan 2 (Dasar): Gradien radial asli Anda (Tengah ke ujung) */
         radial-gradient(ellipse at center, #050505 30%, #131722 100%);
-    
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
@@ -33,378 +30,142 @@ body {
     padding-top: 80px; 
 }
 
-body::-webkit-scrollbar {
-    display: none;
-}
-
+body::-webkit-scrollbar { display: none; }
 a { text-decoration: none; color: inherit; }
 
-/* NAVBAR & FOOTER (Standar) */
+/* NAVBAR & FOOTER */
 .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 1000; background-color: transparent; transition: 0.4s; display: grid; grid-template-columns: 1fr minmax(auto, 1000px) 1fr; align-items: center; padding: 0 var(--edge-spacing); }
 .navbar.scrolled { background-color: rgba(19, 23, 34, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
 .left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
 .main-nav { display: flex; gap: 30px; margin-left: 14px; }
 .main-nav div { display: flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 14px; font-weight: 500; cursor: pointer; }
 .main-nav div:hover { color: #ffffff; }
-.right-nav { justify-self: end; display: flex; align-items: center; gap: 20px; color:#fff; }
-.right-nav img { width: 32px; height: 32px; border-radius: 50%; }
+.right-nav { justify-self: end; display: flex; align-items: center; gap: 20px; color:#fff; position: relative; }
 
+/* NAVBAR PROFILE COMPONENTS */
+.nav-bell-icon { font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s; }
+.nav-bell-icon:hover { color: #fff; }
+.profile-dropdown-trigger { cursor: pointer; position: relative; }
+.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block; }
+.profile-initial-small { width: 36px; height: 36px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a; }
+.profile-dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; }
+.dropdown-header { padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px; }
+.profile-pic-large { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.profile-initial-large { width: 40px; height: 40px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; }
+.dropdown-user-info { overflow: hidden; }
+.dropdown-user-name { color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dropdown-user-role { color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px; }
+.dropdown-menu-links { padding: 8px; }
+.dropdown-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; }
+.dropdown-link:hover { background-color: #222; color: #fff; }
+.dropdown-link-icon { width: 16px; text-align: center; }
+.logout-link { color: #ef4444; margin-top: 4px; }
+.logout-link:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+/* PAGE FRAME */
 .page-frame { max-width: var(--content-width); margin: 0 auto; padding: 0 var(--content-padding); width: 100%; }
 hr { border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 40px 0; width: 100%; }
 .page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }
 .right-footer { display: flex; gap: 20px; }
 
-/* =========================================
-   2. SETTINGS HEADER & TABS
-   ========================================= */
-.page-frame-nav h1 { font-size: 32px; font-weight: 700; margin-bottom: 24px; }
+/* ALERTS */
+.alert-box { padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.alert-success { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
+.alert-error { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
 
+/* SETTINGS CONTENT */
+.page-frame-nav h1 { font-size: 32px; font-weight: 700; margin-bottom: 24px; }
 .toggle-select-settings { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px; }
 .tab-link { padding: 12px 0; font-size: 15px; font-weight: 500; color: var(--text-secondary); border-bottom: 2px solid transparent; transition: 0.2s; }
 .tab-link:hover { color: #fff; }
 .tab-link.active { color: #fff; border-bottom-color: var(--text-primary); }
 
-/* =========================================
-   3. SETTINGS SECTIONS & FORMS
-   ========================================= */
+.settings-section.hidden { display: none; }
+.settings-section.active { display: block; }
+
 .section-block { margin-bottom: 20px; }
 .section-block h2 { font-size: 20px; font-weight: 600; color: #fff; margin-bottom: 4px; }
 .section-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
 
-/* Menghilangkan margin bawah agar ikon dan teks sejajar sempurna di tengah */
-.layout-header .section-desc {
-    margin-bottom: 0;
-}
-
-/* Layout Profile (Foto Kiri, Input Kanan) */
 .profile-wrapper { display: flex; gap: 30px; align-items: flex-start; margin-bottom: 24px; }
-
-/* Profile Picture Upload */
 .img-container { position: relative; width: 80px; height: 80px; border-radius: 50%; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-.img-container img { width: 100%; height: 100%; object-fit: cover; }
+.preview-image-style { width: 100%; height: 100%; object-fit: cover; }
+.profile-initial-preview { width: 100%; height: 100%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 700; }
 .upload-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; color: #fff; font-size: 20px; opacity: 0; cursor: pointer; transition: 0.2s; }
 .img-container:hover .upload-overlay { opacity: 1; }
 
-/* Inputs */
 .name-input { flex: 1; display: flex; gap: 20px; }
 .input-group { flex: 1; display: flex; flex-direction: column; gap: 8px; }
 .input-group span { font-size: 13px; color: #a0a0a0; font-weight: 500; }
-.input-group input { background: transparent; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 14px; font-size: 14px; color: #fff; outline: none; transition: 0.2s; }
-.input-group input:focus { border-color: #fff; }
+.custom-input { background: transparent; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 14px; font-size: 14px; color: #fff; outline: none; transition: 0.2s; }
+.custom-input:focus { border-color: #fff; }
 
-/* Header dengan Tombol Kanan (Email / Phone) */
 .layout-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.layout-header .section-desc { margin-bottom: 0; }
 
-/* Display Cards (Email, Phone) */
 .display-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 20px; }
 .card-atas { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
 .card-atas h3 { font-size: 16px; font-weight: 600; color: #fff; margin:0;}
 .badge-primary { background: rgba(255,255,255,0.1); color: #e0e0e0; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; }
 .display-card p { font-size: 13px; color: #888; margin:0; }
 
-/* Password Section Khusus */
 .pass-info { display: flex; align-items: center; gap: 16px; }
 .icon-circle { width: 44px; height: 44px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 18px; color: #a0a0a0; }
 
-/* =========================================
-   4. BUTTONS & TOGGLES
-   ========================================= */
-.btn-primary { background: #fff; color: #000; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
-.btn-primary:hover { background: #e0e0e0; }
-
-.btn-secondary { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s; }
-.btn-secondary:hover { background: rgba(255,255,255,0.1); }
-
-.btn-add { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
-.btn-add:hover { background: rgba(255,255,255,0.05); }
-
-.btn-danger { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
-.btn-danger:hover { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); }
-
-/* Switch Toggle Apple Style */
 .appearance-card { display: flex; justify-content: space-between; align-items: center; }
 .appearance-card h3 { font-size: 16px; color: #fff; margin-bottom: 4px; }
+
+/* BUTTONS */
+.btn-primary { background: #fff; color: #000; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+.btn-primary:hover { background: #e0e0e0; }
+.btn-secondary { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s; }
+.btn-add { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
+.btn-danger { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+.btn-danger:hover { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); }
+.mt-16 { margin-top: 16px; }
+
+/* TOGGLE */
 .switch-btn { width: 44px; height: 24px; background-color: #444; border-radius: 12px; border: none; position: relative; cursor: pointer; transition: 0.3s; }
 .switch-btn::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background-color: #fff; border-radius: 50%; transition: 0.3s; }
 .switch-btn.active { background-color: var(--accent-green); }
 .switch-btn.active::after { transform: translateX(20px); }
 
-
-/* =========================================
-   6. MODAL POP-UPS (APPLE/IOS STYLE)
-   ========================================= */
-.modal-overlay {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    /* Latar belakang hanya digelapkan tanpa efek blur */
-    background: rgba(0, 0, 0, 0.7); 
-    z-index: 9998;
-}
-.modal-overlay.show { display: block; }
-
-.edit-modal {
-    display: none; flex-direction: column; gap: 16px;
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 400px; max-width: 90vw; padding: 32px 24px;
-    
-    /* Card dibuat agak transparan dengan efek kaca (blur pada card, bukan background) */
-    background-color: rgba(18, 18, 18, 0.85); 
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    
-    border: 1px solid rgba(255,255,255,0.08); 
-    border-radius: 20px; 
-    z-index: 9999; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-}
+/* MODALS */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9998; }
+.modal-overlay.show { display: block; backdrop-filter: blur(5px); }
+.edit-modal { display: none; flex-direction: column; gap: 16px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; max-width: 90vw; padding: 32px 24px; background-color: rgba(18, 18, 18, 0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; z-index: 9999; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); }
 .edit-modal.show { display: flex; }
+.modal-close-icon { position: absolute; right: 20px; top: 20px; background: transparent; border: none; color: #888; font-size: 20px; cursor: pointer; }
+.modal-header-intro { margin-bottom: 20px; text-align: center; }
+.modal-header-icon { font-size: 30px; margin-bottom: 10px; }
+.icon-blue { color: var(--accent-blue); }
+.icon-orange { color: var(--accent-orange); }
+.edit-form-group { margin-bottom: 20px; text-align: left; }
+.edit-form-group label { display: block; color: #ccc; font-size: 12px; margin-bottom: 8px; }
+.modal-input { width: 100%; padding: 12px; background: #0a0a0a; border: 1px solid #333; color: #fff; border-radius: 8px; }
+.modal-actions { display: flex; gap: 10px; }
+.btn-cancel { flex: 1; padding: 12px; background: #333; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.btn-confirm-green { flex: 1; padding: 12px; background: var(--accent-green); color: #000; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; }
 
-/* =========================================
-   GAYA BARU MODAL (RATA KIRI + TOMBOL X)
-   ========================================= */
-/* Tombol Silang (X) di Kanan Atas */
-.modal-close-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: transparent;
-    border: none;
-    color: #888;
-    font-size: 20px;
-    cursor: pointer;
-    transition: 0.2s;
-    padding: 4px; /* Area klik yang lebih luas */
-}
-.modal-close-icon:hover {
-    color: #fff;
-    transform: scale(1.1);
-}
+.mb-15 { margin-bottom: 15px; }
+.mb-20 { margin-bottom: 20px; }
+.hidden { display: none; }
 
-/* Modal Header (Rata Kiri) */
-.modal-header-intro { 
-    text-align: left; /* Mengubah dari center ke kiri */
-    margin-bottom: 16px; 
-    padding-right: 24px; /* Memberi ruang agar teks tidak menabrak tombol X */
-}
-.modal-header-icon {
-    width: 48px; /* Disesuaikan agar pas dengan gambar referensi */
-    height: 48px; 
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 50%; 
-    display: flex; justify-content: center; align-items: center;
-    font-size: 20px; color: #fff; 
-    margin: 0 0 16px 0; /* Mengubah dari '0 auto 16px auto' agar mentok ke kiri */
-}
-.edit-modal h2 { font-size: 22px; font-weight: 600; color: #fff; margin: 0 0 8px 0; }
-.edit-modal p { font-size: 13.5px; color: #a0a0a0; margin: 0; line-height: 1.5; }
-
-/* Modal Inputs */
-.edit-form-group { display: flex; flex-direction: column; gap: 8px; text-align: left; }
-.edit-form-group label { font-size: 12px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
-.custom-input {
-    background-color: transparent; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px;
-    padding: 14px; font-size: 14px; color: var(--text-primary); outline: none; width: 100%; transition: 0.2s;
-}
-.custom-input:focus { border-color: var(--text-primary); }
-
-/* Modal Buttons */
-.modal-actions { display: flex; gap: 12px; margin-top: 16px; }
-.btn-cancel {
-    flex: 1; background: transparent; color: var(--text-primary); border: 1px solid rgba(255,255,255,0.15);
-    padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition:0.2s;
-}
-.btn-cancel:hover { background: rgba(255,255,255,0.05); }
-
-.btn-confirm {
-    flex: 1; background: var(--text-primary); color: var(--bg-body); border: none;
-    padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition:0.2s;
-}
-.btn-confirm:hover { opacity: 0.8; }
-
-/* KODE TAMBAHAN AGAR MODAL BEKERJA DI LIGHT MODE */
-body.light-mode .edit-modal { 
-    /* Card menjadi putih transparan seperti kaca es di Light Mode */
-    background-color: rgba(255, 255, 255, 0.85); 
-    border-color: rgba(0,0,0,0.08); 
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); 
-}
-body.light-mode .modal-header-icon { color: var(--text-primary); border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.02); }
-body.light-mode .custom-input { border-color: rgba(0,0,0,0.15); }
-body.light-mode .btn-cancel { border-color: rgba(0,0,0,0.15); }
-body.light-mode .btn-cancel:hover { background: rgba(0,0,0,0.05); }
-
-/* =========================================
-   5. LIGHT MODE THEME OVERRIDES
-   ========================================= */
+/* LIGHT MODE OVERRIDES */
 body.light-mode {
-    --bg-body: #f1f5f9; /* Sedikit lebih abu-abu agar kontras dengan card putih lebih tegas */
-    --bg-card: #ffffff;
+    --bg-body: #f1f5f9;
     --text-primary: #0f172a; 
     --text-secondary: #64748b; 
-    --border-color: #cbd5e1; 
-    
-    background-color: var(--bg-body);
-    
-    /* Gradien dibuat lebih tegas (tidak terlalu pudar/lembut) */
-    background-image: 
-        /* Cahaya putih dari atas sekarang lebih transparan dan berhenti lebih cepat (30%) */
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, transparent 30%),
-        
-        /* Gradien radial dasar disesuaikan agar transisinya lebih natural */
-        radial-gradient(ellipse at center, #f8fafc 0%, #e2e8f0 90%);
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, transparent 30%), radial-gradient(ellipse at center, #f8fafc 0%, #e2e8f0 90%);
 }
+body.light-mode .display-card { background: #fff; border-color: rgba(0,0,0,0.1); }
+body.light-mode .custom-input { background: #fff; color: #000; border-color: rgba(0,0,0,0.2); }
+body.light-mode .btn-primary { background: #0f172a; color: #fff; }
+body.light-mode .edit-modal { background-color: rgba(255, 255, 255, 0.9); border-color: rgba(0,0,0,0.1); }
+body.light-mode .modal-input { background: #fff; color: #000; border-color: rgba(0,0,0,0.1); }
 
-/* --- Penyesuaian Elemen Spesifik untuk Light Mode --- */
-body.light-mode .section-block h2, 
-body.light-mode .page-frame-nav h1,
-body.light-mode .card-atas h3,
-body.light-mode .appearance-card h3,
-body.light-mode .left-nav h1 {
-    color: var(--text-primary);
-}
-
-body.light-mode .tab-link.active {
-    color: var(--text-primary);
-    border-bottom-color: var(--text-primary);
-}
-
-body.light-mode .navbar.scrolled {
-    /* Mengurangi kepekatan warna putih (dari 0.85 menjadi 0.4) agar lebih tembus pandang */
-    background-color: rgba(255, 255, 255, 0.4); 
-    
-    /* Mengurangi intensitas blur agar tidak terlihat terlalu padat/tebal */
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px);
-    
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-body.light-mode .main-nav div:hover {
-    color: var(--text-primary);
-}
-
-body.light-mode .right-nav {
-    color: var(--text-primary);
-}
-
-/* Form & Input */
-body.light-mode .input-group input {
-    color: var(--text-primary);
-    border-color: rgba(0, 0, 0, 0.15);
-}
-body.light-mode .input-group input:focus {
-    border-color: var(--text-primary);
-}
-
-/* Card & Backgrounds */
-body.light-mode .display-card {
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-}
-body.light-mode .badge-primary {
-    background: rgba(0, 0, 0, 0.08);
-    color: #333;
-}
-body.light-mode .icon-circle {
-    background: rgba(0, 0, 0, 0.05);
-    color: var(--text-secondary);
-}
-
-/* Buttons */
-body.light-mode .btn-primary {
-    background: #0f172a; /* Tombol utama jadi gelap */
-    color: #fff;
-}
-body.light-mode .btn-primary:hover {
-    background: #334155;
-}
-body.light-mode .btn-secondary,
-body.light-mode .btn-add {
-    color: var(--text-primary);
-    border-color: rgba(0, 0, 0, 0.15);
-}
-body.light-mode .btn-secondary:hover,
-body.light-mode .btn-add:hover {
-    background: rgba(0, 0, 0, 0.05);
-}
-
-/* Toggle Switch Background di Light Mode */
-body.light-mode .switch-btn {
-    background-color: #cbd5e1;
-}
-body.light-mode .switch-btn.active {
-    background-color: var(--accent-green);
-}
-
-body.light-mode .modal-close-icon { color: #a0a0a0; }
-body.light-mode .modal-close-icon:hover { color: #333; }
-
-
-/* =========================================
-   PERBAIKAN VISUAL LIGHT MODE (FIXES)
-   ========================================= */
-
-/* 1. Fix Garis Pembatas (HR) agar terlihat */
-body.light-mode hr {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-/* 2. Fix Teks Deskripsi di setiap Card agar tidak putih/hilang */
-body.light-mode .section-desc,
-body.light-mode .display-card p,
-body.light-mode .pass-info p {
-    color: var(--text-secondary);
-}
-
-/* 3. Fix Border Foto Profil agar tegas */
-body.light-mode .img-container {
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    background-color: #ffffff; /* Memastikan background foto tidak transparan */
-}
-
-/* 4. Fix Label dan Kotak Input Nama */
-body.light-mode .input-group span {
-    color: var(--text-secondary);
-    font-weight: 600;
-}
-body.light-mode .input-group input {
-    background-color: #ffffff; /* Latar input jadi putih solid */
-    border: 1px solid rgba(0, 0, 0, 0.2); /* Garis batas abu-abu tegas */
-    color: var(--text-primary);
-}
-body.light-mode .input-group input:focus {
-    border-color: var(--text-primary);
-}
-
-/* 5. Fix Tombol Delete Account agar merahnya terlihat di background terang */
-body.light-mode .btn-danger {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: #dc2626; /* Merah gelap yang tegas */
-    border: 1px solid rgba(239, 68, 68, 0.3);
-}
-body.light-mode .btn-danger:hover {
-    background-color: rgba(239, 68, 68, 0.2);
-}
-
-/* 6. Fix Warna Teks di dalam Modal Pop-up saat Light Mode */
-body.light-mode .edit-modal h2 {
-    color: var(--text-primary); /* Mengubah judul menjadi hitam/gelap */
-}
-
-body.light-mode .edit-modal p {
-    color: var(--text-secondary); /* Mengubah deskripsi menjadi abu-abu gelap */
-}
-
-/* Fix warna teks input yang sedang diketik di dalam modal */
-body.light-mode .custom-input {
-    color: var(--text-primary);
-    background-color: #ffffff; /* Memastikan input box putih bersih */
-}
-
-/* Mobile Responsive */
 @media (max-width: 600px) {
     .profile-wrapper { flex-direction: column; align-items: center; }
     .name-input { flex-direction: column; width: 100%; }
     .layout-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-    .pass-layout { flex-direction: column; align-items: flex-start; }
 }

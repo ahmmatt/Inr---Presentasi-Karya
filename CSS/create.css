@@ -56,19 +56,15 @@ ul {
    2. NAVBAR STYLING (DINAMIS)
    ========================================= */
 .navbar {
-    /* 1. Membuat Navbar Menempel di Atas */
     position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px; /* Tinggi fix diperlukan agar layout stabil */
+    height: 60px;
     z-index: 1000;
-    /* Background transparan murni dan tanpa garis bawah */
     background-color: transparent; 
     border-bottom: 1px solid transparent; 
-    /* PENTING: Efek transisi agar perubahan blur-nya halus (smooth) */
     transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
-    /* Layout */
     display: grid;
     grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
     align-items: center;
@@ -76,23 +72,14 @@ ul {
     box-sizing: border-box;
 }
 
-/* B. KONDISI SCROLLED (Saat di-scroll) */
 .navbar.scrolled {
-    /* UBAH: Menggunakan warna RGB dari #131722 dengan transparansi 60% */
     background-color: rgba(19, 23, 34, 0.6); 
-    
-    /* Efek Kaca (Blur) */
-    backdrop-filter: blur(16px); /* Tingkatkan blur sedikit agar lebih halus */
+    backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);  
-    
-    /* Garis bawah yang sangat tipis dan elegan */
     border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
-    
-    /* Tambahan efek bayangan (shadow) halus untuk memisahkan navbar dan konten */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Navbar Items */
 .left-nav { grid-column: 1; justify-self: start; }
 .left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
 
@@ -120,13 +107,40 @@ ul {
     justify-self: end; 
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
+    position: relative;
 }
 .right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; }
-.right-nav img { width: 32px; height: 32px; border-radius: 50%; background-color: #333; display: block; }
 
 /* =========================================
-   3. PAGE FRAME & HEADER
+   3. NAVBAR PROFILE & NOTIFICATIONS
+   ========================================= */
+.nav-bell-icon { font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s; }
+.nav-bell-icon:hover { color: #fff; }
+
+.profile-dropdown-trigger { cursor: pointer; position: relative; }
+.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block; }
+.profile-initial-small { width: 36px; height: 36px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a; }
+
+.profile-dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; }
+
+.dropdown-header { padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px; }
+.profile-pic-large { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.profile-initial-large { width: 40px; height: 40px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; }
+
+.dropdown-user-info { overflow: hidden; }
+.dropdown-user-name { color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dropdown-user-role { color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px; }
+
+.dropdown-menu-links { padding: 8px; }
+.dropdown-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; }
+.dropdown-link:hover { background-color: #222; color: #fff; }
+.dropdown-link-icon { width: 16px; text-align: center; }
+.logout-link { color: #ef4444; margin-top: 4px; }
+.logout-link:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+/* =========================================
+   4. PAGE FRAME & HEADER
    ========================================= */
 .page-frame {
     max-width: var(--content-width);
@@ -146,7 +160,7 @@ ul {
 .page-frame-nav p { color: var(--text-secondary); font-size: 14px; margin: 0;}
 
 /* =========================================
-   4. LAYOUT CREATE EVENT (2 KOLOM)
+   5. LAYOUT CREATE EVENT (2 KOLOM)
    ========================================= */
 .create-wrapper-layout {
     display: grid;
@@ -157,7 +171,7 @@ ul {
 }
 
 /* =========================================
-   5. KOLOM KIRI (GAMBAR & LOKASI)
+   6. KOLOM KIRI (GAMBAR & LOKASI)
    ========================================= */
 .left-layout {
     display: flex;
@@ -165,11 +179,10 @@ ul {
     gap: 20px;
 }
 
-/* A. Kotak Upload Gambar */
 .add-pict-card {
     background-color: rgba(255, 255, 255, 0.03); 
     border-radius: 16px;
-    aspect-ratio: 1 / 1; /* Persegi */
+    aspect-ratio: 1 / 1; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -187,14 +200,12 @@ ul {
     z-index: 2; 
 }
 
-/* =========================================
-   HOVER EFFECT UNTUK ICON UPLOAD GAMBAR
-   ========================================= */
-/* Ketika area kartu upload gambar disorot mouse */
+.image-preview { display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 16px; position: absolute; top: 0; left: 0; z-index: 1; }
+
 .add-pict-card:hover .pict-action-select {
-    background-color: #2a2a2a; /* Background berubah jadi gelap */
-    color: #ffffff;            /* Ikon berubah jadi putih */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Opsional: Menambah sedikit efek timbul */
+    background-color: #2a2a2a; 
+    color: #ffffff;            
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
 }
 .pict-action-select {
     background-color: #ffffff;
@@ -210,12 +221,9 @@ ul {
     bottom: 20px;
     right: 20px;
     z-index: 1;
-    
-    /* TAMBAHKAN BARIS INI: Agar perubahan warna halus */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* B. Dropdown Lokasi */
 .add-loc-wrapper {
     display: flex;
     flex-direction: column;
@@ -238,17 +246,19 @@ ul {
 .right-loc-card p { font-size: 12px; color: #a0a0a0; margin: 0; }
 .loc-arrow { position: absolute; right: 20px; color: #a0a0a0; transition: transform 0.3s ease; }
 
-/* Area Opsi Lokasi (Tersembunyi) */
 .loc-options {
     display: none; 
     flex-direction: column;
     gap: 12px;
     background-color: rgba(255, 255, 255, 0.03);
     padding: 16px;
+    padding-top: 16px;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 .loc-options.show { display: flex; }
+
+.loc-section-title { color: #fff; font-size: 14px; margin-bottom: 8px; font-weight: bold; }
 
 .loc-btn {
     background-color: #2a2a2a;
@@ -266,7 +276,7 @@ ul {
 }
 .loc-btn:hover { background-color: #333; }
 
-.loc-divider { text-align: center; position: relative; color: #666; font-size: 12px; }
+.loc-divider { text-align: center; position: relative; color: #666; font-size: 12px; margin: 16px 0; }
 .loc-divider::before, .loc-divider::after {
     content: ""; position: absolute; top: 50%; width: 40%; height: 1px; background-color: rgba(255, 255, 255, 0.1);
 }
@@ -285,17 +295,35 @@ ul {
 .virtual-link-input i { color: #888; }
 .virtual-link-input input { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-size: 14px; }
 
+.city-select { 
+    background: transparent; 
+    border: none; 
+    outline: none; 
+    color: #fff; 
+    width: 100%; 
+    font-family: inherit; 
+    font-size: 14px; 
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 14px;
+    padding-right: 20px;
+}
+.city-select option { background-color: #121212; color: #ffffff; }
+
 /* =========================================
    3D EVENT SPACE CARD
    ========================================= */
-/* Styling Judul "Optional" */
 .left-section-title {
     font-size: 14px;
     color: #ffffff;
-    margin: 10px 0 -10px 0; /* Jarak agar tidak terlalu jauh dengan card-nya */
+    margin: 10px 0 -10px 0; 
 }
 
-/* Kotak 3D Space */
 .space-3d-card {
     background-color: rgba(255, 255, 255, 0.05); 
     padding: 16px;
@@ -306,7 +334,6 @@ ul {
     position: relative;
     cursor: pointer;
     transition: background-color 0.2s;
-    /* Memberikan garis putus-putus agar mirip kotak upload file */
     border: 1px dashed rgba(255, 255, 255, 0.1); 
 }
 
@@ -314,7 +341,6 @@ ul {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Memanipulasi input file agar transparan dan menutupi kotak */
 .space-3d-card form,
 .space-3d-card input[type="file"] {
     position: absolute;
@@ -322,12 +348,11 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0; /* Dibuat tidak terlihat (transparan) */
+    opacity: 0; 
     cursor: pointer;
-    z-index: 2; /* Berada paling atas agar bisa diklik */
+    z-index: 2; 
 }
 
-/* Mengatur teks dan ikon 3D */
 .space-3d-info {
     display: flex;
     align-items: center;
@@ -352,14 +377,13 @@ ul {
     margin: 0;
 }
 
-/* Ikon panah upload di kanan */
 .upload-icon {
     color: #666;
     font-size: 14px;
 }
 
 /* =========================================
-   6. KOLOM KANAN (DETAIL EVENT)
+   7. KOLOM KANAN (DETAIL EVENT)
    ========================================= */
 .right-layout {
     display: flex;
@@ -367,30 +391,25 @@ ul {
     gap: 20px;
 }
 
-/* =========================================
-   DROPDOWN PUBLIC / PRIVATE
-   ========================================= */
-/* Wrapper utama (sebagai jangkar/jangkar untuk absolute dropdown) */
 .visibility-wrapper {
-    align-self: flex-end; /* Memposisikan seluruh wrapper ini di pojok kanan */
-    position: relative;   /* PENTING: Menjadi patokan letak dropdown (absolute) nanti */
-    z-index: 50;          /* Agar dropdown selalu di atas elemen lain */
-    display: inline-block; /* Lebar hanya sebesar isinya */
+    align-self: flex-end; 
+    position: relative;   
+    z-index: 50;          
+    display: inline-block; 
 }
 
-/* Badge Public/Private (Tombol yang diklik) */
 .event-type {
     background-color: rgba(255, 255, 255, 0.08);
     padding: 8px 16px;
     border-radius: 20px;
-    display: flex;        /* Ubah jadi flex agar ikon & teks di tengah */
+    display: flex;        
     align-items: center;
     gap: 8px;
     font-size: 13px;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.2s;
-    user-select: none;    /* Mencegah teks ter-highlight saat diklik dua kali */
+    user-select: none;    
 }
 
 .event-type:hover {
@@ -402,30 +421,25 @@ ul {
     font-weight: 500;
 }
 
-/* Kotak Pilihan Dropdown yang Melayang */
 .visibility-dropdown {
-    display: none;        /* Sembunyi dari awal */
+    display: none;        
     flex-direction: column;
-    
-    position: absolute;   /* Melayang keluar dari arus dokumen normal */
-    top: calc(100% + 8px);/* Posisinya pas di bawah tombol + jarak 8px */
-    right: 0;             /* Rata kanan dengan tombolnya */
-    
+    position: absolute;   
+    top: calc(100% + 8px);
+    right: 0;             
     background-color: #1a1a1a;
     border: 1px solid #333;
     border-radius: 12px;
     overflow: hidden;
-    min-width: 140px;     /* Lebar minimal agar teks 'Private' tidak terpotong */
+    min-width: 140px;     
     box-shadow: 0 8px 24px rgba(0,0,0,0.5);
 }
 
-/* Munculkan (timpa display:none) jika ada class .show dari JavaScript */
 .visibility-dropdown.show {
     display: flex !important;
     flex-direction: column !important;
 }
 
-/* Item dalam Dropdown */
 .visibility-option {
     padding: 12px 16px;
     display: flex;
@@ -440,9 +454,7 @@ ul {
 .visibility-option:hover {
     background-color: #333;
 }
-/* =========================================
-   PERBAIKAN INPUT JUDUL EVENT
-   ========================================= */
+
 .event-name {
     width: 100%;
     margin-bottom: 10px;
@@ -454,7 +466,6 @@ ul {
 
 .event-name input {
     width: 100%;
-    /* Paksa hilangkan style bawaan browser */
     background-color: transparent !important; 
     border: none !important;
     outline: none !important;
@@ -468,7 +479,7 @@ ul {
     color: #555 !important; 
     font-weight: 770;
 }
-/* Global Card Style */
+
 .card-box {
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
@@ -476,14 +487,12 @@ ul {
     border: 1px solid rgba(255, 255, 255, 0.03); 
 }
 
-/* Wrapper Schedule & Timezone */
 .time-loc-wrapper {
     display: flex;
     gap: 20px;
     width: 100%;
 }
 
-/* Grid Matrix untuk Schedule */
 .schedule-wrapper {
     flex: 2; 
     display: grid;
@@ -498,6 +507,7 @@ ul {
 .start-text, .end-text { display: flex; align-items: center; gap: 8px; }
 .start-text h4, .end-text h4 { margin: 0; font-weight: 500; }
 .line-of-circle { margin-left: 3px; height: 100%; border-left: 1px dashed #444; }
+.dot-icon { font-size: 8px; }
 
 .start-date-time-card-left { grid-area: start-date; }
 .start-date-time-card-right { grid-area: start-time; }
@@ -523,7 +533,6 @@ ul {
 }
 .schedule-wrapper input::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
 
-/* Timezone Card */
 .time-area {
     flex: 1; 
     display: flex;
@@ -536,7 +545,6 @@ ul {
 .time-area h4 { color: #fff; margin: 0; font-size: 14px;}
 .time-area p { margin: 0; font-size: 12px;}
 
-/* Description Card */
 .desc-wrapper {
     display: flex;
     align-items: center;
@@ -553,68 +561,61 @@ ul {
     font-size: 14px;
 }
 
-/* Event Options Card */
 /* =========================================
-   GAYA INPUT DATALIST (KATEGORI)
+   8. EVENT OPTIONS COMPONENT
    ========================================= */
-.category-wrapper {
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center;
-}
-
-/* Memastikan datalist input memiliki background gelap yang sama */
-input[list] {
-    background-color: #121212 !important;
-    border: 1px solid #333 !important;
-    color: #fff !important;
-}
-
-input[list]:focus {
-    border-color: #555 !important;
-}
-
-/* Memperbaiki panah bawaan datalist pada browser Chrome/Edge */
-input::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    opacity: 0.5;
-    cursor: pointer;
-}
-input::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
-}   
 .right-layout > h4 { font-size: 14px; color: #ffffff; margin: 10px 0 -5px 0; }
 .event-options-wrapper { display: flex; flex-direction: column; gap: 16px; }
-.ticket-wrapper, .approval-wrapper, .capacity-wrapper { display: flex; justify-content: space-between; align-items: center; }
 .event-options-wrapper hr { border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 0; }
 
-.ticket-wrapper-left, .approval-wrapper-left, .capacity-wrapper-left {
-    display: flex; align-items: center; gap: 12px; color: #a0a0a0;
-}
-.ticket-wrapper-left h3, .approval-wrapper-left h3, .capacity-wrapper-left h3 {
-    margin: 0; font-size: 14px; font-weight: 500; color: #e0e0e0;
+.wrapper-relative { position: relative; }
+.category-wrapper, .ticket-wrapper, .approval-wrapper, .capacity-wrapper, .question-wrapper { 
+    display: flex; justify-content: space-between; align-items: center; 
 }
 
-.ticket-wrapper-right, .capacity-wrapper-right { display: flex; align-items: center; gap: 8px; color: #a0a0a0; }
-.ticket-wrapper-right input, .capacity-wrapper-right input {
-    background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px;
-}
+.options-left-label { display: flex; align-items: center; gap: 12px; color: #a0a0a0; }
+.options-left-label h3 { margin: 0; font-size: 14px; font-weight: 500; color: #e0e0e0; }
 
-/* =========================================
-   GAYA UNTUK BARIS CUSTOM QUESTIONS
-   ========================================= */
+.options-right-trigger { cursor: pointer; display: flex; gap: 8px; align-items: center; color: #a0a0a0; }
+
+.right-display-input { cursor: pointer; background: transparent; border: none; outline: none; color: #a0a0a0; text-align: right; font-size: 14px; pointer-events: none; }
+.input-140 { width: 140px; }
+.input-160 { width: 160px; }
+.input-170 { width: 170px; }
+.edit-pen-icon { font-size: 12px; color: #a0a0a0; }
+
+.hidden-by-default { display: none; }
+
+/* Custom utility classes */
+.mb-8 { margin-bottom: 8px; }
+.mt-10 { margin-top: 10px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.full-width { width: 100%; }
+
+/* Input Dropdowns */
+input[list] { background-color: #121212 !important; border: 1px solid #333 !important; color: #fff !important; }
+input[list]:focus { border-color: #555 !important; }
+input::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; cursor: pointer; }
+input::-webkit-calendar-picker-indicator:hover { opacity: 1; }   
+
+.category-other-input { display: none; margin-top: 8px; }
+
+/* Registration Form Options */
+.questions-container-box { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.questions-label { font-size: 14px; color: #b0b0b0; margin-bottom: 4px; display: block; }
+
 .question-row {
     display: flex;
     align-items: center;
     gap: 8px;
     width: 100%;
-    margin-bottom: 10px; /* Tambahkan jarak antar pertanyaan */
+    margin-bottom: 10px; 
 }
 
-/* KUNCI: Menyamakan desain dengan input tiket/kapasitas */
 .question-row .custom-input {
-    flex: 1; /* Memakan sisa ruang */
-    background-color: #121212 !important; /* Paksa warna background gelap */
+    flex: 1; 
+    background-color: #121212 !important; 
     border: 1px solid #333 !important;
     border-radius: 8px;
     padding: 12px 14px;
@@ -628,26 +629,22 @@ input::-webkit-calendar-picker-indicator:hover {
     border-color: #555 !important;
 }
 
-/* =========================================
-   PERBAIKAN POSISI IKON SAMPAH DI CUSTOM QUESTIONS
-   ========================================= */
 .remove-question-btn {
     color: #ef4444;
     cursor: pointer;
     font-size: 14px;
     transition: 0.2s all ease;
-    flex-shrink: 0; /* Agar kotak tidak mengecil */
-    width: 32px;    /* Lebar pasti */
-    height: 32px;   /* Tinggi pasti */
+    flex-shrink: 0; 
+    width: 32px;    
+    height: 32px;  
     
-    /* KUNCI PERBAIKAN: Paksa ke tengah dengan !important */
-    display: flex;
-    align-items: center !important;     /* Paksa tengah vertikal */
-    justify-content: center !important; /* Paksa tengah horizontal */
+    display: inline-block !important; 
+    text-align: center !important;    
+    line-height: 32px !important;     
     
     border-radius: 6px;
-    margin: 0;  /* Pastikan tidak ada margin luar yang mengganggu */
-    padding: 0; /* Pastikan tidak ada padding dalam yang mengganggu */
+    margin: 0;  
+    padding: 0; 
 }
 
 .remove-question-btn:hover {
@@ -655,9 +652,7 @@ input::-webkit-calendar-picker-indicator:hover {
     background-color: rgba(239, 68, 68, 0.15);
     transform: scale(1.05);
 }
-/* =========================================
-   GAYA HEADER PENGANTAR (SESUAI GAMBAR REFERENSI)
-   ========================================= */
+
 .modal-header-intro {
     display: flex;
     flex-direction: column;
@@ -694,21 +689,15 @@ input::-webkit-calendar-picker-indicator:hover {
     line-height: 1.5;
 }
 
-/* =========================================
-   SCROLL BEHAVIOR UNTUK MODAL / CARD
-   ========================================= */
-/* Kunci background agar tidak bisa di-scroll */
 body.no-scroll {
     overflow: hidden !important;
 }
 
-/* Buat bagian dalam modal bisa di-scroll jika isinya panjang */
 .ticket-dropdown, .capacity-dropdown {
-    max-height: 90vh !important; /* Maksimal tinggi 90% dari layar */
-    overflow-y: auto !important; /* Munculkan scrollbar vertikal otomatis */
+    max-height: 90vh !important; 
+    overflow-y: auto !important; 
 }
 
-/* Mempercantik tampilan Scrollbar di dalam modal (Khusus Chrome/Safari/Edge) */
 .ticket-dropdown::-webkit-scrollbar, 
 .capacity-dropdown::-webkit-scrollbar {
     width: 6px;
@@ -727,9 +716,6 @@ body.no-scroll {
     background-color: #666;
 }
 
-/* =========================================
-   DROPDOWN TICKET PRICE (HARGA TIKET)
-   ========================================= */
 .ticket-dropdown {
     display: none; 
     flex-direction: column;
@@ -741,20 +727,12 @@ body.no-scroll {
     width: 460px;  
     max-width: 90vw; 
     padding: 30px; 
-    
-    /* --- UPDATE UNTUK EFEK LEBIH PEKAT --- */
-    /* 1. Warna hitam dibuat lebih pekat (0.85 atau 85%) */
     background-color: rgba(18, 18, 18, 0.85); 
-    
-    /* 2. Efek blur ditingkatkan (32px) agar lebih buram */
     backdrop-filter: blur(32px);
     -webkit-backdrop-filter: blur(32px);
-    
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     z-index: 9999; 
-    
-    /* Shadow dibuat sedikit lebih tegas */
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 25px 60px rgba(0, 0, 0, 0.6);
 }
 
@@ -791,8 +769,8 @@ body.no-scroll {
     background-color: #121212;
     border: 1px solid #333;
     border-radius: 8px;
-    padding: 12px 14px; /* Sebelumnya 10px 12px */
-    font-size: 15px;    /* Sebelumnya 13px atau 14px */
+    padding: 12px 14px; 
+    font-size: 15px;    
     color: #fff;
     outline: none;
     width: 100%;
@@ -803,56 +781,42 @@ body.no-scroll {
     border-color: #555;
 }
 
-
-/* =========================================
-   GAYA UNTUK TICKET CATEGORIES (TIERS) - PERBAIKAN
-   ========================================= */
 .ticket-tiers-wrapper {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-top: 4px;
-    width: 100%; /* Pastikan wrapper tidak melebihi modal */
+    width: 100%; 
 }
+.section-sub-label { font-size: 12px; color: #a0a0a0; margin-bottom: 6px; display: block; }
 
 .ticket-tier-row {
     display: flex;
     align-items: center;
-    gap: 8px; /* Jarak antar elemen */
+    gap: 8px; 
     margin-bottom: 10px;
-    width: 100%; /* Baris mengambil lebar penuh yang tersedia */
-    box-sizing: border-box; /* Agar padding tidak menambah lebar total */
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
-/* Memanfaatkan desain input yang sudah ada */
 .ticket-tier-row .custom-input {
     background-color: #121212;
     border: 1px solid #333;
     border-radius: 8px;
-    padding: 12px 14px; /* Sebelumnya 10px 12px */
-    font-size: 15px;    /* Sebelumnya 13px atau 14px */
+    padding: 12px 14px; 
+    font-size: 15px;    
     color: #fff;
     outline: none;
     transition: border-color 0.2s;
-    /* PERBAIKAN PENTING: agar input tidak meledak keluar */
     min-width: 0; 
 }
+.readonly-input { color: #a0a0a0; }
+.readonly-vip { color: #eab308 !important; font-weight: bold !important; cursor: not-allowed; border-color: rgba(234, 179, 8, 0.3) !important; }
 
-.ticket-tier-row .custom-input:focus {
-    border-color: #555;
-}
-
-/* Proporsi panjang inputan */
-/* flex: X 1 0 berarti: ambil porsi X, boleh mengecil (shrink: 1), basis 0 */
+.ticket-tier-row .custom-input:focus { border-color: #555; }
 .ticket-tier-row .tier-name { flex: 3 1 0; } 
 .ticket-tier-row .tier-price { flex: 2 1 0; }
 
-/* =========================================
-   PERBAIKAN POSISI IKON TONG SAMPAH (FLEXBOX MURNI)
-   ========================================= */
-/* =========================================
-   PERBAIKAN POSISI IKON TONG SAMPAH TIKET
-   ========================================= */
 .remove-tier-btn {
     color: #ef4444; 
     cursor: pointer;
@@ -861,12 +825,9 @@ body.no-scroll {
     flex-shrink: 0;       
     width: 32px;          
     height: 32px;         
-    
-    /* KUNCI PERBAIKAN: Hapus !important pada display agar JS bisa menyembunyikannya */
     display: flex; 
     align-items: center !important;      
     justify-content: center !important;  
-    
     border-radius: 6px;   
     margin: 0;            
     padding: 0; 
@@ -878,13 +839,12 @@ body.no-scroll {
     transform: scale(1.05); 
 }
 
-/* Tombol Tambah Kategori Baru */
 .add-tier-btn {
     background: rgba(255, 255, 255, 0.05);
-    color: #22c55e; /* Hijau */
+    color: #22c55e; 
     border: 1px dashed rgba(34, 197, 94, 0.5);
-    padding: 12px;      /* Sebelumnya 10px */
-    font-size: 14px;    /* Sebelumnya 13px */
+    padding: 12px;      
+    font-size: 14px;    
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
@@ -898,24 +858,18 @@ body.no-scroll {
     border-color: #22c55e;
 }
 
-/* =========================================
-   MENGHILANGKAN PANAH PADA INPUT NUMBER (FORCE)
-   ========================================= */
-/* Untuk Chrome, Safari, Edge, Opera */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none !important;
     margin: 0 !important;
 }
 
-/* Untuk Firefox */
 input[type="number"] {
     -moz-appearance: textfield !important;
 }
 
-/* Styling Khusus Dropdown Select agar terlihat elegan di mode gelap */
 .custom-select {
-    appearance: none; /* Hilangkan panah bawaan browser */
+    appearance: none; 
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 12px center;
@@ -928,11 +882,9 @@ input[type="number"] {
     color: #fff;
 }
 
-/* Layout Tombol Aksi */
 .ticket-actions {
     display: flex;
     gap: 10px;
-    margin-top: 16px;
 }
 
 .cancel-btn {
@@ -945,7 +897,7 @@ input[type="number"] {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
-    flex: 1; /* Lebar seimbang */
+    flex: 1; 
 }
 
 .cancel-btn:hover {
@@ -954,19 +906,16 @@ input[type="number"] {
 }
 
 .ticket-actions .apply-btn {
-    flex: 1; /* Lebar seimbang */
+    flex: 1; 
 }
 
-/* =========================================
-   TOMBOL CLOSE (X) PADA MODAL CREATE EVENT
-   ========================================= */
 .close-modal {
     position: absolute;
-    top: 24px;       /* Sebelumnya 20px */
-    right: 24px;     /* Sebelumnya 20px */
+    top: 24px;       
+    right: 24px;     
     color: #888;
     cursor: pointer;
-    font-size: 22px; /* Sebelumnya 18px */
+    font-size: 22px; 
     transition: color 0.2s ease;
     z-index: 10;
 }
@@ -975,7 +924,6 @@ input[type="number"] {
     color: #ffffff; 
 }
 
-/* Switch Toggle (Require Approval) */
 .approval-wrapper-right button {
     width: 44px; height: 24px; background-color: #fff; border-radius: 12px; border: none; position: relative; cursor: pointer;
 }
@@ -983,9 +931,6 @@ input[type="number"] {
     content: ''; position: absolute; top: 2px; right: 2px; width: 20px; height: 20px; background-color: #1a1a1a; border-radius: 50%;
 }
 
-/* =========================================
-   DROPDOWN PENGATURAN KAPASITAS
-   ========================================= */
 .capacity-dropdown {
     display: none; 
     flex-direction: column;
@@ -997,28 +942,18 @@ input[type="number"] {
     width: 460px;  
     max-width: 90vw; 
     padding: 30px; 
-    
-    /* --- UPDATE UNTUK EFEK LEBIH PEKAT --- */
-    /* 1. Warna hitam dibuat lebih pekat (0.85 atau 85%) */
     background-color: rgba(18, 18, 18, 0.85); 
-    
-    /* 2. Efek blur ditingkatkan (32px) agar lebih buram */
     backdrop-filter: blur(32px);
     -webkit-backdrop-filter: blur(32px);
-    
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     z-index: 9999; 
-    
-    /* Shadow dibuat sedikit lebih tegas */
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 25px 60px rgba(0, 0, 0, 0.6);
 }
-/* Munculkan jika ada class .show */
 .capacity-dropdown.show {
     display: flex;
 }
 
-/* Styling Pilihan Radio */
 .capacity-type-selector {
     display: flex;
     flex-direction: column;
@@ -1030,23 +965,21 @@ input[type="number"] {
     align-items: center;
     gap: 10px;
     color: #fff;
-    font-size: 15px; /* Sebelumnya 13px */
+    font-size: 15px; 
     cursor: pointer;
 }
 
 .cap-radio input[type="radio"] {
     accent-color: #ffffff;
-    width: 18px;  /* Sebelumnya 16px */
-    height: 18px; /* Sebelumnya 16px */
+    width: 18px;  
+    height: 18px; 
     cursor: pointer;
 }
 
-/* Styling Input Angka */
 .capacity-number-input {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-top: -4px;
 }
 
 .capacity-number-input label {
@@ -1058,8 +991,8 @@ input[type="number"] {
     background-color: #121212;
     border: 1px solid #333;
     border-radius: 8px;
-    padding: 12px 14px; /* Sebelumnya 10px 12px */
-    font-size: 15px;    /* Sebelumnya 13px atau 14px */
+    padding: 12px 14px; 
+    font-size: 15px;    
     color: #fff;
     outline: none;
     width: 100%;
@@ -1070,14 +1003,12 @@ input[type="number"] {
     border-color: #555;
 }
 
-/* Tombol Terapkan (Apply) */
 .apply-btn {
     background-color: #ffffff;
     color: #000;
     border: none;
-    padding: 14px;      /* Sebelumnya 10px */
-    font-size: 15px;    /* Sebelumnya 13px */
-    margin-top: 20px;   /* Tambahkan jarak atas sedikit */
+    padding: 14px;      
+    font-size: 15px;    
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
@@ -1088,12 +1019,9 @@ input[type="number"] {
     background-color: #e0e0e0;
 }
 
-/* Mencegah input asli di klik langsung seperti teks biasa */
-#capacity-display {
-    pointer-events: none;
-}
+.mt-8-label { margin-top: 8px; display: block; font-size: 12px; color: #a0a0a0; }
+.radio-subtext { font-size: 12px; color: #ccc; }
 
-/* Styling Kotak Pemilihan Posisi Kursi */
 .seat-type-options {
     display: flex;
     flex-direction: column;
@@ -1105,10 +1033,6 @@ input[type="number"] {
     margin-top: 2px;
 }
 
-
-/* =========================================
-   GAYA UNTUK ALOKASI NOMOR KURSI (SEAT RANGES)
-   ========================================= */
 .seat-allocation-wrapper {
     display: flex;
     flex-direction: column;
@@ -1124,13 +1048,12 @@ input[type="number"] {
     box-sizing: border-box;
 }
 
-/* Menggunakan gaya input yang sama dengan tiket */
 .seat-tier-row .custom-input {
     background-color: #121212;
     border: 1px solid #333;
     border-radius: 8px;
-    padding: 12px 14px; /* Sebelumnya 10px 12px */
-    font-size: 15px;    /* Sebelumnya 13px atau 14px */
+    padding: 12px 14px; 
+    font-size: 15px;    
     color: #fff;
     outline: none;
     transition: border-color 0.2s;
@@ -1138,46 +1061,12 @@ input[type="number"] {
 }
 .seat-tier-row .custom-input:focus { border-color: #555; }
 
-/* Proporsi panjang input: Nama lebih panjang dari Rentang Angka */
 .seat-tier-row .seat-tier-name { flex: 3 1 0; }
 .seat-tier-row .seat-tier-range { flex: 2 1 0; }
 
-/* =========================================
-   PERBAIKAN MUTLAK POSISI IKON SAMPAH
-   ========================================= */
-.remove-question-btn {
-    color: #ef4444;
-    cursor: pointer;
-    font-size: 14px;
-    transition: 0.2s all ease;
-    flex-shrink: 0; 
-    width: 32px;    
-    height: 32px;   
-    
-    /* TEKNIK BARU: Menggunakan line-height & text-align */
-    display: inline-block !important; /* Ganti dari flex menjadi inline-block */
-    text-align: center !important;    /* Pusatkan horizontal */
-    line-height: 32px !important;     /* Pusatkan vertikal (SAMAKAN dengan height) */
-    
-    border-radius: 6px;
-    margin: 0;  
-    padding: 0; 
-}
-
-.remove-question-btn:hover {
-    color: #ff6b6b;
-    background-color: rgba(239, 68, 68, 0.15);
-    transform: scale(1.05);
-}
-
-/* =========================================
-   ANIMASI SWITCH TOGGLE
-   ========================================= */
-/* Default State (Mati / Kiri) */
 .switch-btn {
     width: 44px; 
     height: 24px; 
-    /* WARNA FALSE: Abu-abu Gelap */
     background-color: #444444; 
     border-radius: 12px; 
     border: none; 
@@ -1186,12 +1075,11 @@ input[type="number"] {
     transition: background-color 0.3s ease;
 }
 
-/* Lingkaran dalam Switch */
 .switch-btn::after {
     content: ''; 
     position: absolute; 
     top: 2px; 
-    left: 2px; /* Posisi di kiri */
+    left: 2px; 
     width: 20px; 
     height: 20px; 
     background-color: #ffffff; 
@@ -1199,18 +1087,15 @@ input[type="number"] {
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-/* KONDISI TRUE (Nyala / Kanan) */
 .switch-btn.active {
-    /* WARNA TRUE: Hijau Terang (Success) */
     background-color: #22c55e; 
 }
 
 .switch-btn.active::after {
-    transform: translateX(20px); /* Lingkaran Geser ke kanan */
-    background-color: #ffffff; /* Lingkaran tetap putih */
+    transform: translateX(20px); 
+    background-color: #ffffff; 
 }
 
-/* Submit Button */
 .submit-wrapper button {
     width: 100%;
     background-color: #ffffff;
@@ -1227,7 +1112,7 @@ input[type="number"] {
 .submit-wrapper button:hover { background-color: #e0e0e0; }
 
 /* =========================================
-   7. FOOTER
+   9. FOOTER
    ========================================= */
 hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
 .page-footer { display: flex; justify-content: space-between; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); }

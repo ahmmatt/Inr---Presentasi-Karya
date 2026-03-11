@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!noResultsRow) {
                 noResultsRow = document.createElement("tr");
                 noResultsRow.id = "no-results-row";
-                noResultsRow.innerHTML = `<td colspan="5" style="text-align:center; padding: 60px 20px; color:#888;">
+                noResultsRow.innerHTML = `<td colspan="5" class="empty-table-cell">
                     <i class="fa-solid fa-magnifying-glass" style="font-size: 32px; color: #444; margin-bottom: 16px;"></i><br>
                     <h4 style="color: #fff; font-size: 16px; margin-bottom: 4px;">No guests found</h4>
                     <p style="font-size: 13px;">We couldn't find anyone matching your search or filter criteria.</p>
@@ -192,4 +192,25 @@ document.addEventListener("DOMContentLoaded", function() {
     if(closeBtn) closeBtn.addEventListener("click", closeEditModal);
     if(modalOverlay) modalOverlay.addEventListener("click", closeEditModal);
 
-});
+    // ==========================================
+    // 5. DROPDOWN NAVBAR PROFILE
+    // ==========================================
+    const profileTrigger = document.getElementById('profile-dropdown-trigger');
+    const profileMenu = document.getElementById('profile-dropdown-menu');
+
+    if (profileTrigger && profileMenu) {
+        // Munculkan menu saat foto profil diklik
+        profileTrigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Tutup menu otomatis jika user klik area kosong di layar
+        window.addEventListener('click', function(e) {
+            if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
+                profileMenu.style.display = 'none';
+            }
+        });
+    }
+
+}); // AKHIR DARI DOMContentLoaded

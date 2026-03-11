@@ -40,17 +40,61 @@ a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
 /* =========================================
-   2. NAVBAR STYLING (Dari Base Anda)
+   2. NAVBAR STYLING
    ========================================= */
-.navbar { position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 1000; background-color: rgba(19, 23, 34, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: grid; grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr; align-items: center; padding: 0 var(--edge-spacing); }
+.navbar {
+    position: fixed; top: 0; left: 0; width: 100%; height: 60px; z-index: 1000;
+    background-color: transparent; border-bottom: 1px solid transparent; 
+    transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+    display: grid; grid-template-columns: 1fr minmax(auto, var(--content-width)) 1fr;
+    align-items: center; padding: 0 var(--edge-spacing); 
+}
+
+.navbar.scrolled {
+    background-color: rgba(19, 23, 34, 0.6); 
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);  
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
 .left-nav { grid-column: 1; justify-self: start; }
 .left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
+
 .main-nav { grid-column: 2; justify-self: start; margin-left: 14px; display: flex; gap: 30px; }
 .main-nav div { display: flex; align-items: center; gap: 8px; color: #a0a0a0; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
 .main-nav div:hover { color: #ffffff; }
-.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 20px; }
-.right-nav a { font-size: 14px; font-weight: 500; color: #ffffff; }
-.right-nav img { width: 32px; height: 32px; border-radius: 50%; display: block; }
+
+.right-nav { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 15px; position: relative; }
+
+/* =========================================
+   3. NAVBAR PROFILE & NOTIFICATIONS
+   ========================================= */
+.nav-bell-icon { font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s; }
+.nav-bell-icon:hover { color: #fff; }
+
+.profile-dropdown-trigger { cursor: pointer; position: relative; }
+.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block; }
+.profile-initial-small { width: 36px; height: 36px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a; }
+
+.profile-dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; }
+
+.dropdown-header { padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px; }
+.profile-pic-large { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.profile-initial-large { width: 40px; height: 40px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0; }
+
+.dropdown-user-info { overflow: hidden; }
+.dropdown-user-name { color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dropdown-user-role { color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px; }
+
+.dropdown-menu-links { padding: 8px; }
+.dropdown-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; }
+.dropdown-link:hover { background-color: #222; color: #fff; }
+.dropdown-link-icon { width: 16px; text-align: center; }
+.logout-link { color: #ef4444; margin-top: 4px; }
+.logout-link:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+
+
 
 /* =========================================
    3. FOOTER & PAGE FRAME
@@ -149,6 +193,81 @@ hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
 
 /* Sisi Kiri (Teks) */
 .ticket-info { flex: 1; }
+.ticket-info-v2 { flex: 1; text-align: center; width: 100%; padding: 40px 0;}
+/* =========================================
+   STATUS TIKET (PENDING & AWAITING PAYMENT)
+   ========================================= */
+
+/* Mengatur jarak & agar teks berada di tengah rata */
+.ticket-info-v2 {
+    text-align: center;
+    width: 100%;
+    padding: 40px 0;
+}
+
+/* --- Pengaturan Ikon --- */
+.status-icon-orange {
+    font-size: 50px;
+    color: #f97316; /* Oranye */
+    margin-bottom: 20px;
+}
+
+.status-icon-red {
+    font-size: 50px;
+    color: #ef4444; /* Merah */
+    margin-bottom: 20px;
+}
+
+/* --- Pengaturan Judul (h1) --- */
+.title-orange {
+    color: #f97316;
+}
+
+.title-red {
+    color: #ef4444;
+}
+
+/* --- Pengaturan Teks Paragraf --- */
+.status-desc {
+    color: #a0a0a0; /* Abu-abu sekunder */
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+.status-instruction {
+    color: #ffffff; /* Putih cerah */
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.text-green-highlight {
+    color: #22c55e; /* Hijau uang */
+}
+
+.payment-error-msg {
+    color: #ef4444; /* Merah peringatan */
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+/* --- Pengaturan Tombol Pay Now --- */
+.btn-pay-now {
+    margin-top: 24px;
+    padding: 14px 30px;
+    background-color: #22c55e;
+    color: #000000; /* Teks di dalam tombol dibuat hitam agar kontras */
+    border: none;
+    border-radius: 8px; /* Tambahan agar tidak terlalu kaku/kotak */
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-pay-now:hover {
+    background-color: #1da851; /* Warna hijau sedikit menggelap saat disorot */
+    transform: translateY(-2px); /* Sedikit melayang */
+}
 .ticket-subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.5; }
 .event-title { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 24px; line-height: 1.3; }
 
@@ -176,17 +295,99 @@ hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
     justify-content: center;
     gap: 16px;
     min-width: 200px;
+    margin-top: 20px;
 }
-.qr-code-box {
-    background-color: #ffffff; /* WAJIB PUTIH AGAR MUDAH DI-SCAN */
-    padding: 16px;
-    border-radius: 16px;
-    display: flex;
+.qr-code-box { background: #fff; padding: 10px; border-radius: 12px; display: flex; justify-content: center; align-items: center; width: 170px; height: 170px; margin: 0 auto; }
+
+/* Memastikan gambar QR Code penuh menyentuh batas padding */
+.qr-code-box img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Teks deskripsi di bawah QR Code */
+.qr-desc {
+    margin-top: 12px;
+    color: #a0a0a0;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* =========================================
+   VIRTUAL MEETING SECTION (ONLINE TICKET)
+   ========================================= */
+
+/* Kotak pembungkus gembok / link virtual */
+.virtual-box-wrapper {
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+}
+
+/* Ikon Gembok Terbuka / Tertutup */
+.virtual-icon-green {
+    font-size: 32px;
+    color: #22c55e;
+    margin-bottom: 12px;
+}
+
+.virtual-icon-orange {
+    font-size: 32px;
+    color: #f97316;
+    margin-bottom: 12px;
+}
+
+/* Judul dan Deskripsi dalam kotak Virtual */
+.virtual-title {
+    color: #fff;
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.virtual-desc {
+    color: #a0a0a0;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.virtual-desc-locked {
+    color: #a0a0a0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Teks warna oranye khusus untuk penunjuk waktu */
+.text-orange {
+    color: #f97316;
+}
+
+/* Tombol Join Virtual Event */
+.btn-join-virtual {
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 200px;
-    height: 200px;
+    gap: 8px;
+    padding: 12px 24px;
+    background: #22c55e;
+    color: #000;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
+
+/* Efek Hover untuk tombol */
+.btn-join-virtual:hover {
+    background: #1da851;
+    transform: translateY(-2px);
+}
+
 /* Placeholder ikon jika belum ada gambar QR asli */
 .qr-placeholder { font-size: 150px; color: #000; } 
 

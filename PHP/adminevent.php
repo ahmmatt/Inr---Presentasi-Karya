@@ -133,39 +133,39 @@ $nav_pic = $nav_user_data['profile_picture'];
             <div class="main-nav-discover"><i class="fa-solid fa-house"></i><a href="adminevent.php">Home</a></div>
             <div class="main-nav-event"><i class="fa-regular fa-calendar-plus"></i><a href="create.php">Create Event</a></div>
         </div>
-        <div class="right-nav" style="display: flex; align-items: center; gap: 15px; position: relative;">
-            <i class="fa-regular fa-bell" style="font-size: 18px; color: #a0a0a0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a0a0a0'"></i>
+        <div class="right-nav">
+            <i class="fa-regular fa-bell nav-bell-icon" title="Notifications"></i>
             
-            <div id="profile-dropdown-trigger" style="cursor: pointer; position: relative;" title="<?= htmlspecialchars($nav_name) ?>">
+            <div id="profile-dropdown-trigger" class="profile-dropdown-trigger" title="<?= htmlspecialchars($nav_name) ?>">
                 <?php if(!empty($nav_pic)): ?>
-                    <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block;">
+                    <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" alt="Profile" class="profile-pic-small">
                 <?php else: ?>
-                    <div style="width: 36px; height: 36px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a;">
+                    <div class="profile-initial-small">
                         <?= $nav_initial ?>
                     </div>
                 <?php endif; ?>
             </div>
 
-            <div id="profile-dropdown-menu" style="display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden;">
+            <div id="profile-dropdown-menu" class="profile-dropdown-menu">
                 
-                <div style="padding: 15px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; gap: 12px;">
+                <div class="dropdown-header">
                     <?php if(!empty($nav_pic)): ?>
-                        <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                        <img src="../Media/uploads/<?= htmlspecialchars($nav_pic) ?>" class="profile-pic-large">
                     <?php else: ?>
-                        <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #f97316; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; flex-shrink: 0;"><?= $nav_initial ?></div>
+                        <div class="profile-initial-large"><?= $nav_initial ?></div>
                     <?php endif; ?>
-                    <div style="overflow: hidden;">
-                        <h4 style="color: #fff; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= htmlspecialchars($nav_name) ?></h4>
-                        <p style="color: #888; font-size: 12px; margin: 0; text-transform: capitalize; margin-top: 2px;"><?= $_SESSION['role'] ?></p>
+                    <div class="dropdown-user-info">
+                        <h4 class="dropdown-user-name"><?= htmlspecialchars($nav_name) ?></h4>
+                        <p class="dropdown-user-role"><?= $_SESSION['role'] ?></p>
                     </div>
                 </div>
 
-                <div style="padding: 8px;">
-                    <a href="settings.php" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ccc; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s;" onmouseover="this.style.background='#222'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#ccc';">
-                        <i class="fa-solid fa-gear" style="width: 16px; text-align: center;"></i> Settings
+                <div class="dropdown-menu-links">
+                    <a href="settings.php" class="dropdown-link">
+                        <i class="fa-solid fa-gear dropdown-link-icon"></i> Settings
                     </a>
-                    <a href="logout.php" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #ef4444; text-decoration: none; font-size: 13px; border-radius: 8px; transition: 0.2s; margin-top: 4px;" onmouseover="this.style.background='rgba(239, 68, 68, 0.1)';" onmouseout="this.style.background='transparent';">
-                        <i class="fa-solid fa-arrow-right-from-bracket" style="width: 16px; text-align: center;"></i> Logout
+                    <a href="logout.php" class="dropdown-link logout-link">
+                        <i class="fa-solid fa-arrow-right-from-bracket dropdown-link-icon"></i> Logout
                     </a>
                 </div>
 
@@ -207,7 +207,7 @@ $nav_pic = $nav_user_data['profile_picture'];
             <div class="header-actions">
                 <a href="scanner.php?event_id=<?= $current_event_id ?>" class="btn-primary"><i class="fa-solid fa-qrcode"></i> Open Scanner</a>
                 
-                <form method="POST" style="display: inline;" onsubmit="return confirm('Delete this event and ALL its data?');">
+                <form method="POST" class="inline-form" onsubmit="return confirm('Delete this event and ALL its data?');">
                     <input type="hidden" name="action" value="delete_event">
                     <input type="hidden" name="event_id" value="<?= $current_event_id ?>">
                     <button type="submit" class="btn-danger"><i class="fa-solid fa-trash"></i> Delete Event</button>
@@ -246,10 +246,10 @@ $nav_pic = $nav_user_data['profile_picture'];
                 // Tombol bisa diklik jika waktu sekarang lebih besar dari waktu selesai, atau status sudah ended
                 $is_ended = ($curr_time > $end_time_full || $current_event['status'] == 'ended') ? 'true' : 'false';
             ?>
-            <div class="metric-card" style="cursor: pointer;" onclick="if(<?= $is_ended ?>){ window.location.href='withdrawal.php?event_id=<?= $current_event_id ?>'; } else { alert('Event belum selesai! Penarikan dana (Withdrawal) hanya bisa dilakukan setelah event berakhir.'); }">
+            <div class="metric-card clickable-card" onclick="if(<?= $is_ended ?>){ window.location.href='withdrawal.php?event_id=<?= $current_event_id ?>'; } else { alert('Event belum selesai! Penarikan dana (Withdrawal) hanya bisa dilakukan setelah event berakhir.'); }">
                 <div class="metric-icon"><i class="fa-solid fa-wallet"></i></div>
                 <div class="metric-info">
-                    <p>Est. Revenue <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 10px; margin-left: 4px;"></i></p>
+                    <p>Est. Revenue <i class="fa-solid fa-arrow-up-right-from-square icon-small-right"></i></p>
                     <h3><?= formatRupiah($revenue) ?></h3>
                 </div>
             </div>
@@ -261,7 +261,6 @@ $nav_pic = $nav_user_data['profile_picture'];
                 <button class="tab-btn" data-tab="need_approval">Need Approval <?= $pending > 0 ? "<span class='badge-count'>$pending</span>" : "" ?></button>
                 <button class="tab-btn" data-tab="awaiting_payment">Awaiting Payment</button>
                 <button class="tab-btn" data-tab="approved">Approved</button>
-                
                 <button class="tab-btn" data-tab="present">Checked-In</button>
             </div>
 
@@ -285,7 +284,7 @@ $nav_pic = $nav_user_data['profile_picture'];
                     </thead>
                     <tbody id="attendee-table-body">
                         <?php if(count($attendees) == 0): ?>
-                            <tr><td colspan="5" style="text-align:center; padding:40px; color:#888;">No attendees registered yet.</td></tr>
+                            <tr><td colspan="5" class="empty-table-cell">No attendees registered yet.</td></tr>
                         <?php else: ?>
                             <?php foreach($attendees as $att): ?>
                             <tr>
@@ -310,13 +309,12 @@ $nav_pic = $nav_user_data['profile_picture'];
                                         <span class="status-badge awaiting_payment">Awaiting Payment</span>
                                     <?php elseif($att['status'] == 'approved'): ?>
                                         <span class="status-badge approved">Approved</span>
-                                        
                                     <?php elseif($att['status'] == 'checked_in'): ?>
                                         <span class="status-badge present">Checked-In</span>
                                     <?php endif; ?>
                                 </td>
                                 <td class="action-cell">
-                                    <form method="POST" style="display:contents;">
+                                    <form method="POST" class="display-contents">
                                         <input type="hidden" name="action" value="update_status">
                                         <input type="hidden" name="attendee_id" value="<?= $att['id_attendee'] ?>">
                                         <input type="hidden" name="current_event_id" value="<?= $current_event_id ?>">
@@ -340,7 +338,7 @@ $nav_pic = $nav_user_data['profile_picture'];
                                     </form>
 
                                     <?php if($att['status'] != 'need_approval'): ?>
-                                    <form method="POST" style="display:contents;" onsubmit="return confirm('Revert status for this user?');">
+                                    <form method="POST" class="display-contents" onsubmit="return confirm('Revert status for this user?');">
                                         <input type="hidden" name="action" value="update_status">
                                         <input type="hidden" name="attendee_id" value="<?= $att['id_attendee'] ?>">
                                         <input type="hidden" name="current_event_id" value="<?= $current_event_id ?>">
@@ -367,7 +365,7 @@ $nav_pic = $nav_user_data['profile_picture'];
                                         <i class="fa-solid fa-pen"></i>
                                     </button>
 
-                                    <form method="POST" style="display:contents;" onsubmit="return confirm('Remove attendee permanently?');">
+                                    <form method="POST" class="display-contents" onsubmit="return confirm('Remove attendee permanently?');">
                                         <input type="hidden" name="action" value="delete_attendee">
                                         <input type="hidden" name="attendee_id" value="<?= $att['id_attendee'] ?>">
                                         <input type="hidden" name="current_event_id" value="<?= $current_event_id ?>">
@@ -384,11 +382,11 @@ $nav_pic = $nav_user_data['profile_picture'];
         </div>
 
         <?php else: ?>
-            <div style="text-align: center; padding: 100px 0; color: #888;">
-                <i class="fa-solid fa-calendar-xmark" style="font-size: 60px; margin-bottom: 20px; color:#444;"></i>
+            <div class="no-events-wrapper">
+                <i class="fa-solid fa-calendar-xmark no-events-icon"></i>
                 <h2>No Events Found</h2>
                 <p>You haven't created any events yet.</p>
-                <a href="create.php" class="btn-primary" style="display:inline-flex; margin-top: 20px; width:auto;"><i class="fa-solid fa-plus"></i> Create New Event</a>
+                <a href="create.php" class="btn-primary btn-inline-auto"><i class="fa-solid fa-plus"></i> Create New Event</a>
             </div>
         <?php endif; ?>
     </div>
@@ -421,13 +419,12 @@ $nav_pic = $nav_user_data['profile_picture'];
                 <input type="text" name="edit_seat" id="edit-seat" class="custom-input">
             </div>
 
-            <div class="edit-form-group" style="margin-top: 8px;">
+            <div class="edit-form-group mt-8">
                 <label>Current Status</label>
                 <select name="edit_status" id="edit-status" class="custom-select">
                     <option value="need_approval">Need Approval (Pending)</option>
                     <option value="awaiting_payment">Awaiting Payment (Unpaid)</option>
                     <option value="approved">Approved (Paid & Has Ticket)</option>
-                    
                     <option value="checked_in">Checked-In (Present)</option>
                 </select>
             </div>
@@ -440,27 +437,5 @@ $nav_pic = $nav_user_data['profile_picture'];
     </div>
     
     <script src="../JS/adminevent.js"></script>
-    <script>
-        // SCRIPT UNTUK DROPDOWN NAVBAR
-        document.addEventListener('DOMContentLoaded', function() {
-            const profileTrigger = document.getElementById('profile-dropdown-trigger');
-            const profileMenu = document.getElementById('profile-dropdown-menu');
-
-            if (profileTrigger && profileMenu) {
-                // Munculkan menu saat foto profil diklik
-                profileTrigger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
-                });
-
-                // Tutup menu otomatis jika user klik area kosong di layar
-                window.addEventListener('click', function(e) {
-                    if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
-                        profileMenu.style.display = 'none';
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>
