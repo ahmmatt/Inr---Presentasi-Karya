@@ -346,3 +346,212 @@ html.light-mode .btn-red { background: #fff1f2; color: #ef4444; border-color: #f
 html.light-mode .btn-red:hover { background: #ef4444; color: #ffe4e6; }
 
 html.light-mode hr { border-top-color: rgba(0, 0, 0, 0.1); }
+
+/* =========================================
+   10. RESPONSIVE & FOOTER (TANPA HAMBURGER)
+   ========================================= */
+
+/* A. FOOTER HACK (Memaksa Footer ke Dasar Layar Global) */
+body { display: flex !important; flex-direction: column !important; min-height: 100vh !important; }
+.page-frame { display: flex !important; flex-direction: column !important; flex: 1 !important; width: 100%; }
+
+.page-frame > hr:last-of-type { 
+    margin-top: auto !important; 
+    margin-bottom: 20px !important; 
+    display: block !important; 
+    width: 100% !important; 
+    border-top: 1px solid rgba(255, 255, 255, 0.15) !important; 
+    flex-shrink: 0 !important; 
+}
+html.light-mode .page-frame > hr:last-of-type { border-top-color: rgba(0, 0, 0, 0.1) !important; }
+
+.page-footer { display: flex; justify-content: space-between; align-items: center; padding-bottom: 40px; font-size: 14px; color: var(--text-secondary); width: 100%; }
+.left-footer, .right-footer { display: flex; align-items: center; gap: 20px; }
+.right-footer a:hover, .left-footer a:hover { color: var(--text-primary); }
+
+/* B. TABLET VIEW (Maks 768px) */
+@media (max-width: 768px) {
+    .navbar { padding: 0 24px; }
+    .main-nav { gap: 15px; }
+    .filter-group { flex-wrap: wrap; }
+}
+
+/* C. MOBILE VIEW (iPhone & Android, Maks 480px) */
+@media (max-width: 480px) {
+    body { padding-top: 70px; }
+    
+    /* 1. Navbar Mobile (Superadmin) - Fix Proporsi Ruang */
+    .navbar { 
+        display: flex !important; 
+        justify-content: space-between !important; 
+        align-items: center !important;
+        padding: 0 16px !important; 
+        width: 100% !important;
+    }
+    
+    .left-nav {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        gap: 2px !important;
+        flex: 1 !important; /* KUNCI: Memaksa area kiri mengambil semua sisa ruang kosong */
+    }
+    
+    .left-nav h1 { 
+        font-size: 20px !important; 
+        margin: 0 !important; 
+        line-height: 1 !important; 
+        white-space: nowrap !important; /* KUNCI: Mencegah SecureGate patah ke bawah */
+    }
+    .superadmin-label { font-size: 10px !important; margin: 0 !important; }
+
+    .right-nav {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 16px !important; 
+        flex: 0 0 auto !important; /* KUNCI: Memaksa area kanan untuk tidak melebar */
+    }
+
+    /* Menghemat Ruang Switcher Tema (Menghilangkan background kotaknya) */
+    .theme-switch-wrapper {
+        font-size: 0 !important; 
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important; /* Menghilangkan garis kotak */
+        background: transparent !important; /* Menghilangkan warna latar kotak */
+        gap: 0 !important; 
+    }
+    .theme-switch-wrapper span { display: none !important; } /* Memastikan tulisan Dark hilang */
+    
+    .switch-btn { width: 34px !important; height: 18px !important; margin: 0 !important; }
+    .switch-btn::after { width: 14px !important; height: 14px !important; top: 2px !important; left: 2px !important; }
+    .switch-btn.active::after { transform: translateX(16px) !important; }
+
+    /* Menyembunyikan tulisan 'Logout', hanya menyisakan ikonnya saja */
+    .logout-text {
+        font-size: 0 !important; 
+        display: flex !important;
+        align-items: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .logout-text i { font-size: 20px !important; margin: 0 !important; }
+
+    /* 2. Header Dashboard (Memaksa Rata Kiri & Rapi) */
+    .page-frame { margin-top: 15px !important; }
+    .page-frame-nav { 
+        display: flex !important; 
+        flex-direction: column !important; 
+        align-items: flex-start !important; 
+        text-align: left !important;
+        margin-bottom: 20px !important;
+        width: 100% !important; 
+    }
+    .page-frame-nav h1 { 
+        font-size: 24px !important; 
+        margin-bottom: 4px !important; 
+        text-align: left !important; 
+        width: 100% !important; 
+    }
+    .page-frame-nav p { 
+        font-size: 12px !important; 
+        margin: 0 !important; 
+        text-align: left !important; 
+        width: 100% !important; 
+    }
+
+    /* 3. Filter / Tab Menu */
+    .filter-group { 
+        flex-wrap: nowrap; 
+        overflow-x: auto; /* Bisa digeser ke samping jika tabnya banyak */
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px; 
+        gap: 8px; 
+    }
+    .filter-btn { padding: 8px 12px; font-size: 11px; white-space: nowrap; }
+
+    /* 4. Tabel Data (Mencegah Hancur di Layar Kecil) */
+    .table-container, .table-wrapper { 
+        overflow-x: auto !important; 
+        -webkit-overflow-scrolling: touch !important; 
+        border-radius: 12px; 
+        margin-top: 16px;
+    }
+    table { min-width: 600px; } /* Memaksa tabel tetap lebar dan digeser (scroll) ke kanan */
+    th, td { padding: 12px 10px; font-size: 11px; }
+
+    
+
+    /* 5. Modal Edit / Approve (Diperkecil Proporsional) */
+    .modal-box { 
+        width: 300px !important; /* Dikunci lebih kecil agar elegan */
+        max-width: 90vw !important; 
+        padding: 20px 16px !important; 
+        border-radius: 16px !important; 
+    }
+    .modal-box h2 { font-size: 16px !important; margin-bottom: 12px !important; }
+    .modal-close-btn { font-size: 22px !important; top: 12px !important; right: 16px !important; }
+    
+    .edit-group { margin-bottom: 10px !important; }
+    .edit-group label { font-size: 10px !important; margin-bottom: 4px !important; }
+    .edit-input { padding: 10px 12px !important; font-size: 11px !important; border-radius: 8px !important; }
+    .form-note { font-size: 9px !important; }
+    
+    .btn-action { padding: 10px !important; font-size: 12px !important; border-radius: 8px !important; margin-top: 8px !important; }
+    
+    /* 6. Kotak Kredensial Akun (Success Modal) */
+    .cred-box { padding: 12px !important; border-radius: 8px !important; gap: 8px !important; }
+    .cred-item { font-size: 10px !important; flex-direction: column !important; align-items: flex-start !important; gap: 4px !important; }
+    .cred-val { font-size: 11px !important; word-break: break-all !important; }
+    .footer-note { font-size: 10px !important; margin-top: 12px !important; }
+
+    /* 7. Footer Mobile */
+    .page-footer { flex-direction: row !important; justify-content: space-between !important; align-items: center !important; font-size: 11px; padding-bottom: 30px; }
+    .left-footer, .right-footer { display: flex !important; gap: 12px !important; }
+
+    /* 8. Admin Cards & Data Rows (Diperkecil Ekstra agar Lega) */
+    .admin-card { 
+        padding: 16px !important; 
+        margin-bottom: 20px !important; 
+        border-radius: 12px !important; 
+    }
+    
+    .admin-card h2 { 
+        font-size: 15px !important; 
+        margin-bottom: 12px !important; 
+        padding-bottom: 10px !important; 
+    }
+    
+    .manage-acc-header {
+        margin-bottom: 12px !important;
+        padding-bottom: 10px !important;
+    }
+    
+    .data-row { 
+        padding: 10px 0 !important; /* Jarak antar baris data dirapatkan */
+    }
+    
+    .info h4 { 
+        font-size: 13px !important; /* Nama event / nama admin diperkecil */
+        margin-bottom: 2px !important; 
+    }
+    
+    .info p { 
+        font-size: 11px !important; /* Detail email / tanggal diperkecil */
+    }
+    
+    .net-revenue { 
+        font-size: 13px !important; /* Angka uang diperkecil */
+    }
+    
+    .net-label { 
+        font-size: 10px !important; 
+    }
+    
+    .btn-action {
+        padding: 8px 12px !important; /* Tombol approve / delete diperkecil */
+        font-size: 11px !important;
+    }
+}

@@ -78,6 +78,12 @@ body::-webkit-scrollbar {
         box-sizing: border-box;
     }
 
+    .navbar.scrolled {
+        background-color: rgba(19, 23, 34, 0.6); 
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);  
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
 
     /* 3. POSISI KANAN (Profile/Create Event) */
     .right-nav {
@@ -410,3 +416,93 @@ html.light-mode .bottom-button-sign:hover {
 }
 html.light-mode .bottom-button-sign a { color: var(--text-primary); font-weight: 600; }
 html.light-mode .bottom-button-sign i { color: var(--text-secondary); }
+
+/* =========================================
+   8. RESPONSIVE DESIGN (TABLET & MOBILE)
+   ========================================= */
+
+/* --- TABLET VIEW (Layar sedang, maks 768px) --- */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 24px; /* Kurangi jarak tepi navbar */
+    }
+
+    .sign-card {
+        padding: 30px; /* Kurangi padding dalam kartu agar tidak terlalu memakan tempat */
+        margin-top: 60px;
+        width: calc(100% - 48px); /* Pastikan kartu tidak menyentuh ujung layar */
+        max-width: 450px; 
+    }
+}
+
+/* --- MOBILE VIEW UNIVERSAL (iPhone & Android, maks 480px) --- */
+@media (max-width: 480px) {
+    body {
+        padding-top: 60px; /* Sesuaikan jarak atas saat di mobile */
+    }
+
+    .navbar {
+        padding: 0 16px;
+    }
+
+    /* Ukuran Teks Navbar sedikit dikecilkan */
+    .left-nav h1 {
+        font-size: 15px; 
+    }
+    .right-nav a {
+        padding: 6px 12px;
+        font-size: 10px;
+    }
+
+    /* Penyesuaian Kotak Login / Register */
+    .sign-card {
+        padding: 24px 20px; /* Padding sisi kiri-kanan lebih tipis agar form terlihat luas */
+        margin-top: 40px;
+        width: 74%; /* Jarak sisa 16px di kiri dan kanan layar */
+        border-radius: 16px; /* Lengkungan sudut sedikit dikurangi */
+        margin-top: 20px;
+    }
+
+    .sign-card img {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+        margin-bottom: 12px;
+    }
+
+    .sign-card h1 {
+        font-size: 17px;
+    }
+
+    .sign-card p {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+
+    /* Penyesuaian Form & Teks Input */
+    .dynamic-label-span {
+        font-size: 12px;
+    }
+
+    input {
+        padding: 10px;
+        font-size: 13px;
+        border-radius: 6px;
+    }
+
+    /* Penyesuaian Tombol */
+    button[type="submit"], 
+    .bottom-button-sign {
+        height: 38px; /* Sedikit lebih ramping di HP */
+        font-size: 13px;
+    }
+
+    .bottom-button-sign a {
+        font-size: 12px;
+    }
+
+    /* Garis pembatas (hr) */
+    hr {
+        margin: 16px 0;
+    }
+}

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'config/connect.php';
+require_once 'config/credentials.php';
 
 // =========================================================
 // LOAD PHPMAILER
@@ -47,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'basyirsinjai@gmail.com'; 
-            $mail->Password   = 'vxfj rntd snow ilve'; 
+            $mail->Username   = SMTP_USER;  // <-- Mengambil dari credentials.php
+            $mail->Password   = SMTP_PASS;  // <-- Mengambil dari credentials.php 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port       = 465;
 
@@ -174,7 +175,7 @@ $all_accounts = $conn->query($sql_acc);
 <body>
     <nav class="navbar">
         <div class="left-nav"><h1>SecureGate <span class="superadmin-label">SUPER ADMIN</span></h1></div>
-        <div class="main-nav"></div>
+        
         <div class="right-nav">
             <div class="theme-switch-wrapper">
                 <i class="fa-solid fa-sun"></i>

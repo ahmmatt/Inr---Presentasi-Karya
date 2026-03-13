@@ -76,7 +76,7 @@ ul { list-style: none; }
 .nav-bell-icon:hover { color: #fff; }
 
 .profile-dropdown-trigger { cursor: pointer; position: relative; }
-.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block; }
+.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; display: block; }
 .profile-initial-small { width: 36px; height: 36px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a; }
 
 .profile-dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; }
@@ -429,17 +429,6 @@ div[id^="reader__dashboard"] {
 .btn-approve:disabled { background-color: #2a2a2a; color: #666; cursor: not-allowed; }
 
 /* =========================================
-   RESPONSIVE (MOBILE VIEW)
-   ========================================= */
-@media (max-width: 768px) {
-    .scanner-layout {
-        grid-template-columns: 1fr; 
-        gap: 24px;
-    }
-    .camera-container { aspect-ratio: 4 / 3; } 
-}
-
-/* =========================================
    6. FOOTER
    ========================================= */
 hr { border: 0; border-top: 1px solid var(--border-color); margin: 40px 0; width: 100%; }
@@ -556,3 +545,150 @@ html.light-mode .btn-approve:disabled { background-color: #e2e8f0 !important; co
 
 /* Footer */
 html.light-mode hr { border-top-color: rgba(0, 0, 0, 0.1); }
+
+/* =========================================
+   MEMAKSA FOOTER SELALU DI BAWAH LAYAR
+   ========================================= */
+body { display: flex !important; flex-direction: column !important; min-height: 100vh !important; }
+.page-frame { display: flex !important; flex-direction: column !important; flex: 1 !important; width: 100%; }
+
+/* Mendorong HR dan Footer ke dasar layar */
+.page-frame > hr:last-of-type { 
+    margin-top: auto !important; 
+    margin-bottom: 20px !important; 
+    display: block !important; 
+    width: 100% !important; 
+    border-top: 1px solid rgba(255, 255, 255, 0.15) !important; 
+    flex-shrink: 0 !important; 
+}
+html.light-mode .page-frame > hr:last-of-type { border-top-color: rgba(0, 0, 0, 0.1) !important; }
+
+/* =========================================
+   8. HAMBURGER MENU & RESPONSIVE DESIGN
+   ========================================= */
+.hamburger-btn { display: none !important; font-size: 20px; cursor: pointer; margin-right: 15px; color: var(--text-primary); transition: color 0.2s; }
+html.light-mode .hamburger-btn { color: var(--text-primary); }
+
+/* C. TABLET VIEW (Maks 768px) */
+@media (max-width: 768px) {
+    .navbar { padding: 0 24px; }
+    .main-nav { gap: 15px; margin-left: 0; }
+    .scanner-layout { grid-template-columns: 1fr; gap: 24px; }
+    .camera-container { aspect-ratio: 4 / 3; }
+}
+
+/* D. MOBILE VIEW (iPhone & Android, Maks 480px) */
+@media (max-width: 480px) {
+    body { padding-top: 70px; }
+    
+    /* 1. Navbar & Sidebar Setup */
+    .navbar { display: flex; justify-content: space-between; padding: 0 16px; }
+    .left-nav { display: flex; align-items: center; }
+    .hamburger-btn { display: block !important; }
+    .left-nav h1 { font-size: 18px; }
+    .profile-pic-small, .profile-initial-small { width: 32px; height: 32px; font-size: 14px; }
+    
+    /* Sidebar Kaca Menu Mobile */
+    .main-nav {
+        position: fixed !important; top: 60px !important; left: -100% !important;
+        width: 250px !important; height: calc(100vh - 60px) !important;
+        background-color: rgba(18, 18, 18, 0.6) !important;
+        backdrop-filter: blur(15px) !important; -webkit-backdrop-filter: blur(15px) !important;
+        border-right: 1px solid #333 !important; border-bottom: none !important;
+        display: flex !important; flex-direction: column !important; align-items: flex-start !important;
+        padding: 30px 20px !important; gap: 25px !important; margin-left: 0 !important;
+        transition: left 0.3s ease-in-out !important; z-index: 999 !important;
+        box-shadow: 4px 0 15px rgba(0,0,0,0.5) !important;
+    }
+    .main-nav.active { left: 0 !important; }
+    .main-nav div { font-size: 16px !important; width: 100% !important; padding-bottom: 15px !important; border-bottom: 1px dashed rgba(255,255,255,0.05) !important; }
+    
+    html.light-mode .main-nav { background-color: rgba(255, 255, 255, 0.6) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; border-right: 1px solid rgba(255, 255, 255, 0.8) !important; box-shadow: 4px 0 30px rgba(0,0,0,0.1) !important; }
+    html.light-mode .main-nav div { border-bottom: 1px dashed rgba(0,0,0,0.1) !important; }
+
+    /* 2. Header Title Scanner */
+    .page-frame { margin-top: 10px; }
+    .page-frame-nav { margin-bottom: 20px; }
+    .page-frame-nav h1 { font-size: 22px; }
+    .page-frame-nav p { font-size: 11px; }
+
+    /* 3. Scanner Kamera (Diperkecil & Ditengahkan) */
+    .scanner-layout { gap: 16px; }
+    
+    .camera-container { 
+        width: 85% !important; /* Lebar kamera diperkecil (tidak full layar) */
+        margin: 0 auto !important; /* Memposisikan kamera pas di tengah */
+        border-radius: 16px; 
+    }
+    .camera-icon { font-size: 28px; margin-bottom: 6px; }
+    #camera-text { font-size: 11px; }
+    
+    .btn-scan { 
+        width: 85% !important; 
+        /* UBAH: Menambahkan jarak bawah (24px) agar tidak menempel dengan kotak di bawahnya */
+        margin: 10px auto 24px auto !important; 
+        padding: 10px; 
+        font-size: 13px; 
+        border-radius: 8px; 
+    }
+
+    /* 4. Kartu Hasil Scan (Diperkecil Ekstra & Disamakan Lebarnya) */
+    .result-section { 
+        width: 85% !important; /* TAMBAH: Menyamakan lebar kotak dengan kamera di atasnya */
+        margin: 0 auto !important; /* TAMBAH: Memposisikan kotak pas di tengah layar */
+        min-height: auto; 
+        border-radius: 12px; 
+    }
+    
+    /* State Menunggu (Belum ada scan) */
+    .empty-state { padding: 24px 16px; border-radius: 12px; }
+    .empty-state i { font-size: 28px; margin-bottom: 8px; }
+    .empty-state h3 { font-size: 14px; margin-bottom: 4px; }
+    .empty-state p { font-size: 10px; }
+
+    /* State Tiket Ditemukan */
+    .scan-result-card { padding: 14px; border-radius: 12px; }
+    .status-badge { padding: 4px 10px; font-size: 11px; margin-bottom: -15px; border-radius: 6px; align-self: flex-end; }
+    
+    .attendee-info { gap: 10px; margin-bottom: 6px; padding-top: 0; }
+    /* Foto Diperbesar */
+    .attendee-pict, .attendee-initial { 
+        width: 100px !important;  /* UBAH: Diperbesar dari 55px ke 80px */
+        height: 100px !important; 
+        border-radius: 12px !important; 
+        border-width: 2px; 
+    }
+    .attendee-initial { font-size: 32px !important; }
+    .attendee-details h2 { font-size: 14px; margin-bottom: 2px; }
+    .attendee-details p { font-size: 9px; }
+    
+    .divider { margin-bottom: 12px; margin-top: 10px; }
+    
+    /* Memaksa Detail Menjadi 3 Kolom Sejajar */
+    .ticket-details-grid { 
+        grid-template-columns: repeat(3, 1fr) !important; /* UBAH: Paksa menjadi 3 kolom */
+        gap: 6px !important; /* Jarak dirapatkan agar muat di HP */
+        margin-bottom: 16px; 
+    }
+    
+    .detail-item span { 
+        font-size: 8px !important; /* Diperkecil agar label muat */
+        margin-bottom: 2px; 
+        white-space: nowrap !important; /* Cegah teks label turun ke bawah */
+    }
+    
+    .detail-item h4 { 
+        font-size: 10px !important; /* Huruf sedikit dikecilkan */
+        word-break: break-all !important; /* SANGAT PENTING: Memaksa ID tiket panjang agar terpotong ke bawah, bukan merusak kolom */
+    }
+    
+    .btn-approve { 
+        padding: 10px; /* Tinggi tombol approve diperkecil */
+        font-size: 13px; 
+        border-radius: 8px; 
+    }
+
+    /* 5. Footer Mobile */
+    .page-footer { flex-direction: row !important; justify-content: space-between !important; align-items: center !important; font-size: 11px; padding-bottom: 30px; }
+    .left-footer, .right-footer { display: flex !important; gap: 12px !important; }
+}

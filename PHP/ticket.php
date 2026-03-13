@@ -183,7 +183,10 @@ $nav_pic = $nav_user_data['profile_picture'];
 </head>
 <body>
     <nav class="navbar">
-        <div class="left-nav"><h1>SecureGate</h1></div>
+        <div class="left-nav">
+            <i class="fa-solid fa-bars hamburger-btn" id="hamburger-btn"></i>
+            <h1>SecureGate</h1>
+        </div>
         <div class="main-nav">
             <div class="main-nav-discover"><i class="fa-regular fa-compass"></i><a href="discover.php">Discover</a></div>
             <div class="main-nav-event"><i class="fa-solid fa-ticket"></i><a href="mainpage.php">My Events</a></div>
@@ -292,6 +295,17 @@ $nav_pic = $nav_user_data['profile_picture'];
                         </div>
                     </div>
                 </div>
+                <hr>
+                <?php if (!empty($event['space_3d_file']) && $event['space_3d_file'] !== 'NULL'): ?>
+                    <div class="space-3d-container">
+                        <h3 class="space-3d-title">Event 3D Space</h3>
+                        <div class="space-3d-wrapper">
+                            <video controls playsinline>
+                                <source src="../Media/uploads/<?= htmlspecialchars($event['space_3d_file']) ?>" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <hr>
                 <div class="category-card">
                     <i class="fa-solid fa-layer-group"></i>

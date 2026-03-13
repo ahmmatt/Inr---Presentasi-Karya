@@ -254,6 +254,28 @@ document.addEventListener("DOMContentLoaded", function() {
             document.body.classList.toggle("no-scroll", capacityDropdown.classList.contains("show"));
         });
 
+        // ========================================================
+        // TAMBAHAN BARU: Sembunyikan otomatis saat halaman dimuat
+        // ========================================================
+        if (capNumContainer) {
+            const defaultSelected = document.querySelector('input[name="cap_type"]:checked');
+            if (defaultSelected && defaultSelected.value === "Unlimited") {
+                capNumContainer.style.display = "none";
+            }
+        }
+        // ========================================================
+
+        capTypeRadios.forEach(radio => {
+            radio.addEventListener("change", function() {
+                if (this.value === "Limited") {
+                    if(capNumContainer) capNumContainer.style.display = "flex";
+                    if(capAmountInput) capAmountInput.focus();
+                } else {
+                    if(capNumContainer) capNumContainer.style.display = "none";
+                }
+            });
+        });
+
         capTypeRadios.forEach(radio => {
             radio.addEventListener("change", function() {
                 if (this.value === "Limited") {
@@ -389,6 +411,36 @@ document.addEventListener("DOMContentLoaded", function() {
         window.addEventListener('click', function(e) {
             if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
                 profileMenu.style.display = 'none';
+            }
+        });
+    }
+
+    // ==========================================
+    // 10. LOGIKA HAMBURGER MENU (MOBILE)
+    // ==========================================
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (hamburgerBtn && mainNav) {
+        hamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            mainNav.classList.toggle('active');
+            
+            if (mainNav.classList.contains('active')) {
+                hamburgerBtn.classList.remove('fa-bars');
+                hamburgerBtn.classList.add('fa-xmark');
+            } else {
+                hamburgerBtn.classList.remove('fa-xmark');
+                hamburgerBtn.classList.add('fa-bars');
+            }
+        });
+
+        // Tutup menu otomatis jika user klik area kosong di layar
+        document.addEventListener('click', (e) => {
+            if (!hamburgerBtn.contains(e.target) && !mainNav.contains(e.target)) {
+                mainNav.classList.remove('active');
+                hamburgerBtn.classList.remove('fa-xmark');
+                hamburgerBtn.classList.add('fa-bars');
             }
         });
     }

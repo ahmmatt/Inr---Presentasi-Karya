@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </nav>
 
-    <div class="glass-card">
+    <div class="glass-card login-card">
         <h2>Portal Access</h2>
         <p class="glass-card-desc">Masuk menggunakan Username ID Admin Anda.</p>
         

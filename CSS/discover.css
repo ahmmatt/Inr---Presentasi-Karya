@@ -57,6 +57,16 @@ ul { list-style: none; }
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
+/* A. Sembunyikan ikon Hamburger di Desktop (Default) */
+.hamburger-btn {
+    display: none !important; 
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 15px;
+    color: var(--text-primary);
+    transition: color 0.2s;
+}
+
 .left-nav { grid-column: 1; justify-self: start; }
 .left-nav h1 { font-size: 20px; font-weight: 700; color: #e0e0e0; }
 
@@ -80,7 +90,7 @@ ul { list-style: none; }
 .nav-bell-icon:hover { color: #fff; }
 
 .profile-dropdown-trigger { cursor: pointer; position: relative; }
-.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block; }
+.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; display: block; }
 .profile-initial-small { width: 36px; height: 36px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a; }
 
 .profile-dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; }
@@ -381,6 +391,10 @@ html.light-mode .right-nav a { color: var(--text-primary); }
 html.light-mode .main-nav div:hover { color: #3b82f6; }
 html.light-mode .nav-bell-icon { color: var(--text-secondary); }
 
+html.light-mode .hamburger-btn {
+    color: var(--text-primary);
+}
+
 html.light-mode .profile-dropdown-menu { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 html.light-mode .dropdown-header { border-bottom-color: #e2e8f0; }
 html.light-mode .dropdown-user-name { color: var(--text-primary); }
@@ -470,3 +484,248 @@ html.light-mode .empty-state p { color: var(--text-secondary); }
 
 /* Footer */
 html.light-mode hr { border-top-color: rgba(0, 0, 0, 0.1); }
+
+/* =========================================
+   6. RESPONSIVE DESIGN (TABLET & MOBILE)
+   ========================================= */
+
+/* --- TABLET VIEW (Layar sedang, maks 768px) --- */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 24px;
+    }
+    .main-nav {
+        gap: 15px;
+        margin-left: 0;
+    }
+    .page-frame {
+        margin: 30px auto;
+    }
+    /* Mengurangi ukuran grid agar lebih muat di Tablet */
+    .category-wrapper {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    .event-card-detail {
+        flex: 0 0 280px;
+        max-width: 280px;
+    }
+    .city-wrapper {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+}
+
+/* --- MOBILE VIEW UNIVERSAL (iPhone & Android, Maks 480px) --- */
+@media (max-width: 480px) {
+    body {
+        padding-top: 70px; 
+    }
+
+    /* Penyesuaian Navbar Mobile */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 16px;
+    }
+    .left-nav {
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Munculkan Ikon Hamburger */
+    .hamburger-btn {
+        display: block !important; 
+    }
+    
+    /* Sulap Menu Tengah Menjadi Sidebar Melayang */
+    .main-nav {
+        position: fixed !important;
+        top: 60px !important;
+        left: -100% !important; /* Sembunyikan di luar layar kiri */
+        width: 250px !important;
+        height: calc(100vh - 60px) !important;
+        background-color: rgba(18, 18, 18, 0.6) !important;
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
+        border-right: 1px solid #333 !important;
+        border-bottom: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 30px 20px !important;
+        gap: 25px !important;
+        margin-left: 0 !important;
+        transition: left 0.3s ease-in-out !important;
+        z-index: 999 !important;
+        box-shadow: 4px 0 15px rgba(0,0,0,0.5) !important;
+    }
+
+    /* Saat ikon diklik (class .active ditambah via JS), sidebar masuk ke layar */
+    .main-nav.active {
+        left: 0 !important; 
+    }
+    
+    /* Jarak dan Garis Pembatas Link di dalam Sidebar */
+    .main-nav div {
+        font-size: 16px !important;
+        width: 100% !important;
+        padding-bottom: 15px !important;
+        border-bottom: 1px dashed rgba(255,255,255,0.05) !important;
+    }
+
+    /* C. Sidebar Light Mode (DIKUNCI HANYA UNTUK HP) */
+    html.light-mode .main-nav {
+        background-color: rgba(255, 255, 255, 0.6) !important; /* Dibuat 60% transparan */
+        backdrop-filter: blur(20px) !important; /* Tambahkan blur ekstra untuk light mode */
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.8) !important; /* Border putih bercahaya */
+        box-shadow: 4px 0 30px rgba(0,0,0,0.1) !important;
+    }
+    html.light-mode .main-nav div {
+        border-bottom: 1px dashed rgba(0,0,0,0.1) !important;
+    }
+
+    .left-nav h1 {
+        font-size: 18px;
+    }
+    .profile-pic-small, .profile-initial-small {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    /* Header, Search & Location */
+    .page-frame {
+        margin: 20px auto;
+    }
+    .page-frame-nav {
+        margin-bottom: 24px;
+        gap: 10px;
+    }
+    .page-frame-nav h1 {
+        font-size: 24px; /* Judul lebih proporsional */
+    }
+    .search-bar-wrapper, .event-location-wrapper {
+        padding: 0; 
+    }
+    .search-bar {
+        height: 48px;
+        padding: 0 16px;
+    }
+    .search-bar input {
+        font-size: 14px;
+    }
+    .event-location-wrapper {
+        justify-content: flex-end; /* Pindah ke kiri agar lebih rapi di HP */
+        margin-bottom: 15px;
+    }
+    .event-location-now {
+        height: 40px;
+        padding: 8px 16px;
+    }
+    .event-location-now h3 {
+        font-size: 13px;
+    }
+
+    .browse {
+        margin-top: -50px;
+        margin-bottom: 40px;
+    }
+
+    /* Kategori: Dibuat 2 Kolom Sejajar & Pas */
+    .category-wrapper {
+        grid-template-columns: 1fr 1fr; /* Memaksa tepat 2 kolom untuk ukuran HP apa pun */
+        gap: 12px;
+        margin-bottom: 30px;
+        margin-top: 15px;
+    }
+    .category-card {
+        padding: 12px 10px;
+    }
+    .icon-box {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+    }
+    .category-card-info h3 {
+        font-size: 13px;
+    }
+    .number-of-event {
+        font-size: 11px;
+    }
+
+    /* Upcoming Event (Carousel Area) */
+    .carousel-container {
+        margin-bottom: 30px;
+    }
+    .carousel-btn {
+        display: none; /* Sembunyikan tombol panah di mobile, karena user bisa langsung geser (swipe) layar */
+    }
+    .upcoming-event {
+        gap: 16px;
+        padding: 5px 5px 25px 5px;
+    }
+    
+    /* Kartu Event Dibuat Lebih Ramping */
+    .event-card-detail {
+        flex: 0 0 240px; /* Mengecil dari 300px agar kartu sebelahnya mengintip sedikit (memancing swipe) */
+        max-width: 240px;
+        padding: 14px;
+    }
+    .card-title {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    .event-card-img {
+        width: 90%;
+        margin-bottom: 12px;
+    }
+    .block-icon {
+        width: 28px;
+        height: 28px;
+    }
+    .block-icon i {
+        font-size: 12px;
+    }
+    .location-title-small {
+        font-size: 12px !important;
+    }
+    .location-desc-small {
+        font-size: 11px !important;
+    }
+
+    /* City List: Dibuat 2 Kolom Sejajar */
+    .city-wrapper {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 30px;
+    }
+    .city-card {
+        padding: 8px 10px;
+        gap: 10px;
+    }
+    .city-card-logo {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    .city-card-info h3 {
+        font-size: 13px;
+    }
+    .value-city-event {
+        font-size: 11px;
+    }
+
+    /* Empty State */
+    .empty-state {
+        padding: 40px 15px;
+    }
+    .empty-state i {
+        font-size: 28px;
+    }
+    .empty-state h3 {
+        font-size: 16px;
+    }
+    .empty-state p {
+        font-size: 12px;
+    }
+}

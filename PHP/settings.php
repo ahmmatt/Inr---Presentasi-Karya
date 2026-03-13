@@ -118,6 +118,7 @@ $nav_pic = $user_data['profile_picture'];
 <body>
     <nav class="navbar">
         <div class="left-nav">
+            <i class="fa-solid fa-bars hamburger-btn" id="hamburger-btn"></i>
             <h1>SecureGate</h1>
         </div>
         
@@ -221,12 +222,12 @@ $nav_pic = $user_data['profile_picture'];
                                     </div>
                                     <img src="" id="preview-img" alt="Profile" class="preview-image-style hidden">
                                 <?php endif; ?>
-
-                                <label for="profile-upload" class="upload-overlay">
-                                    <i class="fa-solid fa-camera"></i>
-                                </label>
-                                <input type="file" name="profile_picture" id="profile-upload" accept="image/*" hidden>
                             </div>
+                            
+                            <label for="profile-upload" class="upload-overlay">
+                                <i class="fa-solid fa-camera"></i>
+                            </label>
+                            <input type="file" name="profile_picture" id="profile-upload" accept="image/*" hidden>
                         </div>
 
                         <div class="name-input">
@@ -307,7 +308,7 @@ $nav_pic = $user_data['profile_picture'];
             </div>
         </div>
 
-        <hr>
+        <hr class="garis-footer">
         <div class="page-footer">
             <div class="left-footer">
                 <a href="#">Discover</a>

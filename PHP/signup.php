@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="signin.php">Sign In</a>
         </div>
     </nav>
-    <nav class="sign-card" style="margin-top: -30px;">
+    <nav class="sign-card" style="margin-top: 10px;">
         <img src="../Media/SVG.png" alt="entry door image">
         <h1>Welcome to SecureGate</h1>
         <p>Please enter your details to get started.</p>
@@ -90,8 +90,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit" name="submit">Sign Up</button>
         </form>
         <hr>
-        <div class="bottom-button-sign"><i class="fab fa-google"></i><a href="">Sign Up with Google</a></div>
+        <div class="bottom-button-sign" onclick="window.location.href='google_auth.php'">
+            <i class="fab fa-google"></i>
+            <a href="google_auth.php">Sign In with Google</a>
+        </div>
         <div class="bottom-button-sign"><i class="fas fa-user"></i><a href="signin.php">Have Account?</a></div>
     </nav>
+    <script src="../JS/sign.js"></script>
 </body>
 </html>

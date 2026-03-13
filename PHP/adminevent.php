@@ -133,6 +133,7 @@ $nav_pic = $nav_user_data['profile_picture'];
 <body>
     <nav class="navbar">
         <div class="left-nav">
+            <i class="fa-solid fa-bars hamburger-btn" id="hamburger-btn"></i>
             <h1>SecureGate</h1>
         </div>
         <div class="main-nav">

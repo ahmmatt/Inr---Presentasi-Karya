@@ -1,2 +1,12 @@
-# Sembunyikan file rahasia
+# Mengabaikan file Autentikasi Google
+PHP/google_auth.php
+
+# Mengabaikan file Kredensial & Koneksi Database
+PHP/config/credentials.php
+PHP/config/connect.php
+PHP/config/google_client.php
 PHP/config/secret_keys.php
+PHP/vendor
+
+
+

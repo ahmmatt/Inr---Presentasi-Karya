@@ -213,4 +213,35 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // ==========================================
+    // 6. LOGIKA HAMBURGER MENU (MOBILE)
+    // ==========================================
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (hamburgerBtn && mainNav) {
+        hamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Mencegah event klik bocor
+            mainNav.classList.toggle('active');
+            
+            // Ubah icon dari garis tiga (bars) menjadi silang (xmark)
+            if (mainNav.classList.contains('active')) {
+                hamburgerBtn.classList.remove('fa-bars');
+                hamburgerBtn.classList.add('fa-xmark');
+            } else {
+                hamburgerBtn.classList.remove('fa-xmark');
+                hamburgerBtn.classList.add('fa-bars');
+            }
+        });
+
+        // Tutup menu otomatis saat user klik area kosong di layar
+        document.addEventListener('click', (e) => {
+            if (!hamburgerBtn.contains(e.target) && !mainNav.contains(e.target)) {
+                mainNav.classList.remove('active');
+                hamburgerBtn.classList.remove('fa-xmark');
+                hamburgerBtn.classList.add('fa-bars');
+            }
+        });
+    }
+
 }); // AKHIR DARI DOMContentLoaded

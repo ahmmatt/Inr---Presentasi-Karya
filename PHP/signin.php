@@ -91,7 +91,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit" name="submit">Sign In</button>
         </form>
         <hr>
-        <div class="bottom-button-sign"><i class="fab fa-google"></i><a href="">Sign In with Google</a></div>
+        <div class="bottom-button-sign" onclick="window.location.href='google_auth.php'">
+            <i class="fab fa-google"></i>
+            <a href="google_auth.php">Sign In with Google</a>
+        </div>
         <div class="bottom-button-sign"><i class="fas fa-user"></i><a href="signup.php">Not Have Account?</a></div>
     </nav>
 

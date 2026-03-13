@@ -145,4 +145,33 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // ==========================================
+    // 6. LOGIKA HAMBURGER MENU (MOBILE)
+    // ==========================================
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (hamburgerBtn && mainNav) {
+        hamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            mainNav.classList.toggle('active');
+            
+            if (mainNav.classList.contains('active')) {
+                hamburgerBtn.classList.remove('fa-bars');
+                hamburgerBtn.classList.add('fa-xmark');
+            } else {
+                hamburgerBtn.classList.remove('fa-xmark');
+                hamburgerBtn.classList.add('fa-bars');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!hamburgerBtn.contains(e.target) && !mainNav.contains(e.target)) {
+                mainNav.classList.remove('active');
+                hamburgerBtn.classList.remove('fa-xmark');
+                hamburgerBtn.classList.add('fa-bars');
+            }
+        });
+    }
+
 });

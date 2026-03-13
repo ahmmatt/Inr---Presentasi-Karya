@@ -85,7 +85,7 @@ ul {
 .nav-bell-icon:hover { color: #fff; }
 
 .profile-dropdown-trigger { cursor: pointer; position: relative; }
-.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #2a2a2a; display: block; }
+.profile-pic-small { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; display: block; }
 .profile-initial-small { width: 36px; height: 36px; border-radius: 50%; background-color: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; border: 2px solid #2a2a2a; }
 
 .profile-dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background: #121212; border: 1px solid #333; border-radius: 12px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000; overflow: hidden; }
@@ -978,6 +978,46 @@ hr { border: 0; border-top: 1px solid #2a2a2a; margin: 40px 0; width: 100%; }
 .right-footer a:hover { color: var(--text-primary); }
 
 /* =========================================
+   3D SPACE VIDEO DISPLAY
+   ========================================= */
+.space-3d-container {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.space-3d-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.space-3d-wrapper {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.space-3d-wrapper video {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16 / 9; 
+    object-fit: cover;
+}
+
+/* Light Mode Support */
+html.light-mode .space-3d-wrapper {
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================
    8. GLOBAL LIGHT MODE OVERRIDES (TICKET DETAIL)
    ========================================= */
 html.light-mode body {
@@ -1129,3 +1169,186 @@ html.light-mode .btn-close-done:hover { background-color: #e2e8f0; }
 
 /* Footer */
 html.light-mode hr { border-top-color: rgba(0, 0, 0, 0.1); }
+
+/* =========================================
+   9. HAMBURGER MENU & RESPONSIVE DESIGN (TICKET DETAIL)
+   ========================================= */
+
+/* A. Sembunyikan ikon Hamburger di Desktop */
+.hamburger-btn { display: none !important; font-size: 20px; cursor: pointer; margin-right: 15px; color: var(--text-primary); transition: color 0.2s; }
+html.light-mode .hamburger-btn { color: var(--text-primary); }
+
+/* B. Perbaikan Footer agar tetap di bawah layar (Global) */
+body { display: flex; flex-direction: column; min-height: 100dvh; }
+.page-frame { flex: 1; display: flex; flex-direction: column; width: 100%; }
+.page-frame > hr:last-of-type { margin-top: auto !important; margin-bottom: 15px; } /* Sesuai request */
+
+/* =========================================
+   C. TABLET & MOBILE VIEW RESTRUCTURE
+   ========================================= */
+@media (max-width: 768px) {
+    .navbar { padding: 0 20px; }
+    .main-nav { gap: 15px; margin-left: 0; }
+    body { padding-top: 70px; }
+    
+    /* 1. MAGIC TRICK: Hancurkan Grid Kolom Kiri/Kanan */
+    .create-wrapper-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+        margin-bottom: 40px;
+    }
+    
+    /* Membebaskan elemen di dalamnya agar bisa diurutkan ulang */
+    .left-layout, .right-layout {
+        display: contents !important; 
+    }
+    
+    /* Sembunyikan garis (hr) agar tampilan lebih bersih seperti desain referensi */
+    .left-layout hr { display: none !important; }
+
+    /* 2. URUTAN TATA LETAK BARU (Sesuai Referensi Gambar) */
+    /* 2. URUTAN TATA LETAK BARU (Sesuai Referensi Gambar) */
+    .add-pict-card              { order: 1; } /* Poster di Paling Atas */
+    .event-name                 { order: 2; margin-bottom: 0 !important; } /* Judul */
+    .presented-wrapper          { order: 3; margin-top: -10px !important; margin-bottom: 10px !important; } /* Host/Organizer */
+    .time-loc-and-price-wrapper { order: 4; } /* Tanggal, Lokasi & Harga */
+    .register-card              { order: 5; } /* Kotak Registrasi (Naik ke atas) */
+    .event-description          { order: 6; margin-top: 10px !important; } /* Deskripsi Acara (Naik ke atas) */
+    .space-3d-container         { order: 7; }
+    .maps-or-link-card          { order: 8; margin-top: 15px !important; } /* Tautan Virtual / Peta (Pindah ke bawah deskripsi) */
+    .category-card              { order: 9; align-self: flex-start; margin-top: 20px !important; } /* Kategori Paling Bawah */
+
+    /* 3. POSTER EVENT (Ukuran Sedang, Tidak Full Layar) */
+    .add-pict-card {
+        width: 85% !important; /* Tidak full layar */
+        max-width: 320px; /* Batas maksimal besarnya */
+        margin: 0 auto 10px auto !important; /* Tengah */
+        border-radius: 20px !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .add-pict-card.view-mode img { border-radius: 20px !important; }
+
+    /* 4. JUDUL EVENT (Diperkecil Proporsional) */
+    .event-name.view-mode-title h1 { font-size: 24px !important; line-height: 1.3 !important; }
+
+    /* 5. TANGGAL & LOKASI (Dibuat Berdampingan Sebelahan) */
+    /* 5. TANGGAL, LOKASI & HARGA */
+    .time-loc-and-price-wrapper {
+        display: flex !important;
+        flex-direction: column !important; /* Ini kunci untuk memaksa tiket turun ke bawah */
+        gap: 20px !important;
+        width: 100%;
+    }
+
+    /* (Biarkan kode time-loc-left di bawah ini tetap seperti sebelumnya) */
+    .time-loc-left {
+        display: flex !important;
+        flex-direction: row !important; 
+        gap: 12px !important;
+        align-items: flex-start !important;
+        width: 100%;
+    }
+
+    /* Ukuran Icon Kotak Tanggal & Lokasi */
+    .time-date-card, .event-loc-icon { width: 38px !important; height: 38px !important; border-radius: 8px !important; flex-shrink: 0; }
+    .time-date-card span { font-size: 8px !important; padding: 2px 0 !important; }
+    .time-date-card h4 { font-size: 13px !important; }
+    .event-loc-icon i { font-size: 14px !important; }
+
+    /* Teks Tanggal & Lokasi */
+    .time-date-detail { min-height: 38px !important; justify-content: center; }
+    .time-date-detail h3 { font-size: 12px !important; margin-bottom: 2px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    
+    /* Membatasi teks deskripsi lokasi maksimal 2 baris */
+    .time-date-detail p { 
+        font-size: 10px !important; 
+        line-height: 1.3; 
+        display: -webkit-box; 
+        -webkit-line-clamp: 2; 
+        -webkit-box-orient: vertical; 
+        overflow: hidden; 
+    }
+
+    /* 6. PRICE CARDS (Tinggi dikurangi) */
+    .price-cards-wrapper {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important; /* Dijejer 2 kolom ke samping */
+        gap: 12px !important;
+        width: 100%;
+    }
+    .price-right-card {
+        padding: 12px 10px !important; /* Padding atas bawah dikurangi agar lebih tipis */
+        min-width: auto !important;
+        border-radius: 12px !important;
+    }
+    .price-right-card i { font-size: 16px !important; margin-bottom: 6px !important; }
+    .price-right-card p { font-size: 10px !important; margin-bottom: 2px !important; }
+    .price-right-card h3 { font-size: 13px !important; }
+
+    /* 7. KOTAK REGISTRASI & TOMBOL */
+    /* 7. KOTAK REGISTRASI & TOMBOL */
+    .register-card { 
+        padding: 24px 20px !important; /* Mengembalikan ruang di dalam kotak agar teks tidak mepet */
+        gap: 12px !important; 
+        margin-bottom: 0 !important; 
+        width: 100% !important; 
+        border-radius: 10px !important; /* Menghilangkan sudut yang melengkung */ 
+    }
+    .register-header h4 { font-size: 13px !important; }
+    .register-card > h3 { font-size: 12px !important; line-height: 1.4; }
+    .profile-detail img.profile-img-reg { width: 30px !important; height: 30px !important; }
+    .profile-detail h3 { font-size: 12px !important; }
+    .profile-detail .email-text { font-size: 10px !important; }
+    .btn-register { padding: 12px !important; font-size: 12px !important; border-radius: 8px !important; }
+
+    /* 8. HOST, MAPS & CATEGORY ELEMENTS */
+    .presented-left { gap: 10px !important; }
+    .presented-logo img, .presented-logo div { width: 30px !important; height: 30px !important; font-size: 12px !important; }
+    .presented-detail h3 { font-size: 13px !important; }
+    .presented-detail p { font-size: 10px !important; }
+    
+    .maps-or-link-card h4 { font-size: 13px !important; margin-bottom: 6px !important; }
+    .maps-container-static { height: 120px !important; border-radius: 10px !important; }
+    .link-wrapper { padding: 10px 12px !important; gap: 10px !important; border-radius: 10px !important; margin-top: 5px !important;}
+    .url-box span { font-size: 11px !important; }
+    
+    .event-description h4 { font-size: 14px !important; margin-bottom: 6px !important; }
+    .event-description p { font-size: 12px !important; line-height: 1.5 !important; }
+
+    .space-3d-title { font-size: 13px; }
+    .space-3d-wrapper { width: 95% !important;margin: 0 auto 10px auto !important; }
+    
+    .category-card { font-size: 11px !important; padding: 6px 12px !important; }
+    .category-card h3 { font-size: 11px !important; }
+
+    .page-frame > hr:last-of-type { margin-bottom: 15px !important; display: block !important; margin-top: auto !important; }
+    .page-footer { padding-bottom: 30px !important; font-size: 11px !important; }
+}
+
+/* KHUSUS PENYESUAIAN MENU MOBILE KECIL (Maks 480px) */
+@media (max-width: 480px) {
+    .navbar { display: flex; justify-content: space-between; padding: 0 16px; }
+    .left-nav { display: flex; align-items: center; }
+    .hamburger-btn { display: block !important; }
+    .left-nav h1 { font-size: 18px; }
+    .profile-pic-small, .profile-initial-small { width: 32px; height: 32px; font-size: 14px; }
+    
+    /* Sidebar Kaca Menu Mobile */
+    .main-nav {
+        position: fixed !important; top: 60px !important; left: -100% !important;
+        width: 250px !important; height: calc(100vh - 60px) !important;
+        background-color: rgba(18, 18, 18, 0.6) !important;
+        backdrop-filter: blur(15px) !important; -webkit-backdrop-filter: blur(15px) !important;
+        border-right: 1px solid #333 !important; border-bottom: none !important;
+        display: flex !important; flex-direction: column !important; align-items: flex-start !important;
+        padding: 30px 20px !important; gap: 25px !important; margin-left: 0 !important;
+        transition: left 0.3s ease-in-out !important; z-index: 999 !important;
+        box-shadow: 4px 0 15px rgba(0,0,0,0.5) !important;
+    }
+    .main-nav.active { left: 0 !important; }
+    .main-nav div { font-size: 16px !important; width: 100% !important; padding-bottom: 15px !important; border-bottom: 1px dashed rgba(255,255,255,0.05) !important; }
+    
+    html.light-mode .main-nav { background-color: rgba(255, 255, 255, 0.6) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; border-right: 1px solid rgba(255, 255, 255, 0.8) !important; box-shadow: 4px 0 30px rgba(0,0,0,0.1) !important; }
+    html.light-mode .main-nav div { border-bottom: 1px dashed rgba(0,0,0,0.1) !important; }
+}

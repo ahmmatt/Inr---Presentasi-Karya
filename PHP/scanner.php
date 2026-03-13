@@ -46,7 +46,10 @@ $nav_pic = $nav_user_data['profile_picture'];
 </head>
 <body>
     <nav class="navbar">
-        <div class="left-nav"><h1>SecureGate</h1></div>
+        <div class="left-nav">
+            <i class="fa-solid fa-bars hamburger-btn" id="hamburger-btn"></i>
+            <h1>SecureGate</h1>
+        </div>
         <div class="main-nav">
             <div class="main-nav-discover"><i class="fa-solid fa-house"></i><a href="adminevent.php">Home</a></div>
             <div class="main-nav-event"><i class="fa-regular fa-calendar-plus"></i><a href="create.php">Create Event</a></div>
@@ -156,6 +159,18 @@ $nav_pic = $nav_user_data['profile_picture'];
                         <i class="fa-solid fa-check-circle"></i> Approve & Check-In
                     </button>
                 </div>
+            </div>
+        </div>
+        <hr>
+        <div class="page-footer">
+            <div class="left-footer">
+                <a href="">Discover</a>
+                <a href="">Help</a>
+            </div>
+            <div class="right-footer">
+                <a href=""><i class="fab fa-x"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </div>

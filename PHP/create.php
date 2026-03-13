@@ -159,7 +159,10 @@ $nav_pic = $nav_user_data['profile_picture'];
 </head>
 <body>
     <nav class="navbar">
-        <div class="left-nav"><h1>SecureGate</h1></div>
+        <div class="left-nav">
+            <i class="fa-solid fa-bars hamburger-btn" id="hamburger-btn"></i>
+            <h1>SecureGate</h1>
+        </div>
         <div class="main-nav">
             <div class="main-nav-discover"><i class="fa-solid fa-house"></i><a href="adminevent.php">Home</a></div>
             <div class="main-nav-event"><i class="fa-regular fa-calendar-plus"></i><a href="create.php">Create Event</a></div>

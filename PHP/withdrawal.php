@@ -110,6 +110,7 @@ $nav_pic = $nav_user_data['profile_picture'];
 <body>
     <nav class="navbar">
         <div class="left-nav">
+            <i class="fa-solid fa-bars hamburger-btn" id="hamburger-btn"></i>
             <h1>SecureGate</h1>
         </div>
         
@@ -275,6 +276,19 @@ $nav_pic = $nav_user_data['profile_picture'];
             </div>
 
         </div>
+        <hr>
+        <div class="page-footer">
+            <div class="left-footer">
+                <a href="">Discover</a>
+                <a href="">Help</a>
+            </div>
+            <div class="right-footer">
+                <a href=""><i class="fab fa-x"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        
     </div>
     
     <script src="../JS/withdrawal.js"></script>                                         

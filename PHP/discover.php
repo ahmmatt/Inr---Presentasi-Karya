@@ -23,6 +23,9 @@ if (isset($_GET['city'])) {
 
 $selected_category = isset($_GET['category']) ? $_GET['category'] : 'All';
 
+// TAMBAHAN 1: Tangkap kata kunci pencarian dari URL
+$search_keyword = isset($_GET['search']) ? trim($_GET['search']) : ''; 
+
 // 2. Susun Query Pencarian Berdasarkan Filter
 $where_clauses = ["e.status = 'active'"];
 
@@ -33,8 +36,14 @@ if ($selected_category !== 'All') {
 
 if ($selected_city !== 'All') {
     $city_esc = $conn->real_escape_string($selected_city);
-    // PERBAIKAN PENTING: Sekarang kita filter menggunakan kolom 'city' yang baru
     $where_clauses[] = "e.city = '$city_esc'";
+}
+
+// TAMBAHAN 2: Jika ada kata yang dicari, tambahkan ke filter SQL
+if (!empty($search_keyword)) {
+    $search_esc = $conn->real_escape_string($search_keyword);
+    // Cari event yang judulnya (title) mengandung kata kunci tersebut
+    $where_clauses[] = "e.title LIKE '%$search_esc%'"; 
 }
 
 $where_sql = implode(' AND ', $where_clauses);
@@ -115,6 +124,7 @@ $nav_pic = $nav_user_data['profile_picture'];
 <body>
     <nav class="navbar">
         <div class="left-nav">
+            <i class="fa-solid fa-bars hamburger-btn" id="hamburger-btn"></i>
             <h1>SecureGate</h1>
         </div>
         <div class="main-nav">
@@ -170,9 +180,12 @@ $nav_pic = $nav_user_data['profile_picture'];
         <div class="search-bar-wrapper">
             <div class="search-bar">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <form action="discover.php" method="GET">
+                <form action="discover.php" method="GET" style="width: 100%; margin: 0;">
                     <input type="hidden" name="city" value="<?= htmlspecialchars($selected_city) ?>">
-                    <input type="text" name="search" placeholder="Search..">
+                    
+                    <input type="hidden" name="category" value="<?= htmlspecialchars($selected_category) ?>">
+                    
+                    <input type="text" name="search" placeholder="Search event by title..." value="<?= htmlspecialchars($search_keyword) ?>" style="width: 100%; background: transparent; border: none; outline: none; color: #fff;">
                 </form>
             </div>
         </div>
@@ -184,10 +197,10 @@ $nav_pic = $nav_user_data['profile_picture'];
             </div>
         </div>
         
-        <h3>Browse by Category</h3>
+        <h3 class="browse">Browse by Category</h3>
         <div class="category-wrapper">
             
-            <a href="discover.php?category=<?= urlencode('Music Concert') ?>&city=<?= urlencode($selected_city) ?>" class="filter-card-link category-card <?= $selected_category == 'Music Concert' ? 'active-filter' : '' ?>">
+            <a href="discover.php?category=<?= urlencode('Music Concert') ?>&city=<?= urlencode($selected_city) ?>&search=<?= urlencode($search_keyword) ?>" class="filter-card-link category-card <?= $selected_category == 'Music Concert' ? 'active-filter' : '' ?>">
                 <div class="category-card-content">
                     <div class="icon-box icon-yellow"><i class="fa-solid fa-music"></i></div>
                     <div class="category-card-info">
@@ -200,7 +213,7 @@ $nav_pic = $nav_user_data['profile_picture'];
                 </div>
             </a>
 
-            <a href="discover.php?category=<?= urlencode('Workshop & Training') ?>&city=<?= urlencode($selected_city) ?>" class="filter-card-link category-card <?= $selected_category == 'Workshop & Training' ? 'active-filter' : '' ?>">
+            <a href="discover.php?category=<?= urlencode('Workshop & Training') ?>&city=<?= urlencode($selected_city) ?>&search=<?= urlencode($search_keyword) ?>" class="filter-card-link category-card <?= $selected_category == 'Workshop & Training' ? 'active-filter' : '' ?>">
                 <div class="category-card-content">
                     <div class="icon-box icon-green"><i class="fa-solid fa-chalkboard-user"></i></div>
                     <div class="category-card-info">
@@ -213,7 +226,7 @@ $nav_pic = $nav_user_data['profile_picture'];
                 </div>
             </a>  
 
-            <a href="discover.php?category=<?= urlencode('Tech Seminar') ?>&city=<?= urlencode($selected_city) ?>" class="filter-card-link category-card <?= $selected_category == 'Tech Seminar' ? 'active-filter' : '' ?>">
+            <a href="discover.php?category=<?= urlencode('Tech Seminar') ?>&city=<?= urlencode($selected_city) ?>&search=<?= urlencode($search_keyword) ?>" class="filter-card-link category-card <?= $selected_category == 'Tech Seminar' ? 'active-filter' : '' ?>">
                 <div class="category-card-content">
                     <div class="icon-box icon-orange"><i class="fa-solid fa-microphone-lines"></i></div>
                     <div class="category-card-info">
@@ -226,7 +239,7 @@ $nav_pic = $nav_user_data['profile_picture'];
                 </div>
             </a>
 
-            <a href="discover.php?category=All&city=<?= urlencode($selected_city) ?>" class="filter-card-link category-card <?= $selected_category == 'All' ? 'active-filter' : '' ?>">
+            <a href="discover.php?category=All&city=<?= urlencode($selected_city) ?>&search=<?= urlencode($search_keyword) ?>" class="filter-card-link category-card <?= $selected_category == 'All' ? 'active-filter' : '' ?>">
                 <div class="category-card-content">
                     <div class="icon-box icon-purple"><i class="fa-solid fa-layer-group"></i></div>
                     <div class="category-card-info">

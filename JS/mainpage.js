@@ -18,11 +18,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnUpcoming && btnPast && viewUpcoming && viewPast) {
         
         const switchTab = (isUpcomingActive) => {
-            // Ubah style tombol aktif
+            // 1. Ambil elemen page-frame
+            const pageFrame = document.querySelector('.page-frame');
+
+            // 2. Ubah style tombol aktif
             btnUpcoming.classList.toggle('active', isUpcomingActive);
             btnPast.classList.toggle('active', !isUpcomingActive);
 
-            // Menggunakan styling class agar tetap selaras dengan CSS external
+            // 3. INI YANG KURANG: Tambahkan class 'past-active' ke page-frame jika tab Past dipilih
+            if (pageFrame) {
+                pageFrame.classList.toggle('past-active', !isUpcomingActive);
+            }
+
+            // 4. Sembunyikan/Tampilkan Konten
             if (isUpcomingActive) {
                 viewUpcoming.classList.remove('hidden-display');
                 viewPast.classList.add('hidden-display');
@@ -74,6 +82,37 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener('click', function(e) {
             if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
                 profileMenu.style.display = 'none';
+            }
+        });
+    }
+
+    // ==========================================
+    // 4. LOGIKA HAMBURGER MENU (MOBILE)
+    // ==========================================
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (hamburgerBtn && mainNav) {
+        hamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Mencegah klik bocor
+            mainNav.classList.toggle('active');
+            
+            // Ubah icon dari garis tiga (bars) menjadi X (close)
+            if (mainNav.classList.contains('active')) {
+                hamburgerBtn.classList.remove('fa-bars');
+                hamburgerBtn.classList.add('fa-xmark');
+            } else {
+                hamburgerBtn.classList.remove('fa-xmark');
+                hamburgerBtn.classList.add('fa-bars');
+            }
+        });
+
+        // Tutup menu otomatis jika user klik area kosong di luar sidebar
+        document.addEventListener('click', (e) => {
+            if (!hamburgerBtn.contains(e.target) && !mainNav.contains(e.target)) {
+                mainNav.classList.remove('active');
+                hamburgerBtn.classList.remove('fa-xmark');
+                hamburgerBtn.classList.add('fa-bars');
             }
         });
     }
