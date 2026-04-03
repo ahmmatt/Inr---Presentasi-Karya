@@ -87,7 +87,7 @@ $nav_pic = $nav_user_data['profile_picture'];
             <div class="main-nav-event"><i class="fa-solid fa-ticket"></i><a href="mainpage.php">Event</a></div>
         </div>
         <div class="right-nav">
-            <i class="fa-regular fa-bell nav-bell-icon" title="Notifications"></i>
+            
             
             <div id="profile-dropdown-trigger" class="profile-dropdown-trigger" title="<?= htmlspecialchars($nav_name) ?>">
                 <?php if(!empty($nav_pic)): ?>

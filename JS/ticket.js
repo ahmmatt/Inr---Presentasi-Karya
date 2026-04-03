@@ -166,4 +166,36 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    /* =========================================
+       6. LOGIKA COPY LINK LOCATION
+       ========================================= */
+    const copyLinkBtn = document.getElementById('copy-link-btn');
+
+    if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', function() {
+            // Mengambil URL dari atribut data-url pada elemen HTML
+            const urlToCopy = this.getAttribute('data-url');
+            
+            // Menggunakan Clipboard API modern untuk menyalin teks
+            navigator.clipboard.writeText(urlToCopy).then(() => {
+                
+                // Memberikan feedback visual: Ubah ikon jadi centang hijau
+                this.classList.remove('fa-regular', 'fa-copy');
+                this.classList.add('fa-solid', 'fa-check');
+                this.style.color = '#22c55e'; // Warna hijau
+                
+                // Kembalikan ke ikon semula setelah 2 detik
+                setTimeout(() => {
+                    this.classList.remove('fa-solid', 'fa-check');
+                    this.classList.add('fa-regular', 'fa-copy');
+                    this.style.color = ''; // Reset warna
+                }, 2000);
+                
+            }).catch(err => {
+                console.error('Gagal menyalin tautan: ', err);
+                alert('Gagal menyalin tautan, browser Anda mungkin tidak mendukung fitur ini.');
+            });
+        });
+    }
+
 });

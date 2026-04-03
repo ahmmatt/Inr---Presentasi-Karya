@@ -405,7 +405,7 @@ div[id^="reader__dashboard"] {
     transition: 0.2s;
     border: none;
 }
-.btn-scan { background-color: #fff; color: #000; width: 100%; margin-top: 20px; padding: 16px; font-weight: bold; border-radius: 12px; border: none; cursor: pointer; font-size: 16px; }
+.btn-scan { background-color: #fff; color: #000; width: 100%; margin-top: 20px; padding: 16px; font-weight: bold; border-radius: 12px; border: none; cursor: pointer; font-size: 16px; margin-bottom: 30px;}
 .btn-scan:hover { background-color: #e0e0e0; }
 
 /* Button Action */
